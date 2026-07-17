@@ -47,8 +47,8 @@ let q="",brandF="All",condF="All";
   el.src=LOGO;
 })();
 
-/* Hero background — subtle panel field */
-document.getElementById("heroBg").src=panelSVG({brand:"AES Energy"},720,320);
+/* Hero background — real yard photo, SVG fallback */
+document.getElementById("heroBg").src=(typeof PHOTOS!=="undefined"&&PHOTOS.pallets&&PHOTOS.pallets.src)||panelSVG({brand:"AES Energy"},720,320);
 
 const esc=s=>String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function waLink(r){const m=r?`Hello AES Energy, I am interested in the ${r.brand} ${r.wattage}W used panels${r.model?" ("+r.model+")":""} from your inventory. Please send me the details.`:"Hello AES Energy, I would like to receive your current used solar panel inventory.";return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(m);}
@@ -63,9 +63,9 @@ document.getElementById("stats").innerHTML=stats().map(([v,l])=>`<div class="sta
 document.getElementById("brandChips").innerHTML=["All",...brands].map(b=>`<button class="chip" data-b="${esc(b)}">${esc(b)}</button>`).join("");
 document.getElementById("condChips").innerHTML=["All","Used","New"].map(c=>`<button class="cond" data-c="${c}">${c}</button>`).join("");
 
-function card(r){const src=panelSVG(r);
+function card(r){const ph=(typeof PHOTOS!=="undefined")?PHOTOS[r.photo]:null;const src=ph&&ph.src?ph.src:panelSVG(r);
  return `<div class="card"><div class="shot" data-src="${src}">
- <img src="${src}" alt="${esc(r.brand)} ${esc(r.wattage)}W used solar panel">
+ <img src="${src}" alt="${esc(r.brand)} ${esc(r.wattage)}W used solar panel" loading="lazy">
  <div class="fade"></div><span class="tag" style="background:${COND_COLORS[r.condition]||"#8A93A6"}">${esc(r.condition)}</span>
  ${r.wattage?`<span class="watt">${esc(r.wattage)}W</span>`:""}</div>
  <div class="body"><div class="b">${esc(r.brand)}</div>${r.model?`<div class="m">${esc(r.model)}</div>`:""}
