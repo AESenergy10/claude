@@ -54,6 +54,16 @@ const esc=s=>String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&g
 function waLink(r){const m=r?`Hello AES Energy, I am interested in the ${r.brand} ${r.wattage}W used panels${r.model?" ("+r.model+")":""} from your inventory. Please send me the details.`:"Hello AES Energy, I would like to receive your current used solar panel inventory.";return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(m);}
 document.getElementById("waAll").href=waLink(null);
 
+/* Pay with card (Stripe secure checkout) — only shows when a PAY_URL is set */
+(function(){
+  if(typeof PAY_URL==="undefined"||!PAY_URL)return;
+  var w=document.getElementById("payWrap");if(!w)return;
+  w.innerHTML='<a class="pay" href="'+PAY_URL+'" target="_blank" rel="noreferrer">'
+    +'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>'
+    +'Pay with card (Visa / Mastercard)</a>'
+    +'<div class="paynote">Secure checkout powered by Stripe · enter your amount. We never see your card details.</div>';
+})();
+
 const brands=[...new Set(live.map(r=>r.brand))].sort((a,b)=>a===PINNED?-1:b===PINNED?1:a.localeCompare(b));
 
 function stats(){const u=live.reduce((a,r)=>a+(+r.qty||0),0);const kw=live.reduce((a,r)=>a+(+r.qty||0)*(+r.wattage||0),0)/1000;
