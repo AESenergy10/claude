@@ -20,11 +20,18 @@ h1{color:#fff;font-weight:800;font-size:19px;margin:0;letter-spacing:-.01em}
 .search{position:relative;margin-bottom:10px}
 .search input{width:100%;padding:11px 12px 11px 34px;border-radius:10px;border:1.5px solid var(--line);font-size:15px;background:#fff;color:var(--navy);outline:none;font-family:inherit}
 .search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);opacity:.5}
-.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+.browse{display:flex;align-items:center;justify-content:space-between;margin:2px 2px 9px}
+.browse .lbl{font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.browse .swipe{font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--gold);display:inline-flex;align-items:center;gap:3px;animation:nudge 1.8s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(4px)}}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .chips::-webkit-scrollbar{display:none}
-.chip{padding:7px 13px;border-radius:999px;border:none;flex-shrink:0;background:#EAEDF2;color:#6B7385;font-weight:600;font-size:12.5px}
-.chip.on{background:var(--navy);color:#fff;font-weight:800}
-.chips{margin-bottom:14px}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:9px 13px 9px 11px;border-radius:14px;border:1.5px solid var(--line);flex-shrink:0;background:#fff;color:var(--navy);font-weight:700;font-size:13px;white-space:nowrap;box-shadow:0 1px 3px rgba(26,39,68,.07);transition:transform .13s ease,box-shadow .13s ease,background .13s ease,border-color .13s ease}
+.chip .ic{font-size:15px;line-height:1}
+.chip .ct{font-size:11px;font-weight:800;min-width:20px;text-align:center;padding:1px 6px;border-radius:999px;background:#EEF1F6;color:#8A93A6;font-variant-numeric:tabular-nums}
+.chip:active{transform:scale(.95)}
+.chip.on{background:linear-gradient(135deg,var(--navy),var(--navyDeep));color:#fff;border-color:var(--navy);box-shadow:0 5px 14px rgba(26,39,68,.24)}
+.chip.on .ct{background:var(--gold);color:var(--navy)}
 .bsec{margin-bottom:22px}
 .bhead{display:flex;align-items:center;gap:10px;padding:0 2px 9px;border-bottom:2px solid var(--gold);margin-bottom:12px}
 .dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
@@ -79,6 +86,7 @@ h1{color:#fff;font-weight:800;font-size:19px;margin:0;letter-spacing:-.01em}
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A7AFBF" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
     <input id="q" placeholder="Search cars, clothes, panels, location…">
   </div>
+  <div class="browse"><span class="lbl">Browse by category</span><span class="swipe">swipe →</span></div>
   <div class="chips" id="catChips"></div>
   <div id="list"></div>
   <div class="foot">
@@ -208,7 +216,9 @@ function stats(){
 }
 document.getElementById("stats").innerHTML=stats().map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
 
-document.getElementById("catChips").innerHTML=["All",...cats].map(c=>`<button class="chip" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
+const CAT_ICONS={"All":"🛍️","Cars":"🚗","Clothes":"👕","Bicycles":"🚲","Shoes":"👟","Solar Panels":"☀️"};
+const catCount=c=>c==="All"?live.length:live.filter(r=>r.category===c).length;
+document.getElementById("catChips").innerHTML=["All",...cats].map(c=>`<button class="chip" data-cat="${esc(c)}"><span class="ic">${CAT_ICONS[c]||"•"}</span>${esc(c)}<span class="ct">${catCount(c)}</span></button>`).join("");
 
 function card(r){
   const ph=(typeof PHOTOS!=="undefined")?PHOTOS[r.photo]:null;

@@ -95,7 +95,9 @@ function stats(){
 }
 document.getElementById("stats").innerHTML=stats().map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
 
-document.getElementById("catChips").innerHTML=["All",...cats].map(c=>`<button class="chip" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
+const CAT_ICONS={"All":"🛍️","Cars":"🚗","Clothes":"👕","Bicycles":"🚲","Shoes":"👟","Solar Panels":"☀️"};
+const catCount=c=>c==="All"?live.length:live.filter(r=>r.category===c).length;
+document.getElementById("catChips").innerHTML=["All",...cats].map(c=>`<button class="chip" data-cat="${esc(c)}"><span class="ic">${CAT_ICONS[c]||"•"}</span>${esc(c)}<span class="ct">${catCount(c)}</span></button>`).join("");
 
 function card(r){
   const ph=(typeof PHOTOS!=="undefined")?PHOTOS[r.photo]:null;
