@@ -112,6 +112,7 @@ const T={
  }
 };
 let lang="en";
+try{const sv=localStorage.getItem("aes_lang");if(sv==="en"||sv==="fr")lang=sv;else if((navigator.language||"").toLowerCase().startsWith("fr"))lang="fr";}catch(e){}
 const L=()=>T[lang];
 const I=(typeof I18N!=="undefined")?I18N:{categories:{},conditions:{},units:{},badges:{},rows:{}};
 function dcat(c){return lang==="fr"&&I.categories[c]?I.categories[c]:c;}
@@ -277,5 +278,9 @@ function applyLang(l){
   render();
   updateFab();
   if(sheet.classList.contains("on"))renderCart();
+  var tg=document.getElementById("langTog");
+  if(tg)tg.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
 }
+var langTog=document.getElementById("langTog");
+if(langTog)langTog.addEventListener("click",e=>{const b=e.target.closest("button[data-lang]");if(b)applyLang(b.dataset.lang);});
 applyLang(lang);
