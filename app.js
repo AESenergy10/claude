@@ -90,13 +90,6 @@ const order=(typeof CATEGORY_ORDER!=="undefined")?CATEGORY_ORDER:[];
 const cats=order.filter(c=>live.some(r=>r.category===c)).concat([...new Set(live.map(r=>r.category))].filter(c=>order.indexOf(c)<0));
 function catColor(c){return (typeof CATEGORY_COLORS!=="undefined"&&CATEGORY_COLORS[c])||"#1B2C4A";}
 
-function stats(){
-  const units=live.reduce((a,r)=>a+(+r.qty||0),0);
-  const locs=new Set(live.map(r=>r.location).filter(Boolean)).size;
-  return [[live.length,"Listings"],[cats.length,"Categories"],[units.toLocaleString(),"Units in stock"],[locs,"Locations"]];
-}
-document.getElementById("stats").innerHTML=stats().map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
-
 const CAT_ICONS={"All":"🛍️","Cars":"🚗","Clothes":"👕","Bicycles":"🚲","Shoes":"👟","Solar Panels":"☀️"};
 const catCount=c=>c==="All"?live.length:live.filter(r=>r.category===c).length;
 document.getElementById("catChips").innerHTML=["All",...cats].map(c=>`<button class="chip" data-cat="${esc(c)}"><span class="ic">${CAT_ICONS[c]||"•"}</span>${esc(c)}<span class="ct">${catCount(c)}</span></button>`).join("");

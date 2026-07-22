@@ -10,12 +10,10 @@ button{font-family:inherit;cursor:pointer}
 .hero .inner{position:relative;padding:22px 16px 20px;text-align:center}
 .logo-plate{background:#fff;border-radius:14px;padding:12px 16px;display:inline-block;margin-bottom:14px}
 .logo-plate img{width:190px;max-width:62vw;height:auto}
-h1{color:#fff;font-weight:800;font-size:19px;margin:0;letter-spacing:-.01em}
-.kicker{color:var(--gold);font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-top:4px}
-.stats{display:flex;justify-content:center;margin:16px auto 0;background:rgba(255,255,255,.08);border-radius:12px;padding:10px 4px;max-width:460px}
-.stat{flex:1}.stat+.stat{border-left:1px solid rgba(255,255,255,.14)}
-.stat b{display:block;color:var(--gold);font-weight:800;font-size:16px;font-variant-numeric:tabular-nums}
-.stat span{color:#B4BDCE;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:2px;display:block}
+.ebadge{display:inline-block;background:var(--gold);color:var(--navyDeep);font-size:10.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;padding:5px 13px;border-radius:999px;margin-bottom:11px;box-shadow:0 3px 12px rgba(245,168,0,.28)}
+h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;line-height:1.18}
+.sub{color:#C6CEDD;font-size:13.5px;line-height:1.55;margin:9px auto 0;max-width:440px}
+.sub b{color:#fff;font-weight:800}
 .wrap{max-width:720px;margin:0 auto;padding:16px;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
 .search{position:relative;margin-bottom:10px}
 .search input{width:100%;padding:11px 12px 11px 34px;border-radius:10px;border:1.5px solid var(--line);font-size:15px;background:#fff;color:var(--navy);outline:none;font-family:inherit}
@@ -109,9 +107,9 @@ h1{color:#fff;font-weight:800;font-size:19px;margin:0;letter-spacing:-.01em}
   <div class="veil"></div>
   <div class="inner">
     <div class="logo-plate"><img id="logo" alt="AES Energy Global Trade & Solar LLC"></div>
-    <h1>Used Export Inventory</h1>
-    <div class="kicker">Cars · Fripe · Shoes · Bikes · Solar · Container Loads</div>
-    <div class="stats" id="stats"></div>
+    <div class="ebadge">Global Export &amp; Wholesale Business</div>
+    <h1>Used Goods, Shipped by the Container</h1>
+    <p class="sub">We source and export bulk used <b>cars, solar panels, clothing (fripe), shoes &amp; bicycles</b> — full 40ft container loads to West Africa &amp; beyond.</p>
   </div>
 </div>
 <div class="wrap">
@@ -250,13 +248,6 @@ const waIconSm='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
 const order=(typeof CATEGORY_ORDER!=="undefined")?CATEGORY_ORDER:[];
 const cats=order.filter(c=>live.some(r=>r.category===c)).concat([...new Set(live.map(r=>r.category))].filter(c=>order.indexOf(c)<0));
 function catColor(c){return (typeof CATEGORY_COLORS!=="undefined"&&CATEGORY_COLORS[c])||"#1B2C4A";}
-
-function stats(){
-  const units=live.reduce((a,r)=>a+(+r.qty||0),0);
-  const locs=new Set(live.map(r=>r.location).filter(Boolean)).size;
-  return [[live.length,"Listings"],[cats.length,"Categories"],[units.toLocaleString(),"Units in stock"],[locs,"Locations"]];
-}
-document.getElementById("stats").innerHTML=stats().map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
 
 const CAT_ICONS={"All":"🛍️","Cars":"🚗","Clothes":"👕","Bicycles":"🚲","Shoes":"👟","Solar Panels":"☀️"};
 const catCount=c=>c==="All"?live.length:live.filter(r=>r.category===c).length;
