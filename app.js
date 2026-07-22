@@ -76,6 +76,8 @@ document.getElementById("waAll").href=waLink(null);
 /* Pay with card (Stripe secure checkout) — for any listing. Shows when PAY_URL is set. */
 const PAY=(typeof PAY_URL!=="undefined"&&PAY_URL)?PAY_URL:"";
 const cardIcon='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>';
+const plusIcon='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+const waIconSm='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .7.5l.9 2.2c.1.2 0 .4-.1.5l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2.1 1c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg>';
 (function(){
   if(!PAY)return; var w=document.getElementById("payWrap"); if(!w)return;
   w.innerHTML='<a class="pay" href="'+PAY+'" target="_blank" rel="noreferrer">'
@@ -111,9 +113,10 @@ function card(r){
  <div class="facts"><div><div class="k">Available</div><div class="v">${esc(avail)}</div></div>
  ${r.location?`<div><div class="k">Location</div><div class="v" style="font-weight:700">${esc(r.location)}</div></div>`:""}</div>
  ${r.notes?`<div class="note">${esc(r.notes)}</div>`:""}
- <div class="wa"><a href="${waLink(r)}" target="_blank" rel="noreferrer">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .7.5l.9 2.2c.1.2 0 .4-.1.5l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2.1 1c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg>
- Enquire</a>${PAY?`<a class="pc" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Pay with card</a>`:""}</div></div></div>`;
+ <div class="acts">
+ <button class="btn add" data-add="${esc(r.id)}">${plusIcon} Add to cart</button>
+ <div class="acts2"><a class="btn wa2" href="${waLink(r)}" target="_blank" rel="noreferrer">${waIconSm} Enquire</a>${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Pay</a>`:""}</div>
+ </div></div></div>`;
 }
 
 function render(){const s=q.trim().toLowerCase();
@@ -132,8 +135,60 @@ function render(){const s=q.trim().toLowerCase();
 document.getElementById("q").addEventListener("input",e=>{q=e.target.value;render();});
 document.getElementById("catChips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(b){catF=b.dataset.cat;render();}});
 
+/* ---------------- Cart & checkout ---------------- */
+const rowById={};live.forEach(r=>rowById[r.id]=r);
+let cart={};
+try{cart=JSON.parse(localStorage.getItem("aes_cart")||"{}")||{};}catch(e){cart={};}
+// drop any stale ids no longer in inventory
+Object.keys(cart).forEach(id=>{if(!rowById[id]||!(cart[id]>0))delete cart[id];});
+function saveCart(){try{localStorage.setItem("aes_cart",JSON.stringify(cart));}catch(e){}}
+function cartCount(){return Object.values(cart).reduce((a,n)=>a+n,0);}
+function addToCart(id){if(!rowById[id])return;cart[id]=(cart[id]||0)+1;saveCart();updateFab();if(sheet.classList.contains("on"))renderCart();}
+function setQty(id,n){if(n<=0){delete cart[id];}else{cart[id]=n;}saveCart();updateFab();renderCart();}
+
+const fab=document.getElementById("cartFab");
+const sheet=document.getElementById("cartSheet");
+const cartBody=document.getElementById("cartBody");
+function updateFab(){const n=cartCount();if(n>0){fab.hidden=false;fab.innerHTML=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.6"/><circle cx="18" cy="21" r="1.6"/><path d="M2.5 3h2l2.2 12.3a1.6 1.6 0 001.6 1.3h8.8a1.6 1.6 0 001.6-1.3L21.5 7H6"/></svg> View order <span class="cbadge">${n}</span>`;}else{fab.hidden=true;if(sheet.classList.contains("on"))closeCart();}}
+
+function waOrderLink(){
+  const items=Object.keys(cart).map(id=>{const r=rowById[id];const b=r.badge?` (${r.badge})`:"";return `• ${r.brand}${b} — ${r.category} × ${cart[id]}`;});
+  const msg="Hello AES Energy, I'd like to order:\n"+items.join("\n")+"\n\nPlease send me a quote and shipping details.";
+  return wa(msg);
+}
+function renderCart(){
+  const ids=Object.keys(cart);
+  if(!ids.length){cartBody.innerHTML=`<div class="cempty">Your order is empty.<br>Tap “Add to cart” on any listing to build an order.</div>`;return;}
+  const rows=ids.map(id=>{const r=rowById[id];const ph=(typeof PHOTOS!=="undefined")?PHOTOS[r.photo]:null;const src=ph&&ph.src?ph.src:catArt(r);
+    return `<div class="crow"><img src="${src}" alt=""><div class="ci"><div class="cn">${esc(r.brand)}</div><div class="cc">${esc(r.category)}${r.badge?" · "+esc(r.badge):""}</div></div>
+    <div class="step"><button data-dec="${esc(id)}" aria-label="Decrease">−</button><span>${cart[id]}</span><button data-inc="${esc(id)}" aria-label="Increase">+</button></div>
+    <button class="rm" data-rm="${esc(id)}">Remove</button></div>`;}).join("");
+  cartBody.innerHTML=`<div class="clist">${rows}
+    <div class="cnote">Items are quoted per order. Send your list on WhatsApp for a price &amp; shipping quote — or pay an agreed amount / deposit securely by card.</div></div>
+    <div class="cfoot">
+      <a class="btn wa2" href="${waOrderLink()}" target="_blank" rel="noreferrer">${waIconSm} Send order on WhatsApp</a>
+      ${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Pay with card (Stripe)</a>`:""}
+    </div>`;
+}
+function openCart(){renderCart();sheet.classList.add("on");}
+function closeCart(){sheet.classList.remove("on");}
+
+fab.addEventListener("click",openCart);
+sheet.addEventListener("click",e=>{
+  if(e.target.closest("[data-close]")){closeCart();return;}
+  const inc=e.target.closest("[data-inc]"),dec=e.target.closest("[data-dec]"),rm=e.target.closest("[data-rm]");
+  if(inc){setQty(inc.dataset.inc,(cart[inc.dataset.inc]||0)+1);}
+  else if(dec){setQty(dec.dataset.dec,(cart[dec.dataset.dec]||0)-1);}
+  else if(rm){setQty(rm.dataset.rm,0);}
+});
+
 const lb=document.getElementById("lb"),lbImg=document.getElementById("lbImg");
-document.getElementById("list").addEventListener("click",e=>{const s=e.target.closest(".shot");if(s&&s.dataset.src){lbImg.src=s.dataset.src;lb.classList.add("on");}});
+document.getElementById("list").addEventListener("click",e=>{
+  const add=e.target.closest("[data-add]");
+  if(add){addToCart(add.dataset.add);add.classList.add("in");const t=add.innerHTML;add.innerHTML=plusIcon+" Added ✓";setTimeout(()=>{add.classList.remove("in");add.innerHTML=t;},900);return;}
+  const s=e.target.closest(".shot");if(s&&s.dataset.src){lbImg.src=s.dataset.src;lb.classList.add("on");}
+});
 lb.addEventListener("click",()=>lb.classList.remove("on"));
 
+updateFab();
 render();
