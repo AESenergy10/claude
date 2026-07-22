@@ -96,7 +96,6 @@ function stats(){
 document.getElementById("stats").innerHTML=stats().map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
 
 document.getElementById("catChips").innerHTML=["All",...cats].map(c=>`<button class="chip" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
-document.getElementById("condChips").innerHTML=["All","Used","New"].map(c=>`<button class="cond" data-c="${c}">${c}</button>`).join("");
 
 function card(r){
   const ph=(typeof PHOTOS!=="undefined")?PHOTOS[r.photo]:null;
@@ -126,12 +125,10 @@ function render(){const s=q.trim().toLowerCase();
     <div class="grid">${items.map(card).join("")}</div></div>`;}).join("")
    : `<div class="empty">Nothing matches this search. Clear the filters to see everything.</div>`;
   document.querySelectorAll(".chip").forEach(e=>e.classList.toggle("on",e.dataset.cat===catF));
-  document.querySelectorAll(".cond").forEach(e=>e.classList.toggle("on",e.dataset.c===condF));
 }
 
 document.getElementById("q").addEventListener("input",e=>{q=e.target.value;render();});
 document.getElementById("catChips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(b){catF=b.dataset.cat;render();}});
-document.getElementById("condChips").addEventListener("click",e=>{const b=e.target.closest(".cond");if(b){condF=b.dataset.c;render();}});
 
 const lb=document.getElementById("lb"),lbImg=document.getElementById("lbImg");
 document.getElementById("list").addEventListener("click",e=>{const s=e.target.closest(".shot");if(s&&s.dataset.src){lbImg.src=s.dataset.src;lb.classList.add("on");}});

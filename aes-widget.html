@@ -24,9 +24,7 @@ h1{color:#fff;font-weight:800;font-size:19px;margin:0;letter-spacing:-.01em}
 .chips::-webkit-scrollbar{display:none}
 .chip{padding:7px 13px;border-radius:999px;border:none;flex-shrink:0;background:#EAEDF2;color:#6B7385;font-weight:600;font-size:12.5px}
 .chip.on{background:var(--navy);color:#fff;font-weight:800}
-.conds{display:flex;gap:6px;padding-bottom:14px}
-.cond{padding:6px 14px;border-radius:8px;border:1.5px solid var(--line);background:#fff;color:var(--muted);font-weight:600;font-size:12.5px}
-.cond.on{border-color:var(--gold);background:rgba(245,168,0,.13);color:var(--navy);font-weight:800}
+.chips{margin-bottom:14px}
 .bsec{margin-bottom:22px}
 .bhead{display:flex;align-items:center;gap:10px;padding:0 2px 9px;border-bottom:2px solid var(--gold);margin-bottom:12px}
 .dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
@@ -82,7 +80,6 @@ h1{color:#fff;font-weight:800;font-size:19px;margin:0;letter-spacing:-.01em}
     <input id="q" placeholder="Search cars, clothes, panels, location…">
   </div>
   <div class="chips" id="catChips"></div>
-  <div class="conds" id="condChips"></div>
   <div id="list"></div>
   <div class="foot">
     <div class="t">Ready to order a container?</div>
@@ -212,7 +209,6 @@ function stats(){
 document.getElementById("stats").innerHTML=stats().map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
 
 document.getElementById("catChips").innerHTML=["All",...cats].map(c=>`<button class="chip" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
-document.getElementById("condChips").innerHTML=["All","Used","New"].map(c=>`<button class="cond" data-c="${c}">${c}</button>`).join("");
 
 function card(r){
   const ph=(typeof PHOTOS!=="undefined")?PHOTOS[r.photo]:null;
@@ -242,12 +238,10 @@ function render(){const s=q.trim().toLowerCase();
     <div class="grid">${items.map(card).join("")}</div></div>`;}).join("")
    : `<div class="empty">Nothing matches this search. Clear the filters to see everything.</div>`;
   document.querySelectorAll(".chip").forEach(e=>e.classList.toggle("on",e.dataset.cat===catF));
-  document.querySelectorAll(".cond").forEach(e=>e.classList.toggle("on",e.dataset.c===condF));
 }
 
 document.getElementById("q").addEventListener("input",e=>{q=e.target.value;render();});
 document.getElementById("catChips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(b){catF=b.dataset.cat;render();}});
-document.getElementById("condChips").addEventListener("click",e=>{const b=e.target.closest(".cond");if(b){condF=b.dataset.c;render();}});
 
 const lb=document.getElementById("lb"),lbImg=document.getElementById("lbImg");
 document.getElementById("list").addEventListener("click",e=>{const s=e.target.closest(".shot");if(s&&s.dataset.src){lbImg.src=s.dataset.src;lb.classList.add("on");}});
