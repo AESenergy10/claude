@@ -243,7 +243,7 @@ const waIconSm='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentCol
   if(!PAY)return; var w=document.getElementById("payWrap"); if(!w)return;
   w.innerHTML='<a class="pay" href="'+PAY+'" target="_blank" rel="noreferrer">'
     +'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>'
-    +'Pay by card (Visa / Mastercard)</a>'
+    +'Buy by card (Visa / Mastercard)</a>'
     +'<div class="paynote">Secure checkout by Stripe · enter your amount. We never see your card details.</div>';
 })();
 
@@ -276,7 +276,7 @@ function card(r){
  ${r.notes?`<div class="note">${esc(r.notes)}</div>`:""}
  <div class="acts">
  <button class="btn add" data-add="${esc(r.id)}">${plusIcon} Add to cart</button>
- <div class="acts2"><a class="btn wa2" href="${waLink(r)}" target="_blank" rel="noreferrer">${waIconSm} Enquire</a>${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Pay</a>`:""}</div>
+ <div class="acts2"><a class="btn wa2" href="${waLink(r)}" target="_blank" rel="noreferrer">${waIconSm} Enquire</a>${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Buy</a>`:""}</div>
  </div></div></div>`;
 }
 
@@ -328,7 +328,7 @@ function renderCart(){
     <div class="cnote">Items are quoted per order. Send your list on WhatsApp for a price &amp; shipping quote — or pay an agreed amount / deposit securely by card.</div></div>
     <div class="cfoot">
       <a class="btn wa2" href="${waOrderLink()}" target="_blank" rel="noreferrer">${waIconSm} Send order on WhatsApp</a>
-      ${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Pay with card (Stripe)</a>`:""}
+      ${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Buy with card (Stripe)</a>`:""}
     </div>`;
 }
 function openCart(){renderCart();sheet.classList.add("on");}
