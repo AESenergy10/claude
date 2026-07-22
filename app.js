@@ -73,6 +73,17 @@ function waLink(r){
 }
 document.getElementById("waAll").href=waLink(null);
 
+/* Pay with card (Stripe secure checkout) — for solar panel payments. Shows when PAY_URL is set. */
+const PAY=(typeof PAY_URL!=="undefined"&&PAY_URL)?PAY_URL:"";
+const cardIcon='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>';
+(function(){
+  if(!PAY)return; var w=document.getElementById("payWrap"); if(!w)return;
+  w.innerHTML='<a class="pay" href="'+PAY+'" target="_blank" rel="noreferrer">'
+    +'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>'
+    +'Pay for solar panels (Visa / Mastercard)</a>'
+    +'<div class="paynote">Secure checkout by Stripe · enter your amount. We never see your card details.</div>';
+})();
+
 const order=(typeof CATEGORY_ORDER!=="undefined")?CATEGORY_ORDER:[];
 const cats=order.filter(c=>live.some(r=>r.category===c)).concat([...new Set(live.map(r=>r.category))].filter(c=>order.indexOf(c)<0));
 function catColor(c){return (typeof CATEGORY_COLORS!=="undefined"&&CATEGORY_COLORS[c])||"#1B2C4A";}
@@ -101,7 +112,7 @@ function card(r){
  ${r.notes?`<div class="note">${esc(r.notes)}</div>`:""}
  <div class="wa"><a href="${waLink(r)}" target="_blank" rel="noreferrer">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .7.5l.9 2.2c.1.2 0 .4-.1.5l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2.1 1c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg>
- Enquire</a></div></div></div>`;
+ Enquire</a>${(PAY&&r.category==="Solar Panels")?`<a class="pc" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Pay with card</a>`:""}</div></div></div>`;
 }
 
 function render(){const s=q.trim().toLowerCase();
