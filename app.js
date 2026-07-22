@@ -61,7 +61,8 @@ const T={
  en:{
    ebadge:"Global Export &amp; Wholesale Business",
    h1:"Used Goods, Shipped by the Container",
-   sub:'We source and export bulk used <b>cars, solar panels, clothing (fripe), shoes &amp; bicycles</b> — full 40ft container loads to West Africa &amp; beyond.',
+   sub:'We source and export bulk used <b>solar panels, cars, clothing (fripe), shoes &amp; bicycles</b> — full 40ft container loads to West Africa &amp; beyond.',
+   web:"Visit our website",
    search:"Search cars, clothes, panels, location…",
    browse:"Browse by category", swipe:"swipe →",
    all:"All", available:"Available", location:"Location",
@@ -86,7 +87,8 @@ const T={
  fr:{
    ebadge:"Entreprise d'export &amp; de gros à l'international",
    h1:"Marchandises d'occasion, expédiées par conteneur",
-   sub:"Nous sourçons et exportons en gros des <b>voitures, panneaux solaires, vêtements (friperie), chaussures &amp; vélos</b> d'occasion — conteneurs complets de 40 pieds vers l'Afrique de l'Ouest et au-delà.",
+   sub:"Nous sourçons et exportons en gros des <b>panneaux solaires, voitures, vêtements (friperie), chaussures &amp; vélos</b> d'occasion — conteneurs complets de 40 pieds vers l'Afrique de l'Ouest et au-delà.",
+   web:"Visitez notre site web",
    search:"Rechercher voitures, vêtements, panneaux, lieu…",
    browse:"Parcourir par catégorie", swipe:"glissez →",
    all:"Tout", available:"Disponible", location:"Lieu",
@@ -261,6 +263,7 @@ function applyLang(l){
   setHTML("ebadge",L().ebadge);
   setText("h1",L().h1);
   setHTML("sub",L().sub);
+  setText("webCta",L().web);
   const qi=document.getElementById("q");if(qi)qi.placeholder=L().search;
   setText("browseLbl",L().browse);
   setText("swipeCue",L().swipe);

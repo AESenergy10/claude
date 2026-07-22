@@ -25,9 +25,13 @@ button{font-family:inherit;cursor:pointer}
 .hero .inner{position:relative;padding:22px 16px 20px;text-align:center}
 .logo-plate{background:#fff;border-radius:14px;padding:12px 16px;display:inline-block;margin-bottom:14px}
 .logo-plate img{width:190px;max-width:62vw;height:auto}
-.langtog{position:absolute;top:10px;right:12px;display:flex;gap:2px;background:rgba(255,255,255,.12);border-radius:999px;padding:3px;z-index:6}
-.langtog button{border:none;background:transparent;color:#C6CEDD;font-weight:800;font-size:11.5px;padding:5px 11px;border-radius:999px;cursor:pointer;letter-spacing:.03em;font-family:inherit}
-.langtog button.on{background:var(--gold);color:var(--navyDeep)}
+.langtog{position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:3px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.20);border-radius:999px;padding:4px 4px 4px 9px;z-index:6;box-shadow:0 4px 14px rgba(8,14,26,.28)}
+.langtog .globe{font-size:15px;line-height:1;margin-right:2px}
+.langtog button{border:none;background:transparent;color:#E4E9F1;font-weight:800;font-size:13px;padding:8px 14px;border-radius:999px;cursor:pointer;letter-spacing:.04em;font-family:inherit;min-width:42px}
+.langtog button.on{background:var(--gold);color:var(--navyDeep);box-shadow:0 2px 8px rgba(245,168,0,.4)}
+.weblink{display:inline-flex;align-items:center;gap:7px;margin-top:13px;padding:9px 16px;border-radius:999px;background:rgba(245,168,0,.14);border:1.5px solid var(--gold);color:var(--gold);font-size:13px;font-weight:800;text-decoration:none}
+.weblink b{color:#fff;font-weight:800}
+.weblink svg{opacity:.9}
 .ebadge{display:inline-block;background:var(--gold);color:var(--navyDeep);font-size:10.5px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;padding:5px 13px;border-radius:999px;margin-bottom:11px;box-shadow:0 3px 12px rgba(245,168,0,.28)}
 h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;line-height:1.18}
 .sub{color:#C6CEDD;font-size:13.5px;line-height:1.55;margin:9px auto 0;max-width:440px}
@@ -113,7 +117,7 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
 .foot a.big{display:inline-flex;align-items:center;justify-content:center;gap:7px;margin-top:13px;padding:13px 22px;border-radius:999px;background:#25D366;color:#fff;font-weight:800;font-size:15px;text-decoration:none}
 .foot a.pay{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;padding:13px 22px;border-radius:999px;background:var(--gold);color:#1A2744;font-weight:800;font-size:15px;text-decoration:none}
 .foot .paynote{color:#9AA5BC;font-size:11.5px;margin-top:8px;line-height:1.5}
-.foot .site{margin-top:14px;color:var(--gold);font-size:12.5px;font-weight:700}
+.foot a.site{display:inline-block;margin-top:14px;color:var(--gold);font-size:13px;font-weight:800;text-decoration:underline;text-underline-offset:3px}
 .fine{text-align:center;font-size:11px;color:#B3BAC8;padding:16px 0 10px;line-height:1.6}
 .empty{text-align:center;padding:48px 20px;color:var(--muted);background:#fff;border-radius:14px;border:1.5px dashed var(--line);font-size:14.5px}
 #lb{position:fixed;inset:0;background:rgba(8,14,26,.94);z-index:100;display:none;place-items:center;padding:18px;cursor:zoom-out}
@@ -127,13 +131,18 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
   <div class="veil"></div>
   <div class="inner">
     <div class="langtog" id="langTog">
+      <span class="globe" aria-hidden="true">🌐</span>
       <button data-lang="en">EN</button>
       <button data-lang="fr">FR</button>
     </div>
     <div class="logo-plate"><img id="logo" alt="AES Energy Global Trade & Solar LLC"></div>
     <div class="ebadge" id="ebadge">Global Export &amp; Wholesale Business</div>
     <h1 id="h1">Used Goods, Shipped by the Container</h1>
-    <p class="sub" id="sub">We source and export bulk used <b>cars, solar panels, clothing (fripe), shoes &amp; bicycles</b> — full 40ft container loads to West Africa &amp; beyond.</p>
+    <p class="sub" id="sub">We source and export bulk used <b>solar panels, cars, clothing (fripe), shoes &amp; bicycles</b> — full 40ft container loads to West Africa &amp; beyond.</p>
+    <a class="weblink" id="webLink" href="https://aesenerg.com" target="_blank" rel="noreferrer">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/></svg>
+      <span id="webCta">Visit our website</span><b>aesenerg.com</b>
+    </a>
   </div>
 </div>
 <div class="wrap">
@@ -152,7 +161,7 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
       <span id="waAllTxt">Message us on WhatsApp</span>
     </a>
     <div id="payWrap"></div>
-    <div class="site">aesenerg.com</div>
+    <a class="site" href="https://aesenerg.com" target="_blank" rel="noreferrer">aesenerg.com</a>
   </div>
   <div class="fine" id="fineTxt">AES Energy Global Trade &amp; Solar LLC · Photos of actual stock</div>
 </div>
