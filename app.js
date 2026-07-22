@@ -56,6 +56,69 @@ function wordmarkSVG(){
 const live=ROWS.filter(r=>!r.draft);
 let q="",catF="All",condF="All";
 
+/* ---------------- Language (EN / FR) ---------------- */
+const T={
+ en:{
+   ebadge:"Global Export &amp; Wholesale Business",
+   h1:"Used Goods, Shipped by the Container",
+   sub:'We source and export bulk used <b>cars, solar panels, clothing (fripe), shoes &amp; bicycles</b> — full 40ft container loads to West Africa &amp; beyond.',
+   search:"Search cars, clothes, panels, location…",
+   browse:"Browse by category", swipe:"swipe →",
+   all:"All", available:"Available", location:"Location",
+   add:"Add to cart", added:"Added ✓", enquire:"Enquire", buy:"Buy",
+   listing:"listing", listings:"listings", inStock:"in stock",
+   empty:"Nothing matches this search. Clear the filters to see everything.",
+   footT:"Ready to order a container?",
+   footD:"We ship full 40ft container loads — cars, solar panels, fripe, shoes and bikes — to Mali, Burkina Faso, Gambia, Nigeria, Togo and Guinea. Pickup and logistics handled by us.",
+   waAll:"Message us on WhatsApp",
+   payBig:"Buy by card (Visa / Mastercard)",
+   payNote:"Secure checkout by Stripe · enter your amount. We never see your card details.",
+   fine:"AES Energy Global Trade &amp; Solar LLC · Photos of actual stock",
+   viewOrder:"View order", yourOrder:"Your order",
+   cartEmpty:'Your order is empty.<br>Tap “Add to cart” on any listing to build an order.',
+   cartNote:"Items are quoted per order. Send your list on WhatsApp for a price &amp; shipping quote — or pay an agreed amount / deposit securely by card.",
+   sendWa:"Send order on WhatsApp", buyCard:"Buy with card (Stripe)", remove:"Remove", ask:"Ask",
+   waGeneric:"Hello AES Energy, please send me your current export inventory (cars, solar panels, used clothes, shoes, bicycles).",
+   waItem:(name,cat,qty,unit)=>`Hello AES Energy, I'm interested in: ${name} — ${cat}. Qty available: ${qty} ${unit}. Please send price & details.`,
+   waOrderHead:"Hello AES Energy, I'd like to order:",
+   waOrderTail:"Please send me a quote and shipping details."
+ },
+ fr:{
+   ebadge:"Entreprise d'export &amp; de gros à l'international",
+   h1:"Marchandises d'occasion, expédiées par conteneur",
+   sub:"Nous sourçons et exportons en gros des <b>voitures, panneaux solaires, vêtements (friperie), chaussures &amp; vélos</b> d'occasion — conteneurs complets de 40 pieds vers l'Afrique de l'Ouest et au-delà.",
+   search:"Rechercher voitures, vêtements, panneaux, lieu…",
+   browse:"Parcourir par catégorie", swipe:"glissez →",
+   all:"Tout", available:"Disponible", location:"Lieu",
+   add:"Ajouter au panier", added:"Ajouté ✓", enquire:"Demander", buy:"Acheter",
+   listing:"annonce", listings:"annonces", inStock:"en stock",
+   empty:"Aucun résultat. Effacez les filtres pour tout voir.",
+   footT:"Prêt à commander un conteneur ?",
+   footD:"Nous expédions des conteneurs complets de 40 pieds — voitures, panneaux solaires, friperie, chaussures et vélos — vers le Mali, le Burkina Faso, la Gambie, le Nigéria, le Togo et la Guinée. Ramassage et logistique gérés par nos soins.",
+   waAll:"Écrivez-nous sur WhatsApp",
+   payBig:"Payer par carte (Visa / Mastercard)",
+   payNote:"Paiement sécurisé par Stripe · saisissez votre montant. Nous ne voyons jamais vos coordonnées de carte.",
+   fine:"AES Energy Global Trade &amp; Solar LLC · Photos du stock réel",
+   viewOrder:"Voir la commande", yourOrder:"Votre commande",
+   cartEmpty:'Votre commande est vide.<br>Touchez « Ajouter au panier » sur une annonce pour composer une commande.',
+   cartNote:"Les articles sont cotés par commande. Envoyez votre liste sur WhatsApp pour un devis prix &amp; expédition — ou payez un montant convenu / acompte en toute sécurité par carte.",
+   sendWa:"Envoyer la commande sur WhatsApp", buyCard:"Acheter par carte (Stripe)", remove:"Retirer", ask:"Sur demande",
+   waGeneric:"Bonjour AES Energy, merci de m'envoyer votre inventaire d'export actuel (voitures, panneaux solaires, vêtements d'occasion, chaussures, vélos).",
+   waItem:(name,cat,qty,unit)=>`Bonjour AES Energy, je suis intéressé(e) par : ${name} — ${cat}. Quantité disponible : ${qty} ${unit}. Merci de m'envoyer le prix et les détails.`,
+   waOrderHead:"Bonjour AES Energy, je souhaite commander :",
+   waOrderTail:"Merci de m'envoyer un devis et les détails d'expédition."
+ }
+};
+let lang="en";
+try{const sv=localStorage.getItem("aes_lang");if(sv==="en"||sv==="fr")lang=sv;else if((navigator.language||"").toLowerCase().startsWith("fr"))lang="fr";}catch(e){}
+const L=()=>T[lang];
+const I=(typeof I18N!=="undefined")?I18N:{categories:{},conditions:{},units:{},badges:{},rows:{}};
+function dcat(c){return lang==="fr"&&I.categories[c]?I.categories[c]:c;}
+function dcond(v){return lang==="fr"&&I.conditions[v]?I.conditions[v]:v;}
+function dunit(u){return lang==="fr"&&I.units[u]?I.units[u]:u;}
+function dbadge(b){return lang==="fr"&&I.badges[b]?I.badges[b]:b;}
+function tr(r,f){const o=lang==="fr"&&I.rows[r.id];return (o&&o[f])?o[f]:r[f];}
+
 /* App icons (used when self-hosted and added to home screen) */
 (function(){var a=document.getElementById("appleIcon"),f=document.getElementById("favIcon");if(a)a.href=LOGO;if(f)f.href=LOGO;})();
 
@@ -67,24 +130,23 @@ document.getElementById("heroBg").src=(typeof PHOTOS!=="undefined"&&PHOTOS.palle
 
 function wa(m){return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(m);}
 function waLink(r){
-  if(!r) return wa("Hello AES Energy, please send me your current export inventory (cars, solar panels, used clothes, shoes, bicycles).");
-  const b=r.badge?(" ("+r.badge+")"):"";
-  return wa(`Hello AES Energy, I'm interested in: ${r.brand}${b} — ${r.category}. Qty available: ${r.qty} ${r.unit||""}. Please send price & details.`);
+  if(!r) return wa(L().waGeneric);
+  const b=r.badge?(" ("+dbadge(r.badge)+")"):"";
+  return wa(L().waItem(tr(r,"brand")+b, dcat(r.category), r.qty, dunit(r.unit||"")));
 }
-document.getElementById("waAll").href=waLink(null);
 
 /* Pay with card (Stripe secure checkout) — for any listing. Shows when PAY_URL is set. */
 const PAY=(typeof PAY_URL!=="undefined"&&PAY_URL)?PAY_URL:"";
 const cardIcon='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>';
 const plusIcon='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
 const waIconSm='<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5-4.5-.2-.2-1.2-1.6-1.2-3s.7-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .7.5l.9 2.2c.1.2 0 .4-.1.5l-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.4.1.6-.1l.8-1c.2-.2.4-.2.6-.1l2.1 1c.3.1.5.2.5.3.1.2.1.7-.1 1.4z"/></svg>';
-(function(){
+function buildPay(){
   if(!PAY)return; var w=document.getElementById("payWrap"); if(!w)return;
   w.innerHTML='<a class="pay" href="'+PAY+'" target="_blank" rel="noreferrer">'
     +'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>'
-    +'Buy by card (Visa / Mastercard)</a>'
-    +'<div class="paynote">Secure checkout by Stripe · enter your amount. We never see your card details.</div>';
-})();
+    +L().payBig+'</a>'
+    +'<div class="paynote">'+L().payNote+'</div>';
+}
 
 const order=(typeof CATEGORY_ORDER!=="undefined")?CATEGORY_ORDER:[];
 const cats=order.filter(c=>live.some(r=>r.category===c)).concat([...new Set(live.map(r=>r.category))].filter(c=>order.indexOf(c)<0));
@@ -92,36 +154,42 @@ function catColor(c){return (typeof CATEGORY_COLORS!=="undefined"&&CATEGORY_COLO
 
 const CAT_ICONS={"All":"🛍️","Cars":"🚗","Clothes":"👕","Bicycles":"🚲","Shoes":"👟","Solar Panels":"☀️"};
 const catCount=c=>c==="All"?live.length:live.filter(r=>r.category===c).length;
-document.getElementById("catChips").innerHTML=["All",...cats].map(c=>`<button class="chip" data-cat="${esc(c)}"><span class="ic">${CAT_ICONS[c]||"•"}</span>${esc(c)}<span class="ct">${catCount(c)}</span></button>`).join("");
+function buildChips(){
+  document.getElementById("catChips").innerHTML=["All",...cats].map(c=>{
+    const label=c==="All"?L().all:dcat(c);
+    return `<button class="chip" data-cat="${esc(c)}"><span class="ic">${CAT_ICONS[c]||"•"}</span>${esc(label)}<span class="ct">${catCount(c)}</span></button>`;
+  }).join("");
+}
 
 function card(r){
   const ph=(typeof PHOTOS!=="undefined")?PHOTOS[r.photo]:null;
   const src=ph&&ph.src?ph.src:catArt(r);
-  const avail=r.qty?((+r.qty).toLocaleString()+(r.unit?" "+r.unit:"")):"Ask";
+  const brand=tr(r,"brand"),model=tr(r,"model"),notes=tr(r,"notes");
+  const avail=r.qty?((+r.qty).toLocaleString()+(r.unit?" "+dunit(r.unit):"")):L().ask;
   return `<div class="card"><div class="shot" data-src="${src}">
- <img src="${src}" alt="${esc(r.brand)} — ${esc(r.category)}" loading="lazy">
- <div class="fade"></div><span class="tag" style="background:${COND_COLORS[r.condition]||"#8A93A6"}">${esc(r.condition)}</span>
- ${r.badge?`<span class="watt">${esc(r.badge)}</span>`:""}</div>
- <div class="body"><div class="b">${esc(r.brand)}</div>${r.model?`<div class="m">${esc(r.model)}</div>`:""}
- <div class="facts"><div><div class="k">Available</div><div class="v">${esc(avail)}</div></div>
- ${r.location?`<div><div class="k">Location</div><div class="v" style="font-weight:700">${esc(r.location)}</div></div>`:""}</div>
- ${r.notes?`<div class="note">${esc(r.notes)}</div>`:""}
+ <img src="${src}" alt="${esc(brand)} — ${esc(dcat(r.category))}" loading="lazy">
+ <div class="fade"></div><span class="tag" style="background:${COND_COLORS[r.condition]||"#8A93A6"}">${esc(dcond(r.condition))}</span>
+ ${r.badge?`<span class="watt">${esc(dbadge(r.badge))}</span>`:""}</div>
+ <div class="body"><div class="b">${esc(brand)}</div>${model?`<div class="m">${esc(model)}</div>`:""}
+ <div class="facts"><div><div class="k">${L().available}</div><div class="v">${esc(avail)}</div></div>
+ ${r.location?`<div><div class="k">${L().location}</div><div class="v" style="font-weight:700">${esc(r.location)}</div></div>`:""}</div>
+ ${notes?`<div class="note">${esc(notes)}</div>`:""}
  <div class="acts">
- <button class="btn add" data-add="${esc(r.id)}">${plusIcon} Add to cart</button>
- <div class="acts2"><a class="btn wa2" href="${waLink(r)}" target="_blank" rel="noreferrer">${waIconSm} Enquire</a>${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Buy</a>`:""}</div>
+ <button class="btn add" data-add="${esc(r.id)}">${plusIcon} ${L().add}</button>
+ <div class="acts2"><a class="btn wa2" href="${waLink(r)}" target="_blank" rel="noreferrer">${waIconSm} ${L().enquire}</a>${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} ${L().buy}</a>`:""}</div>
  </div></div></div>`;
 }
 
 function render(){const s=q.trim().toLowerCase();
-  const shown=live.filter(r=>(condF==="All"||r.condition===condF)&&(catF==="All"||r.category===catF)&&(!s||[r.brand,r.model,r.category,r.badge,r.location].join(" ").toLowerCase().includes(s)));
+  const shown=live.filter(r=>(condF==="All"||r.condition===condF)&&(catF==="All"||r.category===catF)&&(!s||[r.brand,r.model,r.category,r.badge,r.location,tr(r,"brand"),tr(r,"model"),dcat(r.category)].join(" ").toLowerCase().includes(s)));
   const groups=cats.filter(c=>shown.some(r=>r.category===c)).map(c=>[c,shown.filter(r=>r.category===c)]);
   document.getElementById("list").innerHTML= shown.length? groups.map(([c,items])=>{
     const u=items.reduce((a,r)=>a+(+r.qty||0),0);
     return `<div class="bsec"><div class="bhead"><div class="dot" style="background:${catColor(c)}"></div>
-    <div style="min-width:0;flex:1"><div class="n">${esc(c)}</div><div class="w">${items.length} listing${items.length>1?"s":""}</div></div>
-    <div class="r"><b>${u.toLocaleString()}</b><span>in stock</span></div></div>
+    <div style="min-width:0;flex:1"><div class="n">${esc(dcat(c))}</div><div class="w">${items.length} ${items.length>1?L().listings:L().listing}</div></div>
+    <div class="r"><b>${u.toLocaleString()}</b><span>${L().inStock}</span></div></div>
     <div class="grid">${items.map(card).join("")}</div></div>`;}).join("")
-   : `<div class="empty">Nothing matches this search. Clear the filters to see everything.</div>`;
+   : `<div class="empty">${L().empty}</div>`;
   document.querySelectorAll(".chip").forEach(e=>e.classList.toggle("on",e.dataset.cat===catF));
 }
 
@@ -142,25 +210,25 @@ function setQty(id,n){if(n<=0){delete cart[id];}else{cart[id]=n;}saveCart();upda
 const fab=document.getElementById("cartFab");
 const sheet=document.getElementById("cartSheet");
 const cartBody=document.getElementById("cartBody");
-function updateFab(){const n=cartCount();if(n>0){fab.hidden=false;fab.innerHTML=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.6"/><circle cx="18" cy="21" r="1.6"/><path d="M2.5 3h2l2.2 12.3a1.6 1.6 0 001.6 1.3h8.8a1.6 1.6 0 001.6-1.3L21.5 7H6"/></svg> View order <span class="cbadge">${n}</span>`;}else{fab.hidden=true;if(sheet.classList.contains("on"))closeCart();}}
+function updateFab(){const n=cartCount();if(n>0){fab.hidden=false;fab.innerHTML=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.6"/><circle cx="18" cy="21" r="1.6"/><path d="M2.5 3h2l2.2 12.3a1.6 1.6 0 001.6 1.3h8.8a1.6 1.6 0 001.6-1.3L21.5 7H6"/></svg> ${L().viewOrder} <span class="cbadge">${n}</span>`;}else{fab.hidden=true;if(sheet.classList.contains("on"))closeCart();}}
 
 function waOrderLink(){
-  const items=Object.keys(cart).map(id=>{const r=rowById[id];const b=r.badge?` (${r.badge})`:"";return `• ${r.brand}${b} — ${r.category} × ${cart[id]}`;});
-  const msg="Hello AES Energy, I'd like to order:\n"+items.join("\n")+"\n\nPlease send me a quote and shipping details.";
+  const items=Object.keys(cart).map(id=>{const r=rowById[id];const b=r.badge?` (${dbadge(r.badge)})`:"";return `• ${tr(r,"brand")}${b} — ${dcat(r.category)} × ${cart[id]}`;});
+  const msg=L().waOrderHead+"\n"+items.join("\n")+"\n\n"+L().waOrderTail;
   return wa(msg);
 }
 function renderCart(){
   const ids=Object.keys(cart);
-  if(!ids.length){cartBody.innerHTML=`<div class="cempty">Your order is empty.<br>Tap “Add to cart” on any listing to build an order.</div>`;return;}
+  if(!ids.length){cartBody.innerHTML=`<div class="cempty">${L().cartEmpty}</div>`;return;}
   const rows=ids.map(id=>{const r=rowById[id];const ph=(typeof PHOTOS!=="undefined")?PHOTOS[r.photo]:null;const src=ph&&ph.src?ph.src:catArt(r);
-    return `<div class="crow"><img src="${src}" alt=""><div class="ci"><div class="cn">${esc(r.brand)}</div><div class="cc">${esc(r.category)}${r.badge?" · "+esc(r.badge):""}</div></div>
+    return `<div class="crow"><img src="${src}" alt=""><div class="ci"><div class="cn">${esc(tr(r,"brand"))}</div><div class="cc">${esc(dcat(r.category))}${r.badge?" · "+esc(dbadge(r.badge)):""}</div></div>
     <div class="step"><button data-dec="${esc(id)}" aria-label="Decrease">−</button><span>${cart[id]}</span><button data-inc="${esc(id)}" aria-label="Increase">+</button></div>
-    <button class="rm" data-rm="${esc(id)}">Remove</button></div>`;}).join("");
+    <button class="rm" data-rm="${esc(id)}">${L().remove}</button></div>`;}).join("");
   cartBody.innerHTML=`<div class="clist">${rows}
-    <div class="cnote">Items are quoted per order. Send your list on WhatsApp for a price &amp; shipping quote — or pay an agreed amount / deposit securely by card.</div></div>
+    <div class="cnote">${L().cartNote}</div></div>
     <div class="cfoot">
-      <a class="btn wa2" href="${waOrderLink()}" target="_blank" rel="noreferrer">${waIconSm} Send order on WhatsApp</a>
-      ${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} Buy with card (Stripe)</a>`:""}
+      <a class="btn wa2" href="${waOrderLink()}" target="_blank" rel="noreferrer">${waIconSm} ${L().sendWa}</a>
+      ${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} ${L().buyCard}</a>`:""}
     </div>`;
 }
 function openCart(){renderCart();sheet.classList.add("on");}
@@ -183,5 +251,33 @@ document.getElementById("list").addEventListener("click",e=>{
 });
 lb.addEventListener("click",()=>lb.classList.remove("on"));
 
-updateFab();
-render();
+/* ---------------- Apply language across the page ---------------- */
+function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt;}
+function setHTML(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html;}
+function applyLang(l){
+  lang=(l==="fr")?"fr":"en";
+  try{localStorage.setItem("aes_lang",lang);}catch(e){}
+  if(document.documentElement)document.documentElement.lang=lang;
+  setHTML("ebadge",L().ebadge);
+  setText("h1",L().h1);
+  setHTML("sub",L().sub);
+  const qi=document.getElementById("q");if(qi)qi.placeholder=L().search;
+  setText("browseLbl",L().browse);
+  setText("swipeCue",L().swipe);
+  setText("footT",L().footT);
+  setText("footD",L().footD);
+  setText("waAllTxt",L().waAll);
+  setHTML("fineTxt",L().fine);
+  setText("cartTitle",L().yourOrder);
+  const wl=document.getElementById("waAll");if(wl)wl.href=waLink(null);
+  buildPay();
+  buildChips();
+  render();
+  updateFab();
+  if(sheet.classList.contains("on"))renderCart();
+  var tg=document.getElementById("langTog");
+  if(tg)tg.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
+}
+var langTog=document.getElementById("langTog");
+if(langTog)langTog.addEventListener("click",e=>{const b=e.target.closest("button[data-lang]");if(b)applyLang(b.dataset.lang);});
+applyLang(lang);

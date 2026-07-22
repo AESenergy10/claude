@@ -13,3 +13,32 @@ const PER_CONTAINER=650;
 const COND_COLORS={Used:"#3B7DD8",New:"#2E9E5B"};
 const TINT={"Trina Solar":"#1B3A6B","JA Solar":"#123049","Jinko Solar":"#0F3B33","Canadian Solar":"#4A1620","LONGi Solar":"#0E2E52","Q CELLS":"#2A2A2E","ZNShine Solar":"#152C4E","YH Sunpro":"#1E3352","Risen Energy":"#31184A","REC Solar":"#123A2C","SunPower":"#3A2410"};
 const FALL=["#1B3A6B","#0F3B33","#4A1620","#31184A","#2A2A2E","#123A2C","#3A2410"];
+const I18N={
+ categories:{"Cars":"Voitures","Clothes":"Vêtements","Bicycles":"Vélos","Shoes":"Chaussures","Solar Panels":"Panneaux solaires"},
+ conditions:{"Used":"Occasion","New":"Neuf"},
+ units:{"units":"unités","bales":"balles","lots":"lots","panels":"panneaux","boxes":"caisses"},
+ badges:{"45 kg bale":"balle 45 kg","Sorted":"Trié","Boxed":"En caisse"},
+ rows:{
+  car1:{model:"Berline · AWD · titre propre",notes:"Berline AWD fiable. Expédition RORO vers Cotonou / Lomé / Téma organisée."},
+  car2:{model:"Berline · essence 1,8 L",notes:"Berline compacte économique, titre propre. Très demandée en Afrique de l'Ouest."},
+  car3:{model:"Berline · 2,0 L",notes:"Berlines bien entretenues, plusieurs unités disponibles."},
+  car4:{model:"SUV compact",notes:"SUV compact populaire, facile à entretenir et économique."},
+  car5:{model:"SUV compact · AWD",notes:"SUV familial spacieux, titre propre, bien entretenu."},
+  clo1:{brand:"Vêtements d'occasion — Balles Grade A",model:"Homme & femme mélangés · balles compressées",notes:"Friperie Grade A triée, balles emballées et cerclées. Conteneurs (~600 balles / 40 pieds) disponibles."},
+  clo2:{brand:"Vêtements d'occasion — Triés Grade A",model:"Triés à la main · maillots, chemises, jean",notes:"Mélange premium trié à la main — maillots vintage, chemises et jean. Très demandé en Afrique de l'Ouest."},
+  bike1:{brand:"Vélos d'occasion — Assortis",model:"VTT, ville & route · adulte",notes:"Vélos adultes assortis, révisés. Conteneurs disponibles."},
+  shoe1:{brand:"Chaussures d'occasion — Grade A",model:"Homme, femme & enfant · appairées",notes:"Vendues à la caisse (~25 paires). Grade A triées, appairées et cerclées."},
+  g1:{notes:"Monocristallin, 60 cellules."},
+  g2:{notes:"Module mono 72 cellules."},
+  g3:{notes:"Disponible en grand volume."},
+  g4:{notes:"Cellules demi-coupées."},
+  g5:{notes:"Option cadre tout noir."},
+  g6:{notes:"Meilleur rapport qualité-prix au watt."},
+  g7:{notes:"Module grand format."},
+  g8:{notes:"Sur palettes, prêt à l'enlèvement."},
+  g9:{notes:"Technologie cellules type N."},
+  g10:{notes:"Module premium haute efficacité."},
+  u1:{notes:"Sur palettes, prêt à l'enlèvement."},
+  u2:{notes:"Environ 16 conteneurs disponibles. Sur palettes, prêt à l'enlèvement."}
+ }
+};
