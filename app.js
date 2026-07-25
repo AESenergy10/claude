@@ -79,8 +79,10 @@ const T={
    cartEmpty:'Your order is empty.<br>Tap “Add to cart” on any listing to build an order.',
    cartNote:"Items are quoted per order. Send your list on WhatsApp for a price &amp; shipping quote — or pay an agreed amount / deposit securely by card.",
    sendWa:"Send order on WhatsApp", buyCard:"Buy with card (Stripe)", remove:"Remove", ask:"Ask",
+   toOrder:"Export to order", models:"models",
    waGeneric:"Hello AES Energy, please send me your current export inventory (cars, solar panels, used clothes, shoes, bicycles).",
    waItem:(name,cat,qty,unit)=>`Hello AES Energy, I'm interested in: ${name} — ${cat}. Qty available: ${qty} ${unit}. Please send price & details.`,
+   waCar:(name)=>`Hello AES Energy, I'd like to order this car for export: ${name}. Please send price, total landed cost and shipping to my port.`,
    waOrderHead:"Hello AES Energy, I'd like to order:",
    waOrderTail:"Please send me a quote and shipping details."
  },
@@ -105,8 +107,10 @@ const T={
    cartEmpty:'Votre commande est vide.<br>Touchez « Ajouter au panier » sur une annonce pour composer une commande.',
    cartNote:"Les articles sont cotés par commande. Envoyez votre liste sur WhatsApp pour un devis prix &amp; expédition — ou payez un montant convenu / acompte en toute sécurité par carte.",
    sendWa:"Envoyer la commande sur WhatsApp", buyCard:"Acheter par carte (Stripe)", remove:"Retirer", ask:"Sur demande",
+   toOrder:"Export sur commande", models:"modèles",
    waGeneric:"Bonjour AES Energy, merci de m'envoyer votre inventaire d'export actuel (voitures, panneaux solaires, vêtements d'occasion, chaussures, vélos).",
    waItem:(name,cat,qty,unit)=>`Bonjour AES Energy, je suis intéressé(e) par : ${name} — ${cat}. Quantité disponible : ${qty} ${unit}. Merci de m'envoyer le prix et les détails.`,
+   waCar:(name)=>`Bonjour AES Energy, je souhaite commander cette voiture à l'export : ${name}. Merci de m'envoyer le prix, le coût rendu et l'expédition vers mon port.`,
    waOrderHead:"Bonjour AES Energy, je souhaite commander :",
    waOrderTail:"Merci de m'envoyer un devis et les détails d'expédition."
  }
@@ -134,6 +138,7 @@ function wa(m){return "https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent(m);}
 function waLink(r){
   if(!r) return wa(L().waGeneric);
   const b=r.badge?(" ("+dbadge(r.badge)+")"):"";
+  if(r.category==="Cars") return wa(L().waCar(tr(r,"brand")+b));
   return wa(L().waItem(tr(r,"brand")+b, dcat(r.category), r.qty, dunit(r.unit||"")));
 }
 
@@ -167,7 +172,8 @@ function card(r){
   const ph=(typeof PHOTOS!=="undefined")?PHOTOS[r.photo]:null;
   const src=ph&&ph.src?ph.src:catArt(r);
   const brand=tr(r,"brand"),model=tr(r,"model"),notes=tr(r,"notes");
-  const avail=r.qty?((+r.qty).toLocaleString()+(r.unit?" "+dunit(r.unit):"")):L().ask;
+  const isCar=r.category==="Cars";
+  const avail=isCar?L().toOrder:(r.qty?((+r.qty).toLocaleString()+(r.unit?" "+dunit(r.unit):"")):L().ask);
   return `<div class="card"><div class="shot" data-src="${src}">
  <img src="${src}" alt="${esc(brand)} — ${esc(dcat(r.category))}" loading="lazy">
  <div class="fade"></div><span class="tag" style="background:${COND_COLORS[r.condition]||"#8A93A6"}">${esc(dcond(r.condition))}</span>
@@ -186,10 +192,12 @@ function render(){const s=q.trim().toLowerCase();
   const shown=live.filter(r=>(condF==="All"||r.condition===condF)&&(catF==="All"||r.category===catF)&&(!s||[r.brand,r.model,r.category,r.badge,r.location,tr(r,"brand"),tr(r,"model"),dcat(r.category)].join(" ").toLowerCase().includes(s)));
   const groups=cats.filter(c=>shown.some(r=>r.category===c)).map(c=>[c,shown.filter(r=>r.category===c)]);
   document.getElementById("list").innerHTML= shown.length? groups.map(([c,items])=>{
+    const isCar=c==="Cars";
     const u=items.reduce((a,r)=>a+(+r.qty||0),0);
+    const rhtml=isCar?`<b>${items.length}</b><span>${L().models}</span>`:`<b>${u.toLocaleString()}</b><span>${L().inStock}</span>`;
     return `<div class="bsec"><div class="bhead"><div class="dot" style="background:${catColor(c)}"></div>
     <div style="min-width:0;flex:1"><div class="n">${esc(dcat(c))}</div><div class="w">${items.length} ${items.length>1?L().listings:L().listing}</div></div>
-    <div class="r"><b>${u.toLocaleString()}</b><span>${L().inStock}</span></div></div>
+    <div class="r">${rhtml}</div></div>
     <div class="grid">${items.map(card).join("")}</div></div>`;}).join("")
    : `<div class="empty">${L().empty}</div>`;
   document.querySelectorAll(".chip").forEach(e=>e.classList.toggle("on",e.dataset.cat===catF));
