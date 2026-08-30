@@ -63,6 +63,10 @@ const T={
    h1:"Used Goods, Shipped by the Container",
    sub:'We source and export bulk used <b>solar panels, cars, clothing (fripe), shoes &amp; bicycles</b> — full 40ft container loads to West Africa &amp; beyond.',
    web:"Visit our website",
+   svcBtnT:"Shipping & Vehicle Export Services",
+   svcBtnS:"US warehouses → any African country · freight, cars, solar, household goods",
+   svcTitle:"Shipping & Export Services",
+   svcWa:"Ask about shipping on WhatsApp",
    search:"Search cars, clothes, panels, location…",
    browse:"Browse by category", swipe:"swipe →",
    all:"All", available:"Available", location:"Location",
@@ -91,6 +95,10 @@ const T={
    h1:"Marchandises d'occasion, expédiées par conteneur",
    sub:"Nous sourçons et exportons en gros des <b>panneaux solaires, voitures, vêtements (friperie), chaussures &amp; vélos</b> d'occasion — conteneurs complets de 40 pieds vers l'Afrique de l'Ouest et au-delà.",
    web:"Visitez notre site web",
+   svcBtnT:"Expédition & Export de Véhicules",
+   svcBtnS:"Entrepôts US → tout pays africain · fret, voitures, solaire, biens ménagers",
+   svcTitle:"Expédition & Services d'Export",
+   svcWa:"Questions expédition sur WhatsApp",
    search:"Rechercher voitures, vêtements, panneaux, lieu…",
    browse:"Parcourir par catégorie", swipe:"glissez →",
    all:"Tout", available:"Disponible", location:"Lieu",
@@ -355,6 +363,17 @@ if(booksBtn)booksBtn.addEventListener("click",openBooks);
 if(booksSheet)booksSheet.addEventListener("click",e=>{if(e.target.closest("[data-bclose]"))closeBooks();});
 if(typeof location!=="undefined"&&location.hash==="#books")openBooks();
 
+/* ---------------- Shipping & services tab ---------------- */
+const svcSheet=document.getElementById("svcSheet");
+function openSvc(){if(svcSheet)svcSheet.classList.add("on");}
+function closeSvc(){if(svcSheet)svcSheet.classList.remove("on");}
+var svcBtn=document.getElementById("svcBtn");
+if(svcBtn)svcBtn.addEventListener("click",openSvc);
+if(svcSheet)svcSheet.addEventListener("click",e=>{if(e.target.closest("[data-sclose]"))closeSvc();});
+var svcWaEl=document.getElementById("svcWa");
+if(svcWaEl)svcWaEl.href=wa("Hello, I'd like to ask about 7 Villages / AES Energy shipping & export services (freight, vehicles, solar panels, household goods).");
+if(typeof location!=="undefined"&&location.hash==="#services")openSvc();
+
 /* ---------------- Apply language across the page ---------------- */
 function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt;}
 function setHTML(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html;}
@@ -366,6 +385,10 @@ function applyLang(l){
   setText("h1",L().h1);
   setHTML("sub",L().sub);
   setText("webCta",L().web);
+  setText("svcBtnT",L().svcBtnT);
+  setText("svcBtnS",L().svcBtnS);
+  setText("svcTitle",L().svcTitle);
+  setText("svcWaTxt",L().svcWa);
   const qi=document.getElementById("q");if(qi)qi.placeholder=L().search;
   setText("browseLbl",L().browse);
   setText("swipeCue",L().swipe);
