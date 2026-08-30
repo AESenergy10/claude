@@ -110,6 +110,35 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
 .cfoot .btn{padding:14px;border-radius:12px;font-size:14.5px}
 .cfoot .btn.wa2 svg,.cfoot .btn.pc2 svg{width:18px;height:18px}
 .cempty{text-align:center;color:var(--muted);padding:40px 20px;font-size:14px}
+/* owner books */
+.booksbtn{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:none;border:none;color:#7A869B;font-size:12px;font-weight:700;cursor:pointer;opacity:.8;font-family:inherit}
+.bscroll{flex:1;overflow-y:auto}
+.bsum{display:flex;gap:8px;padding:12px 14px 4px}
+.bsum .t{flex:1;background:#fff;border-radius:12px;padding:11px 8px;text-align:center;box-shadow:0 1px 3px rgba(26,39,68,.07)}
+.bsum .t b{display:block;font-size:16px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.15}
+.bsum .t span{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#8A93A6;margin-top:3px;display:block}
+.bsum .t.in b{color:#128040}.bsum .t.out b{color:#C0546A}.bsum .t.net b{color:var(--navy)}
+.bform{background:#fff;border-radius:12px;padding:12px;margin:10px 14px 0;display:flex;flex-direction:column;gap:8px;box-shadow:0 1px 3px rgba(26,39,68,.07)}
+.bform .row{display:flex;gap:8px}
+.bform label{flex:1;display:flex;flex-direction:column;font-size:10px;font-weight:800;color:#8A93A6;text-transform:uppercase;letter-spacing:.04em;gap:4px}
+.bform input,.bform select{font-family:inherit;font-size:15px;padding:9px 10px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--navy);width:100%;outline:none}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--line);background:#fff;font-weight:800;font-size:13px;color:#8A93A6;cursor:pointer;font-family:inherit}
+.seg button.in.on{border-color:#128040;background:rgba(18,128,64,.1);color:#128040}
+.seg button.out.on{border-color:#C0546A;background:rgba(192,84,106,.12);color:#C0546A}
+.badd{padding:12px;border-radius:10px;border:none;background:var(--navy);color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+.blist{padding:10px 14px 4px}
+.brow{display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:9px 11px;margin-bottom:7px}
+.brow .bi{flex:1;min-width:0}
+.brow .bd{font-weight:800;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brow .bm{font-size:11px;color:#8A93A6;margin-top:1px}
+.brow .ba{font-weight:900;font-size:14px;font-variant-numeric:tabular-nums;flex-shrink:0}
+.brow .ba.in{color:#128040}.brow .ba.out{color:#C0546A}
+.brow .del{background:none;border:none;color:#C0546A;font-size:18px;line-height:1;cursor:pointer;padding:2px 4px;flex-shrink:0}
+.bpingate{padding:34px 22px 40px;text-align:center}
+.bpingate input{font-size:24px;letter-spacing:.35em;text-align:center;width:160px;padding:11px;border:1.5px solid var(--line);border-radius:10px;margin-top:14px;font-family:inherit;outline:none}
+.bpingate .msg{font-size:13px;color:#6B7385;margin-top:8px;line-height:1.5}
+.bexport{width:100%;background:none;border:1.5px solid var(--line);border-radius:10px;padding:12px;font-weight:800;font-size:13.5px;color:var(--navy);cursor:pointer;font-family:inherit}
 .foot{background:var(--navy);border-radius:16px;padding:18px 16px;margin-top:22px;text-align:center}
 .foot .t{color:#fff;font-weight:800;font-size:15.5px}
 .foot .d{color:#9AA5BC;font-size:13px;margin-top:4px;line-height:1.5}
@@ -162,12 +191,19 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
     <a class="site" href="https://aesenergysolar.com/" target="_blank" rel="noreferrer">aesenergysolar.com</a>
   </div>
   <div class="fine" id="fineTxt">AES Energy Global Trade &amp; Solar LLC · Photos of actual stock</div>
+  <div style="text-align:center"><button id="booksBtn" class="booksbtn">🔒 Owner books · income &amp; expenses</button></div>
 </div>
 <button id="cartFab" class="cartfab" hidden></button>
 <div id="cartSheet" class="sheet"><div class="scrim" data-close></div>
   <div class="panel">
     <div class="chead"><b id="cartTitle">Your order</b><button class="x" data-close aria-label="Close">×</button></div>
     <div class="cbody" id="cartBody"></div>
+  </div>
+</div>
+<div id="booksSheet" class="sheet"><div class="scrim" data-bclose></div>
+  <div class="panel">
+    <div class="chead"><b>Income &amp; Expenses</b><button class="x" data-bclose aria-label="Close">×</button></div>
+    <div class="cbody" id="booksBody"></div>
   </div>
 </div>
 <div id="lb"><img id="lbImg" alt=""></div>

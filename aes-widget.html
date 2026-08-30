@@ -95,6 +95,35 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
 .cfoot .btn{padding:14px;border-radius:12px;font-size:14.5px}
 .cfoot .btn.wa2 svg,.cfoot .btn.pc2 svg{width:18px;height:18px}
 .cempty{text-align:center;color:var(--muted);padding:40px 20px;font-size:14px}
+/* owner books */
+.booksbtn{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:none;border:none;color:#7A869B;font-size:12px;font-weight:700;cursor:pointer;opacity:.8;font-family:inherit}
+.bscroll{flex:1;overflow-y:auto}
+.bsum{display:flex;gap:8px;padding:12px 14px 4px}
+.bsum .t{flex:1;background:#fff;border-radius:12px;padding:11px 8px;text-align:center;box-shadow:0 1px 3px rgba(26,39,68,.07)}
+.bsum .t b{display:block;font-size:16px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.15}
+.bsum .t span{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:#8A93A6;margin-top:3px;display:block}
+.bsum .t.in b{color:#128040}.bsum .t.out b{color:#C0546A}.bsum .t.net b{color:var(--navy)}
+.bform{background:#fff;border-radius:12px;padding:12px;margin:10px 14px 0;display:flex;flex-direction:column;gap:8px;box-shadow:0 1px 3px rgba(26,39,68,.07)}
+.bform .row{display:flex;gap:8px}
+.bform label{flex:1;display:flex;flex-direction:column;font-size:10px;font-weight:800;color:#8A93A6;text-transform:uppercase;letter-spacing:.04em;gap:4px}
+.bform input,.bform select{font-family:inherit;font-size:15px;padding:9px 10px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--navy);width:100%;outline:none}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;padding:9px;border-radius:9px;border:1.5px solid var(--line);background:#fff;font-weight:800;font-size:13px;color:#8A93A6;cursor:pointer;font-family:inherit}
+.seg button.in.on{border-color:#128040;background:rgba(18,128,64,.1);color:#128040}
+.seg button.out.on{border-color:#C0546A;background:rgba(192,84,106,.12);color:#C0546A}
+.badd{padding:12px;border-radius:10px;border:none;background:var(--navy);color:#fff;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit}
+.blist{padding:10px 14px 4px}
+.brow{display:flex;align-items:center;gap:10px;background:#fff;border-radius:10px;padding:9px 11px;margin-bottom:7px}
+.brow .bi{flex:1;min-width:0}
+.brow .bd{font-weight:800;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brow .bm{font-size:11px;color:#8A93A6;margin-top:1px}
+.brow .ba{font-weight:900;font-size:14px;font-variant-numeric:tabular-nums;flex-shrink:0}
+.brow .ba.in{color:#128040}.brow .ba.out{color:#C0546A}
+.brow .del{background:none;border:none;color:#C0546A;font-size:18px;line-height:1;cursor:pointer;padding:2px 4px;flex-shrink:0}
+.bpingate{padding:34px 22px 40px;text-align:center}
+.bpingate input{font-size:24px;letter-spacing:.35em;text-align:center;width:160px;padding:11px;border:1.5px solid var(--line);border-radius:10px;margin-top:14px;font-family:inherit;outline:none}
+.bpingate .msg{font-size:13px;color:#6B7385;margin-top:8px;line-height:1.5}
+.bexport{width:100%;background:none;border:1.5px solid var(--line);border-radius:10px;padding:12px;font-weight:800;font-size:13.5px;color:var(--navy);cursor:pointer;font-family:inherit}
 .foot{background:var(--navy);border-radius:16px;padding:18px 16px;margin-top:22px;text-align:center}
 .foot .t{color:#fff;font-weight:800;font-size:15.5px}
 .foot .d{color:#9AA5BC;font-size:13px;margin-top:4px;line-height:1.5}
@@ -145,12 +174,19 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
     <a class="site" href="https://aesenergysolar.com/" target="_blank" rel="noreferrer">aesenergysolar.com</a>
   </div>
   <div class="fine" id="fineTxt">AES Energy Global Trade &amp; Solar LLC · Photos of actual stock</div>
+  <div style="text-align:center"><button id="booksBtn" class="booksbtn">🔒 Owner books · income &amp; expenses</button></div>
 </div>
 <button id="cartFab" class="cartfab" hidden></button>
 <div id="cartSheet" class="sheet"><div class="scrim" data-close></div>
   <div class="panel">
     <div class="chead"><b id="cartTitle">Your order</b><button class="x" data-close aria-label="Close">×</button></div>
     <div class="cbody" id="cartBody"></div>
+  </div>
+</div>
+<div id="booksSheet" class="sheet"><div class="scrim" data-bclose></div>
+  <div class="panel">
+    <div class="chead"><b>Income &amp; Expenses</b><button class="x" data-bclose aria-label="Close">×</button></div>
+    <div class="cbody" id="booksBody"></div>
   </div>
 </div>
 <div id="lb"><img id="lbImg" alt=""></div>
@@ -462,6 +498,100 @@ document.getElementById("list").addEventListener("click",e=>{
   const s=e.target.closest(".shot");if(s&&s.dataset.src){lbImg.src=s.dataset.src;lb.classList.add("on");}
 });
 lb.addEventListener("click",()=>lb.classList.remove("on"));
+
+/* ---------------- Owner books: income & expenses (private, on this device) ---------------- */
+const booksSheet=document.getElementById("booksSheet");
+const booksBody=document.getElementById("booksBody");
+let books=[];try{books=JSON.parse(localStorage.getItem("aes_books")||"[]")||[];}catch(e){books=[];}
+let bookCur="$";try{bookCur=localStorage.getItem("aes_books_cur")||"$";}catch(e){bookCur="$";}
+let bookUnlocked=false, bKind="in";
+function saveBooks(){try{localStorage.setItem("aes_books",JSON.stringify(books));}catch(e){}}
+function bGetPin(){try{return localStorage.getItem("aes_books_pin")||"";}catch(e){return "";}}
+function bSetPin(p){try{localStorage.setItem("aes_books_pin",p);}catch(e){}}
+function money(n){return bookCur+" "+(+n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});}
+
+function openBooks(){booksSheet.classList.add("on");if(bookUnlocked)renderBooks();else renderPinGate();}
+function closeBooks(){booksSheet.classList.remove("on");}
+
+function renderPinGate(){
+  const isSet=!bGetPin();
+  booksBody.innerHTML=`<div class="bpingate">
+    <div style="font-size:36px">🔒</div>
+    <div style="font-weight:900;font-size:16px;margin-top:6px">${isSet?"Set a PIN":"Enter your PIN"}</div>
+    <div class="msg">${isSet?"Create a 4-digit PIN to keep your books private on this phone.":"Keeps your income &amp; expenses private on this device."}</div>
+    <input id="bpin" type="tel" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+    <div class="msg" id="bpinErr" style="color:#C0546A;min-height:16px"></div>
+    <button class="badd" id="bpinBtn" style="width:160px;margin:6px auto 0">${isSet?"Set PIN":"Unlock"}</button>
+  </div>`;
+  const inp=document.getElementById("bpin");if(inp)inp.focus();
+  document.getElementById("bpinBtn").onclick=()=>{
+    const v=((document.getElementById("bpin")||{}).value||"").trim();
+    if(!/^\d{4}$/.test(v)){document.getElementById("bpinErr").textContent="Enter 4 digits.";return;}
+    if(isSet){bSetPin(v);bookUnlocked=true;renderBooks();}
+    else if(v===bGetPin()){bookUnlocked=true;renderBooks();}
+    else document.getElementById("bpinErr").textContent="Wrong PIN. Try again.";
+  };
+}
+function renderBooks(){
+  const income=books.filter(b=>b.kind==="in").reduce((a,b)=>a+(+b.amount||0),0);
+  const expense=books.filter(b=>b.kind==="out").reduce((a,b)=>a+(+b.amount||0),0);
+  const net=income-expense;
+  const today=new Date().toISOString().slice(0,10);
+  const cats=["Sale","Deposit","Vehicle purchase","Goods purchase","Shipping","Customs","Transport","Fees","Refund","Other"];
+  const list=[...books].sort((a,b)=>(b.date+b.id).localeCompare(a.date+a.id)).map(b=>`
+    <div class="brow"><div class="bi"><div class="bd">${esc(b.desc||b.cat||"—")}</div><div class="bm">${esc(b.date)}${b.cat?" · "+esc(b.cat):""}</div></div>
+    <div class="ba ${b.kind}">${b.kind==="out"?"−":"+"}${esc(money(b.amount))}</div>
+    <button class="del" data-bdel="${esc(b.id)}" aria-label="Delete">×</button></div>`).join("")
+    || `<div class="cempty" style="padding:22px">No entries yet. Record your first income or expense above.</div>`;
+  booksBody.innerHTML=`<div class="bscroll">
+   <div class="bsum">
+     <div class="t in"><b>${esc(money(income))}</b><span>Income</span></div>
+     <div class="t out"><b>${esc(money(expense))}</b><span>Expenses</span></div>
+     <div class="t net"><b>${esc(money(net))}</b><span>Net profit</span></div>
+   </div>
+   <div class="bform">
+     <div class="seg"><button class="in ${bKind==="in"?"on":""}" data-bkind="in">＋ Income</button><button class="out ${bKind==="out"?"on":""}" data-bkind="out">－ Expense</button></div>
+     <div class="row">
+       <label>Date<input id="bDate" type="date" value="${today}"></label>
+       <label>Amount<input id="bAmt" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00"></label>
+     </div>
+     <div class="row">
+       <label>Category<select id="bCat">${cats.map(c=>`<option>${c}</option>`).join("")}</select></label>
+       <label>Currency<select id="bCur">${["$","€","CFA","₦","£","GH₵"].map(c=>`<option ${c===bookCur?"selected":""}>${c}</option>`).join("")}</select></label>
+     </div>
+     <label>Note<input id="bDesc" type="text" placeholder="e.g. Corolla deposit from Amadou"></label>
+     <button class="badd" id="bAdd">Add entry</button>
+   </div>
+   <div class="blist">${list}</div>
+   </div>
+   <div class="cfoot"><button class="bexport" id="bExport">⬇ Export CSV (for accountant)</button></div>`;
+  booksBody.querySelectorAll("[data-bkind]").forEach(x=>x.onclick=()=>{bKind=x.dataset.bkind;renderBooks();});
+  const cur=document.getElementById("bCur");if(cur)cur.onchange=e=>{bookCur=e.target.value;try{localStorage.setItem("aes_books_cur",bookCur);}catch(_){}renderBooks();};
+  document.getElementById("bAdd").onclick=addBookEntry;
+  document.getElementById("bExport").onclick=exportBooksCSV;
+  booksBody.querySelectorAll("[data-bdel]").forEach(x=>x.onclick=()=>{books=books.filter(b=>b.id!==x.dataset.bdel);saveBooks();renderBooks();});
+}
+function addBookEntry(){
+  const amt=parseFloat((document.getElementById("bAmt")||{}).value);
+  if(!(amt>0)){const a=document.getElementById("bAmt");if(a)a.focus();return;}
+  books.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+    date:(document.getElementById("bDate")||{}).value||new Date().toISOString().slice(0,10),
+    kind:bKind,cat:(document.getElementById("bCat")||{}).value||"",
+    desc:((document.getElementById("bDesc")||{}).value||"").trim(),amount:amt});
+  saveBooks();renderBooks();
+}
+function exportBooksCSV(){
+  const rows=[["Date","Type","Category","Note","Amount","Currency"]].concat(
+    [...books].sort((a,b)=>a.date.localeCompare(b.date)).map(b=>[b.date,b.kind==="in"?"Income":"Expense",b.cat||"",b.desc||"",(+b.amount||0).toFixed(2),bookCur]));
+  const csv=rows.map(r=>r.map(c=>/[",\n]/.test(String(c))?'"'+String(c).replace(/"/g,'""')+'"':c).join(",")).join("\n");
+  try{const blob=new Blob([csv],{type:"text/csv"});const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;a.download="aes-books.csv";document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},600);}catch(e){}
+}
+var booksBtn=document.getElementById("booksBtn");
+if(booksBtn)booksBtn.addEventListener("click",openBooks);
+if(booksSheet)booksSheet.addEventListener("click",e=>{if(e.target.closest("[data-bclose]"))closeBooks();});
+if(typeof location!=="undefined"&&location.hash==="#books")openBooks();
 
 /* ---------------- Apply language across the page ---------------- */
 function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt;}

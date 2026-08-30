@@ -261,6 +261,100 @@ document.getElementById("list").addEventListener("click",e=>{
 });
 lb.addEventListener("click",()=>lb.classList.remove("on"));
 
+/* ---------------- Owner books: income & expenses (private, on this device) ---------------- */
+const booksSheet=document.getElementById("booksSheet");
+const booksBody=document.getElementById("booksBody");
+let books=[];try{books=JSON.parse(localStorage.getItem("aes_books")||"[]")||[];}catch(e){books=[];}
+let bookCur="$";try{bookCur=localStorage.getItem("aes_books_cur")||"$";}catch(e){bookCur="$";}
+let bookUnlocked=false, bKind="in";
+function saveBooks(){try{localStorage.setItem("aes_books",JSON.stringify(books));}catch(e){}}
+function bGetPin(){try{return localStorage.getItem("aes_books_pin")||"";}catch(e){return "";}}
+function bSetPin(p){try{localStorage.setItem("aes_books_pin",p);}catch(e){}}
+function money(n){return bookCur+" "+(+n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});}
+
+function openBooks(){booksSheet.classList.add("on");if(bookUnlocked)renderBooks();else renderPinGate();}
+function closeBooks(){booksSheet.classList.remove("on");}
+
+function renderPinGate(){
+  const isSet=!bGetPin();
+  booksBody.innerHTML=`<div class="bpingate">
+    <div style="font-size:36px">🔒</div>
+    <div style="font-weight:900;font-size:16px;margin-top:6px">${isSet?"Set a PIN":"Enter your PIN"}</div>
+    <div class="msg">${isSet?"Create a 4-digit PIN to keep your books private on this phone.":"Keeps your income &amp; expenses private on this device."}</div>
+    <input id="bpin" type="tel" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+    <div class="msg" id="bpinErr" style="color:#C0546A;min-height:16px"></div>
+    <button class="badd" id="bpinBtn" style="width:160px;margin:6px auto 0">${isSet?"Set PIN":"Unlock"}</button>
+  </div>`;
+  const inp=document.getElementById("bpin");if(inp)inp.focus();
+  document.getElementById("bpinBtn").onclick=()=>{
+    const v=((document.getElementById("bpin")||{}).value||"").trim();
+    if(!/^\d{4}$/.test(v)){document.getElementById("bpinErr").textContent="Enter 4 digits.";return;}
+    if(isSet){bSetPin(v);bookUnlocked=true;renderBooks();}
+    else if(v===bGetPin()){bookUnlocked=true;renderBooks();}
+    else document.getElementById("bpinErr").textContent="Wrong PIN. Try again.";
+  };
+}
+function renderBooks(){
+  const income=books.filter(b=>b.kind==="in").reduce((a,b)=>a+(+b.amount||0),0);
+  const expense=books.filter(b=>b.kind==="out").reduce((a,b)=>a+(+b.amount||0),0);
+  const net=income-expense;
+  const today=new Date().toISOString().slice(0,10);
+  const cats=["Sale","Deposit","Vehicle purchase","Goods purchase","Shipping","Customs","Transport","Fees","Refund","Other"];
+  const list=[...books].sort((a,b)=>(b.date+b.id).localeCompare(a.date+a.id)).map(b=>`
+    <div class="brow"><div class="bi"><div class="bd">${esc(b.desc||b.cat||"—")}</div><div class="bm">${esc(b.date)}${b.cat?" · "+esc(b.cat):""}</div></div>
+    <div class="ba ${b.kind}">${b.kind==="out"?"−":"+"}${esc(money(b.amount))}</div>
+    <button class="del" data-bdel="${esc(b.id)}" aria-label="Delete">×</button></div>`).join("")
+    || `<div class="cempty" style="padding:22px">No entries yet. Record your first income or expense above.</div>`;
+  booksBody.innerHTML=`<div class="bscroll">
+   <div class="bsum">
+     <div class="t in"><b>${esc(money(income))}</b><span>Income</span></div>
+     <div class="t out"><b>${esc(money(expense))}</b><span>Expenses</span></div>
+     <div class="t net"><b>${esc(money(net))}</b><span>Net profit</span></div>
+   </div>
+   <div class="bform">
+     <div class="seg"><button class="in ${bKind==="in"?"on":""}" data-bkind="in">＋ Income</button><button class="out ${bKind==="out"?"on":""}" data-bkind="out">－ Expense</button></div>
+     <div class="row">
+       <label>Date<input id="bDate" type="date" value="${today}"></label>
+       <label>Amount<input id="bAmt" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00"></label>
+     </div>
+     <div class="row">
+       <label>Category<select id="bCat">${cats.map(c=>`<option>${c}</option>`).join("")}</select></label>
+       <label>Currency<select id="bCur">${["$","€","CFA","₦","£","GH₵"].map(c=>`<option ${c===bookCur?"selected":""}>${c}</option>`).join("")}</select></label>
+     </div>
+     <label>Note<input id="bDesc" type="text" placeholder="e.g. Corolla deposit from Amadou"></label>
+     <button class="badd" id="bAdd">Add entry</button>
+   </div>
+   <div class="blist">${list}</div>
+   </div>
+   <div class="cfoot"><button class="bexport" id="bExport">⬇ Export CSV (for accountant)</button></div>`;
+  booksBody.querySelectorAll("[data-bkind]").forEach(x=>x.onclick=()=>{bKind=x.dataset.bkind;renderBooks();});
+  const cur=document.getElementById("bCur");if(cur)cur.onchange=e=>{bookCur=e.target.value;try{localStorage.setItem("aes_books_cur",bookCur);}catch(_){}renderBooks();};
+  document.getElementById("bAdd").onclick=addBookEntry;
+  document.getElementById("bExport").onclick=exportBooksCSV;
+  booksBody.querySelectorAll("[data-bdel]").forEach(x=>x.onclick=()=>{books=books.filter(b=>b.id!==x.dataset.bdel);saveBooks();renderBooks();});
+}
+function addBookEntry(){
+  const amt=parseFloat((document.getElementById("bAmt")||{}).value);
+  if(!(amt>0)){const a=document.getElementById("bAmt");if(a)a.focus();return;}
+  books.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+    date:(document.getElementById("bDate")||{}).value||new Date().toISOString().slice(0,10),
+    kind:bKind,cat:(document.getElementById("bCat")||{}).value||"",
+    desc:((document.getElementById("bDesc")||{}).value||"").trim(),amount:amt});
+  saveBooks();renderBooks();
+}
+function exportBooksCSV(){
+  const rows=[["Date","Type","Category","Note","Amount","Currency"]].concat(
+    [...books].sort((a,b)=>a.date.localeCompare(b.date)).map(b=>[b.date,b.kind==="in"?"Income":"Expense",b.cat||"",b.desc||"",(+b.amount||0).toFixed(2),bookCur]));
+  const csv=rows.map(r=>r.map(c=>/[",\n]/.test(String(c))?'"'+String(c).replace(/"/g,'""')+'"':c).join(",")).join("\n");
+  try{const blob=new Blob([csv],{type:"text/csv"});const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");a.href=url;a.download="aes-books.csv";document.body.appendChild(a);a.click();
+    setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},600);}catch(e){}
+}
+var booksBtn=document.getElementById("booksBtn");
+if(booksBtn)booksBtn.addEventListener("click",openBooks);
+if(booksSheet)booksSheet.addEventListener("click",e=>{if(e.target.closest("[data-bclose]"))closeBooks();});
+if(typeof location!=="undefined"&&location.hash==="#books")openBooks();
+
 /* ---------------- Apply language across the page ---------------- */
 function setText(id,txt){const el=document.getElementById(id);if(el)el.textContent=txt;}
 function setHTML(id,html){const el=document.getElementById(id);if(el)el.innerHTML=html;}
