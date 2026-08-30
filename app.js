@@ -8,7 +8,7 @@ function catArt(r){
   const base=(typeof CATEGORY_COLORS!=="undefined"&&CATEGORY_COLORS[cat])||"#1B2C4A";
   const W=400,H=300,white="#EFF2F7",dark="#0E1A30",gold="#F5A800",win=base;
   let icon="";
-  if(cat==="Cars"){
+  if(cat==="Cars"||cat==="Vehicles"){
     icon=`<rect x="118" y="122" width="172" height="46" rx="16" fill="${white}"/>`
       +`<path d="M150 122 Q162 92 194 92 L214 92 Q246 92 260 122 Z" fill="${white}"/>`
       +`<rect x="168" y="100" width="30" height="22" rx="4" fill="${win}"/>`
@@ -25,6 +25,13 @@ function catArt(r){
       +`<circle cx="150" cy="176" r="34"/><circle cx="256" cy="176" r="34"/>`
       +`<path d="M150 176 L196 122 L236 122 M196 122 L216 176 M216 176 L256 176 M236 122 L248 110 M170 176 L204 176"/></g>`
       +`<circle cx="150" cy="176" r="6" fill="${gold}"/><circle cx="256" cy="176" r="6" fill="${gold}"/>`;
+  } else if(cat==="Household Goods"||cat==="Household"){
+    icon=`<rect x="118" y="150" width="164" height="40" rx="11" fill="${white}"/>`
+      +`<rect x="118" y="120" width="30" height="48" rx="11" fill="${white}"/>`
+      +`<rect x="252" y="120" width="30" height="48" rx="11" fill="${white}"/>`
+      +`<rect x="150" y="112" width="100" height="46" rx="9" fill="#D7DEEA"/>`
+      +`<rect x="200" y="112" width="2" height="46" fill="${base}"/>`
+      +`<rect x="150" y="188" width="16" height="16" fill="${white}"/><rect x="234" y="188" width="16" height="16" fill="${white}"/>`;
   } else if(cat==="Shoes"){
     icon=`<path d="M116 168 Q116 150 138 148 L176 144 Q190 128 212 131 Q238 134 252 150 L292 160 Q308 164 308 177 L308 183 Q308 189 298 189 L130 189 Q116 189 116 178 Z" fill="${white}"/>`
       +`<path d="M185 140 l6 11 M199 137 l6 11 M213 139 l6 11" stroke="${base}" stroke-width="4" stroke-linecap="round"/>`
@@ -215,7 +222,8 @@ document.getElementById("q").addEventListener("input",e=>{q=e.target.value;rende
 document.getElementById("catChips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(b){catF=b.dataset.cat;render();}});
 
 /* ---------------- Cart & checkout ---------------- */
-const rowById={};live.forEach(r=>rowById[r.id]=r);
+const SVC=(typeof SVC_ROWS!=="undefined")?SVC_ROWS:[];
+const rowById={};live.concat(SVC).forEach(r=>rowById[r.id]=r);
 let cart={};
 try{cart=JSON.parse(localStorage.getItem("aes_cart")||"{}")||{};}catch(e){cart={};}
 // drop any stale ids no longer in inventory
@@ -363,13 +371,43 @@ if(booksBtn)booksBtn.addEventListener("click",openBooks);
 if(booksSheet)booksSheet.addEventListener("click",e=>{if(e.target.closest("[data-bclose]"))closeBooks();});
 if(typeof location!=="undefined"&&location.hash==="#books")openBooks();
 
-/* ---------------- Shipping & services tab ---------------- */
+/* ---------------- Shipping & services tab (catalog-style cards) ---------------- */
 const svcSheet=document.getElementById("svcSheet");
+function svcWaLink(r){return wa(`Hello AES Energy / 7 Villages, I'd like to reserve / order: ${r.brand} (${r.code}) — ${r.category}. Price ref: ${r.price} ${r.priceNote||""}. Please send full details and shipping.`);}
+function svcCard(r){
+  const src=catArt(r);
+  let k1,v1,k2,v2;
+  if(r.category==="Vehicles"){k1="Fits";v1=r.fit;k2="Basis";v2=r.priceNote;}
+  else if(r.category.indexOf("Solar")>=0){k1="Yield";v1=r.fit;k2="Sold";v2="Per piece";}
+  else {k1="Lot";v1=r.fit;k2="Sold";v2="Per container";}
+  return `<div class="card"><div class="shot">
+ <img src="${src}" alt="${esc(r.brand)}" loading="lazy">
+ <div class="fade"></div><span class="tag" style="background:${COND_COLORS[r.cond]||"#8A93A6"}">${esc(dcond(r.cond))}</span>
+ <span class="watt">${esc(r.price)}</span></div>
+ <div class="body"><div class="b">${esc(r.brand)}</div>
+ <div class="m">${esc(r.model)} · <span style="color:#A7AFBF">${esc(r.code)}</span></div>
+ <div class="facts"><div><div class="k">${esc(k1)}</div><div class="v">${esc(v1)}</div></div>
+ <div><div class="k">${esc(k2)}</div><div class="v" style="font-weight:700">${esc(v2)}</div></div></div>
+ ${r.meta?`<div class="note">${esc(r.meta)}</div>`:""}
+ <div class="acts"><button class="btn add" data-add="${esc(r.id)}">${plusIcon} ${L().add}</button>
+ <div class="acts2"><a class="btn wa2" href="${svcWaLink(r)}" target="_blank" rel="noreferrer">${waIconSm} ${L().enquire}</a>${PAY?`<a class="btn pc2" href="${PAY}" target="_blank" rel="noreferrer">${cardIcon} ${L().buy}</a>`:""}</div></div>
+ </div></div>`;
+}
+function renderSvc(){
+  const fill=(id,rows)=>{const el=document.getElementById(id);if(el)el.innerHTML=rows.map(svcCard).join("");};
+  fill("svcVehicles",SVC.filter(r=>r.category==="Vehicles"));
+  fill("svcSolar",SVC.filter(r=>r.category.indexOf("Solar")>=0));
+  fill("svcGoods",SVC.filter(r=>r.category.indexOf("Household")>=0));
+}
 function openSvc(){if(svcSheet)svcSheet.classList.add("on");}
 function closeSvc(){if(svcSheet)svcSheet.classList.remove("on");}
 var svcBtn=document.getElementById("svcBtn");
 if(svcBtn)svcBtn.addEventListener("click",openSvc);
-if(svcSheet)svcSheet.addEventListener("click",e=>{if(e.target.closest("[data-sclose]"))closeSvc();});
+if(svcSheet)svcSheet.addEventListener("click",e=>{
+  if(e.target.closest("[data-sclose]")){closeSvc();return;}
+  const add=e.target.closest("[data-add]");
+  if(add){addToCart(add.dataset.add);add.classList.add("in");const t=add.innerHTML;add.innerHTML=plusIcon+" "+L().added;setTimeout(()=>{add.classList.remove("in");add.innerHTML=t;},900);}
+});
 var svcWaEl=document.getElementById("svcWa");
 if(svcWaEl)svcWaEl.href=wa("Hello, I'd like to ask about 7 Villages / AES Energy shipping & export services (freight, vehicles, solar panels, household goods).");
 if(typeof location!=="undefined"&&location.hash==="#services")openSvc();
@@ -400,6 +438,7 @@ function applyLang(l){
   const wl=document.getElementById("waAll");if(wl)wl.href=waLink(null);
   buildPay();
   buildChips();
+  renderSvc();
   render();
   updateFab();
   if(sheet.classList.contains("on"))renderCart();

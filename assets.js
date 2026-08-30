@@ -42,3 +42,21 @@ const I18N={
   u2:{notes:"Environ 16 conteneurs disponibles. Sur palettes, prêt à l'enlèvement."}
  }
 };
+const SVC_ROWS=[
+ {id:"vh1",category:"Vehicles",cond:"Used",brand:"Toyota Camry",model:"2016 · Sedan · Automatic",code:"VH-SD-101",price:"$6,900",priceNote:"FOB warehouse",fit:"2 per 40' HC",meta:"~78,000 mi · Clean title, runs & drives · Gasoline"},
+ {id:"vh2",category:"Vehicles",cond:"Used",brand:"Honda Accord",model:"2015 · Sedan · Automatic",code:"VH-SD-102",price:"$6,200",priceNote:"FOB warehouse",fit:"2 per 40' HC",meta:"~91,000 mi · Clean title, minor wear · Gasoline"},
+ {id:"vh3",category:"Vehicles",cond:"Used",brand:"Nissan Altima",model:"2017 · Sedan · Automatic",code:"VH-SD-103",price:"$6,500",priceNote:"FOB warehouse",fit:"2 per 40' HC",meta:"~64,000 mi · Clean title, runs & drives · Gasoline"},
+ {id:"vh4",category:"Vehicles",cond:"Used",brand:"Toyota RAV4",model:"2017 · SUV · AWD",code:"VH-SU-201",price:"$9,800",priceNote:"FOB warehouse",fit:"2 per 40' HC",meta:"~72,000 mi · Clean title, runs & drives · Gasoline"},
+ {id:"vh5",category:"Vehicles",cond:"Used",brand:"Ford Explorer",model:"2016 · SUV · AWD",code:"VH-SU-202",price:"$8,700",priceNote:"FOB warehouse",fit:"2 per 40' HC",meta:"~88,000 mi · Salvage title, drivable · Gasoline"},
+ {id:"vh6",category:"Vehicles",cond:"Used",brand:"Jeep Grand Cherokee",model:"2015 · SUV · 4WD",code:"VH-SU-203",price:"$8,200",priceNote:"FOB warehouse",fit:"2 per 40' HC",meta:"~96,000 mi · Clean title, runs & drives · Gasoline"},
+ {id:"vh7",category:"Vehicles",cond:"Used",brand:"Ford F-150",model:"2016 · Pickup · 4WD",code:"VH-TR-301",price:"$11,500",priceNote:"FOB warehouse",fit:"1 per 40' HC",meta:"~85,000 mi · Clean title · 5.5 ft bed"},
+ {id:"vh8",category:"Vehicles",cond:"Used",brand:"Chevrolet Silverado",model:"2015 · Pickup · 4WD",code:"VH-TR-302",price:"$10,900",priceNote:"FOB warehouse",fit:"1 per 40' HC",meta:"~102,000 mi · Clean title, minor wear · 6.5 ft bed"},
+ {id:"sp150",category:"Solar Panels — Wholesale",cond:"Used",brand:"150–220W Panels",model:"Aluminum frame · bulk per piece",code:"BKG-SP-150",price:"$10/pc",priceNote:"per piece",fit:"~1,300 / 40'",meta:"Mixed frame condition"},
+ {id:"sp230",category:"Solar Panels — Wholesale",cond:"Used",brand:"225–265W Panels",model:"Aluminum frame · bulk per piece",code:"BKG-SP-230",price:"$12/pc",priceNote:"per piece",fit:"~1,200 / 40'",meta:"Tested · grade A/B mix"},
+ {id:"sp270",category:"Solar Panels — Wholesale",cond:"Used",brand:"270–300W Panels",model:"Aluminum frame · bulk per piece",code:"BKG-SP-270",price:"$15/pc",priceNote:"per piece",fit:"~820 / 40'",meta:"Tested · grade A"},
+ {id:"sp310",category:"Solar Panels — Wholesale",cond:"Used",brand:"310–450W Panels",model:"Aluminum frame · bulk per piece",code:"BKG-SP-310",price:"$17/pc",priceNote:"per piece",fit:"~820 / 40'",meta:"Higher output tier"},
+ {id:"sp500",category:"Solar Panels — Wholesale",cond:"Used",brand:"500–580W Panels",model:"Premium high-watt · per piece",code:"BKG-SP-500",price:"$55/pc",priceNote:"per piece",fit:"~820 / 40'",meta:"Grade A · delivery included"},
+ {id:"hgmat",category:"Household Goods",cond:"Used",brand:"Used Mattresses",model:"Twin–King, mixed",code:"BKG-HG-MAT",price:"Quote",priceNote:"per container",fit:"Container lot",meta:"Compressed / palletized"},
+ {id:"hgfur",category:"Household Goods",cond:"Used",brand:"Household Furniture",model:"Sofas, bed frames, dressers",code:"BKG-HG-FUR",price:"Quote",priceNote:"per container",fit:"Container lot",meta:"Estate & hotel liquidation · wrapped, palletized"},
+ {id:"hgapp",category:"Household Goods",cond:"Used",brand:"Small Appliances",model:"Fridges, fans, kitchenware",code:"BKG-HG-APP",price:"Quote",priceNote:"per container",fit:"Container lot",meta:"Mixed bulk lots · spot-checked, as-is"}
+];
