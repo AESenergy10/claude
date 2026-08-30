@@ -130,6 +130,10 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
 .warn b{color:#5A2530}
 .paylist{display:flex;flex-wrap:wrap;gap:7px;margin-top:2px}
 .paylist span{background:#12331f;color:#8ff0b5;border-radius:8px;padding:6px 11px;font-size:12px;font-weight:800}
+.factgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:11px}
+.ftile{background:#fff;border-radius:11px;padding:11px 12px;box-shadow:0 1px 3px rgba(26,39,68,.06)}
+.ftile .fk{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#8A93A6}
+.ftile .fv{font-size:14px;font-weight:900;color:var(--navy);margin-top:3px;line-height:1.25}
 /* owner books */
 .booksbtn{display:inline-flex;align-items:center;gap:6px;margin-top:16px;background:none;border:none;color:#7A869B;font-size:12px;font-weight:700;cursor:pointer;opacity:.8;font-family:inherit}
 .bscroll{flex:1;overflow-y:auto}
@@ -232,8 +236,7 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
 
       <div class="svcsec">
         <div class="svch"><span class="no">01</span><span class="ti">Vehicles for Export</span></div>
-        <p class="svcp">Pick a vehicle — we handle the container. Each card shows how many units fit in a shared 40' High Cube container. Prices are FOB warehouse; availability changes weekly.</p>
-        <div class="callout"><b>Single sedan, U.S. → Senegal:</b> flat <b>$1,800 freight</b> (paid before shipping) <b>+ $600 customs</b> on arrival.</div>
+        <p class="svcp">Pick a vehicle — we handle the container. Each card shows how many fit in a shared 40' High Cube container. Prices are FOB warehouse.</p>
         <div class="grid" id="svcVehicles"></div>
       </div>
 
@@ -250,31 +253,19 @@ h1{color:#fff;font-weight:800;font-size:22px;margin:0;letter-spacing:-.015em;lin
       </div>
 
       <div class="svcsec">
-        <div class="svch"><span class="no">04</span><span class="ti">How Export Works</span></div>
-        <div class="steps">
-          <div class="step2"><div class="n">1</div><div class="d"><b>Drop off or ship to us</b><span>Bring items to a warehouse, or arrange local pickup / trucking to our dock.</span></div></div>
-          <div class="step2"><div class="n">2</div><div class="d"><b>We consolidate &amp; load</b><span>Cargo is inventoried, palletized or crated, and loaded into a shared or dedicated 20' / 40' container.</span></div></div>
-          <div class="step2"><div class="n">3</div><div class="d"><b>Documentation handled</b><span>Bill of lading, packing list and commercial invoice prepared in English &amp; French for customs clearance.</span></div></div>
-          <div class="step2"><div class="n">4</div><div class="d"><b>Delivered to your port</b><span>Ships to Dakar, Conakry, Lomé and beyond — with inland trucking on to Bamako and other destinations.</span></div></div>
+        <div class="svch"><span class="no">04</span><span class="ti">Shipping &amp; Service</span></div>
+        <div class="factgrid">
+          <div class="ftile"><div class="fk">Sedan → Senegal</div><div class="fv">$1,800 + $600 customs</div></div>
+          <div class="ftile"><div class="fk">Ocean transit</div><div class="fv">~3–5 weeks</div></div>
+          <div class="ftile"><div class="fk">Pallet storage</div><div class="fv">$10 / day</div></div>
+          <div class="ftile"><div class="fk">Auction bid service</div><div class="fv">$500 flat / car</div></div>
         </div>
-        <p class="svcp" style="margin-top:10px"><b>U.S. warehouses</b></p>
-        <div class="whlist"><span>New York, NY</span><span>New Jersey</span><span>Charlotte, NC</span><span>Oakland, CA</span><span>Houston, TX</span><span>Phoenix, AZ</span></div>
-        <div class="callout" style="margin-top:10px"><b>Ocean freight:</b> ~3–5 weeks transit. <b>Pallet storage</b> while awaiting a container: <b>$10 / pallet / day</b> from drop-off.</div>
-      </div>
-
-      <div class="svcsec">
-        <div class="svch"><span class="no">05</span><span class="ti">Auction Buying — We Bid For You</span></div>
-        <p class="svcp">No auction account or license? View listings as a guest, send us the lot number, and we bid and buy on our licensed account for you.</p>
-        <div class="callout"><b>Flat $500 buyer fee, any car</b> — same fee whether the car sells under or over $5,000. You pay the winning price + the $500 fee.</div>
-        <div class="warn">Customer responsibility: you cover trucking from the auction to our warehouse. Auction "door"/storage fees (~<b>$50–$100 / day</b>) and any lay or late-payment fees are yours, not ours. If fees go unpaid over 5 days the auction can cancel the sale; cancellation penalty is <b>$1,000–$1,500</b> (cars under $5,000) or <b>$1,500–$2,000</b> (over $5,000).</div>
-      </div>
-
-      <div class="svcsec">
-        <div class="svch"><span class="no">06</span><span class="ti">Shipping Terms &amp; Payment</span></div>
-        <p class="svcp"><b>Delivery is guaranteed</b> as long as your item is in our hands — no matter how long transit takes, you will get your item.</p>
-        <div class="warn">Once the container is sealed and on the vessel, transit time is out of our hands — schedule changes, port congestion and customs delays are the carrier's and customs authority's responsibility. No cancellation, refund or penalty once the container has sailed. Changes requested after sealing are billed to you.</div>
-        <p class="svcp" style="margin-top:8px"><b>Payment accepted</b></p>
-        <div class="paylist"><span>Orange Money</span><span>Wave</span><span>Bank / Wire Transfer</span></div>
+        <p class="svcp"><b>How it works —</b> drop off or ship to a U.S. warehouse; we consolidate, load and document (bill of lading, packing list &amp; invoice in English &amp; French), then deliver to your port.</p>
+        <p class="svcp"><b>Auction —</b> send us a lot number (Copart, IAAI); we bid on our license. You pay the winning price + $500; trucking and any auction storage / late fees are yours.</p>
+        <div class="whlist"><span>New York</span><span>New Jersey</span><span>Charlotte</span><span>Oakland</span><span>Houston</span><span>Phoenix</span></div>
+        <p class="svcp" style="margin-top:9px"><b>Ports —</b> Dakar · Conakry · Lomé · inland to Bamako.</p>
+        <div class="paylist"><span>Orange Money</span><span>Wave</span><span>Bank / Wire</span></div>
+        <p class="svcp" style="margin-top:9px;font-size:11.5px;color:#8A93A6">Once a container sails, transit is out of our hands — no refund or penalty; delivery is still guaranteed.</p>
       </div>
 
     </div>
