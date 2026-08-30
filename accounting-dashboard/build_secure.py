@@ -117,9 +117,21 @@ tpl = tpl.replace('<div class="top">', lock + '<div class="top">', 1)
 # 4. wrap as a standalone HTML document (charset + mobile viewport)
 i = tpl.index('<div id="lockscreen">')
 head, body = tpl[:i].rstrip(), tpl[i:]
+icons = (
+  '<link rel="apple-touch-icon" href="apple-touch-icon.png">\n'
+  '<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">\n'
+  '<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">\n'
+  '<link rel="manifest" href="manifest.webmanifest">\n'
+  '<meta name="apple-mobile-web-app-capable" content="yes">\n'
+  '<meta name="mobile-web-app-capable" content="yes">\n'
+  '<meta name="apple-mobile-web-app-status-bar-style" content="default">\n'
+  '<meta name="apple-mobile-web-app-title" content="AES Ledger">\n'
+  '<meta name="application-name" content="AES Ledger">\n'
+  '<meta name="theme-color" content="#b5720b">\n')
 doc = ("<!doctype html>\n<html lang=\"en\">\n<head>\n"
        "<meta charset=\"utf-8\">\n"
        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">\n"
+       + icons +
        "<style>*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}img{max-width:100%}[hidden]{display:none!important}</style>\n"
        + head + "\n</head>\n<body>\n" + body + "\n</body>\n</html>\n")
 open(OUT, "w").write(doc)
