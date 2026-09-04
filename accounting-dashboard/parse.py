@@ -29,10 +29,12 @@ FILES = {
     "2026-05": "2026-05-May.pdf",
     "2026-06": "2026-06-June.pdf",
     "2026-07": "2026-07-July.pdf",
+    "2026-08": "2026-08-August.pdf",
 }
 MONTH_LABEL = {
     "2026-01": "Jan 2026", "2026-02": "Feb 2026", "2026-03": "Mar 2026",
     "2026-04": "Apr 2026", "2026-05": "May 2026", "2026-06": "Jun 2026", "2026-07": "Jul 2026",
+    "2026-08": "Aug 2026",
 }
 # Printed control totals (count, amount) per section, for validation.
 CONTROL = {
@@ -43,11 +45,12 @@ CONTROL = {
     "2026-05": {"deposits": (20, 108180.51), "atm": (130, 19757.85), "electronic": (21, 36340.00), "other": (1, 8000.00), "fees": (22, 668.86)},
     "2026-06": {"deposits": (43, 165471.51), "atm": (209, 80967.53), "electronic": (77, 106947.00), "other": (6, 23500.00), "fees": (16, 234.00)},
     "2026-07": {"deposits": (25, 110635.43), "atm": (197, 29106.11), "electronic": (38, 68215.00), "other": (1, 1500.00), "fees": (22, 464.67)},
+    "2026-08": {"deposits": (27, 194664.75), "atm": (237, 58529.19), "electronic": (96, 127423.92), "fees": (29, 275.10), "other": (0, 0.0)},
 }
 SUMMARY = {  # beginning/ending balance per month
     "2026-01": (22.75, 54.01), "2026-02": (54.01, 351.40), "2026-03": (351.40, 1385.74),
     "2026-04": (1385.74, 3072.97), "2026-05": (3072.97, 46486.77),
-    "2026-06": (46486.77, 309.75), "2026-07": (309.75, 11659.40),
+    "2026-06": (46486.77, 309.75), "2026-07": (309.75, 11659.40), "2026-08": (11659.40, 20095.94),
 }
 
 AMT_RE = re.compile(r'^(\d{2}/\d{2})\s+(.*?)\s+\$?([\d,]+\.\d{2})$')
@@ -129,8 +132,10 @@ def categorize(t):
             return ('Cash Deposits', 'ATM / branch cash deposits')
         if d.startswith('deposit') or 'deposit ' in d:
             return ('Check & Mobile Deposits', 'Deposited checks / items')
-        if 'orig co name' in d or 'acctverify' in d:
-            return ('Other Income', 'Misc credits')
+        if 'acctverify' in d:
+            return ('Other Income', 'Account-verification micro-deposit')
+        if 'orig co name' in d:
+            return ('ACH Credits', 'Business ACH deposits from customers / vendors')
         return ('Other Income', 'Uncategorized credit')
 
     if sec == 'fees':
@@ -138,8 +143,8 @@ def categorize(t):
     if sec == 'other':
         return ('Cash Withdrawals', 'Counter / teller cash withdrawal')
     if sec == 'electronic':
-        if 'online transfer to mma' in d:
-            return ('Internal Transfer Out', 'Transfer to linked MMA account')
+        if 'online transfer to mma' in d or 'telephone transfer to' in d or 'transfer to chk' in d:
+            return ('Internal Transfer Out', 'Transfer to linked / own account')
         if any(k in d for k in ['shine logistics','oakland warehouse','7villages','7villagesshipp','ticaju','h s carriers','oceanpath','ati ocean',' ati ','to ati','sam used auto','marp cargo']):
             return ('Shipping & Logistics', 'Freight, warehousing & carriers')
         if 'first america' in d:
@@ -162,11 +167,12 @@ def categorize(t):
     if any(k in d for k in ['sunoco','phillips 66','shell ','exxon','circle k','circlek','speedway',' qt ','qt 1433','go! gas','y&m gas','chevron','bp#','petr','gas & food','gas station','texaco','quiktrip','wawa']):
         return ('Fuel & Gas', 'Vehicle fuel')
     if any(k in d for k in ['expedia','cheapoair','delta air','swa inflight','inflight wifi','economy inn','ramada','inn ','hotel','motel','bay breeze','nu car rental','wyndham','airport','airlines','maggiano','dfw','phx',
-                            'days inn','daystop','american air','united 0','united.com','ua inflt','southwes','greyhound','odysea','boardwalk','national forest','aquarium']):
+                            'days inn','daystop','american air','united 0','united.com','ua inflt','southwes','greyhound','odysea','boardwalk','national forest','aquarium',
+                            'airbnb','fox rent','foxrentacar','preflight','wanderu','flix']):
         return ('Travel & Lodging', 'Flights, hotels & car rental')
-    if any(k in d for k in ['uber','lyft','mta','e-z*pass','ezpass','e-z pass','tsa ','nyc boot','sheriff','booting','toll','paygo','penske','portcheck','pierpass','parking','iah ']):
-        return ('Transportation & Tolls', 'Rideshare, tolls, parking & trucking')
-    if any(k in d for k in ['t-mobile','tmobile','comcast','xfinity','vectrafon','centerpoint','energy']):
+    if any(k in d for k in ['uber','lyft','mta','e-z*pass','ezpass','e-z pass','tsa ','nyc boot','sheriff','booting','toll','paygo','penske','portcheck','pierpass','parking','iah ','lube','car was','clean freak']):
+        return ('Transportation & Tolls', 'Rideshare, tolls, parking & vehicle upkeep')
+    if any(k in d for k in ['t-mobile','tmobile','comcast','xfinity','vectrafon','centerpoint','energy','frontier utilities','utility payment','hcmud','municipal utility']):
         return ('Telecom & Utilities', 'Phone, internet & utilities')
     if any(k in d for k in ['google *workspace','workspace','apple.com/bill','wix.com','linkedin','cloaked','clear *','clearme','experian','myfico','comcast','amazon prime','prime video','amzn.com/bill','kalshi']):
         return ('Software & Subscriptions', 'SaaS, subscriptions & online services')
@@ -181,7 +187,8 @@ def categorize(t):
     if any(k in d for k in ['home depot','best buy','a.s.i cyber','asi cyber','apple store','ace hardware','arties','tractor supply','herc rentals','bro retail','hardware']):
         return ('Suppliers & Inventory', 'Equipment, tools & hardware')
     if any(k in d for k in ['deli','restaurant','restau','grocery','market','halal','meat','poultry','buffet','pizza','burger','mcdonald','chick-fil-a','chick fil','subway','jersey mike','pollo','wingstop','panda express','jade palace','applebee','safeway','food city','ctown','dollar general','wal-mart','walmart','wm supercenter','supercenter','target t-','frys','fry','kitchen','cuisine','cafe','coff','snack','juice','gourmet','sonic','sq *','tst*','tst ','cinema','chuck e cheese','star cinema','auntie anne','feast wave','gohan','empire buffet','dragon gate','saba','biryani','kabab','curry','pintoh','oak town','castillo','super discount','bridge mart','alhayat','minto','bob marley','heaven creek','sam food','macombs','accra','creme of','surma','w & h2','angels naija','zola','ej beauty','uptown beauty','beauty supply','ross stores','de lauers','franklin mini','hunts point','pitkin','theville','new ivoire','quick snacks','mtr grocery','shake shack','first watch','hubcap','haha innovation','oak ',
-                            'chipotle','waffle house','starbucks','smoothie king','tasty pot','india plaza','gen - tempe','cork & bottle','homemade taqueria','stop & go','fiesta mart','grubhub','antojitos','dalaba','domino','vape city','white cloud smoke','smoke shop','goodwill','walgreens','tractor sup','bebe','fresh','taqueria','convenienc','food mart','smoothie']):
+                            'chipotle','waffle house','starbucks','smoothie king','tasty pot','india plaza','gen - tempe','cork & bottle','homemade taqueria','stop & go','fiesta mart','grubhub','antojitos','dalaba','domino','vape city','white cloud smoke','smoke shop','goodwill','walgreens','tractor sup','bebe','fresh','taqueria','convenienc','food mart','smoothie',
+                            'kickin crab','church','pick up stix','the rustic','central bbq','in-n-out','in n out','north italia','west hut','palace food','gristedes','gamestop','crab','bbq',' bar ','cuisi']):
         return ('Meals, Groceries & Retail', 'Food, groceries & retail purchases')
     return ('Other Card Purchases', 'Uncategorized card purchases')
 

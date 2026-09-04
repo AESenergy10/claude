@@ -47,6 +47,12 @@
    "label": "Jul 2026",
    "begin": 309.75,
    "end": 11659.4
+  },
+  {
+   "key": "2026-08",
+   "label": "Aug 2026",
+   "begin": 11659.4,
+   "end": 20095.94
   }
  ],
  "transactions": [
@@ -169,7 +175,7 @@
    "amount": 3700.0,
    "kind": "expense",
    "category": "Internal Transfer Out",
-   "subcategory": "Transfer to linked MMA account"
+   "subcategory": "Transfer to linked / own account"
   },
   {
    "month": "2026-01",
@@ -432,8 +438,8 @@
    "description": "Orig CO Name:Google Orig ID:F770493581 Desc Date: CO Entry",
    "amount": 0.13,
    "kind": "revenue",
-   "category": "Other Income",
-   "subcategory": "Misc credits"
+   "category": "ACH Credits",
+   "subcategory": "Business ACH deposits from customers / vendors"
   },
   {
    "month": "2026-02",
@@ -575,8 +581,8 @@
    "description": "Card Purchase With Pin 02/11 Bruckner Car Was Bronx NY Card 5128",
    "amount": 51.16,
    "kind": "expense",
-   "category": "Other Card Purchases",
-   "subcategory": "Uncategorized card purchases"
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-02",
@@ -774,7 +780,7 @@
    "amount": 3.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-02",
@@ -796,7 +802,7 @@
    "amount": 47.58,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-02",
@@ -851,7 +857,7 @@
    "amount": 17.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-02",
@@ -873,7 +879,7 @@
    "amount": 54.71,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-02",
@@ -884,7 +890,7 @@
    "amount": 5.45,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-02",
@@ -1676,7 +1682,7 @@
    "amount": 17.25,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1731,7 +1737,7 @@
    "amount": 60.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1742,7 +1748,7 @@
    "amount": 232.68,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1775,7 +1781,7 @@
    "amount": 300.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1786,7 +1792,7 @@
    "amount": 17.86,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1797,7 +1803,7 @@
    "amount": 10.5,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1863,7 +1869,7 @@
    "amount": 100.47,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1885,7 +1891,7 @@
    "amount": 9.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1896,7 +1902,7 @@
    "amount": 12.39,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1918,7 +1924,7 @@
    "amount": 45.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1962,7 +1968,7 @@
    "amount": 20.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -1973,7 +1979,7 @@
    "amount": 28.56,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2017,7 +2023,7 @@
    "amount": 31.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2039,7 +2045,7 @@
    "amount": 54.92,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2050,7 +2056,7 @@
    "amount": 20.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2072,7 +2078,7 @@
    "amount": 10.53,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2105,7 +2111,7 @@
    "amount": 21.03,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2116,7 +2122,7 @@
    "amount": 65.17,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2127,7 +2133,7 @@
    "amount": 5.49,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2138,7 +2144,7 @@
    "amount": 8.97,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2149,7 +2155,7 @@
    "amount": 46.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2160,7 +2166,7 @@
    "amount": 17.29,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2171,7 +2177,7 @@
    "amount": 6.79,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2182,7 +2188,7 @@
    "amount": 63.98,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2193,7 +2199,7 @@
    "amount": 42.48,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2204,7 +2210,7 @@
    "amount": 16.99,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2215,7 +2221,7 @@
    "amount": 47.58,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2259,7 +2265,7 @@
    "amount": 52.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2303,7 +2309,7 @@
    "amount": 26.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2314,7 +2320,7 @@
    "amount": 55.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2402,7 +2408,7 @@
    "amount": 70.06,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2413,7 +2419,7 @@
    "amount": 112.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2457,7 +2463,7 @@
    "amount": 23.98,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2479,7 +2485,7 @@
    "amount": 84.4,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2490,7 +2496,7 @@
    "amount": 59.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2501,7 +2507,7 @@
    "amount": 10.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2545,7 +2551,7 @@
    "amount": 16.69,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2589,7 +2595,7 @@
    "amount": 22.27,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2655,7 +2661,7 @@
    "amount": 5.49,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2666,7 +2672,7 @@
    "amount": 13.98,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2677,7 +2683,7 @@
    "amount": 5.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2688,7 +2694,7 @@
    "amount": 16.45,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2721,7 +2727,7 @@
    "amount": 20.98,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2765,7 +2771,7 @@
    "amount": 22.97,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2776,7 +2782,7 @@
    "amount": 21.91,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2787,7 +2793,7 @@
    "amount": 7.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2820,7 +2826,7 @@
    "amount": 64.2,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2831,7 +2837,7 @@
    "amount": 22.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2842,7 +2848,7 @@
    "amount": 10.99,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2897,7 +2903,7 @@
    "amount": 33.72,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2919,7 +2925,7 @@
    "amount": 578.28,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -2963,7 +2969,7 @@
    "amount": 27.69,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -3051,7 +3057,7 @@
    "amount": 25.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -3106,7 +3112,7 @@
    "amount": 9.9,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -3238,7 +3244,7 @@
    "amount": 42.64,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -3249,7 +3255,7 @@
    "amount": 20.49,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -3260,7 +3266,7 @@
    "amount": 115.24,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-03",
@@ -3403,7 +3409,7 @@
    "amount": 200.0,
    "kind": "expense",
    "category": "Internal Transfer Out",
-   "subcategory": "Transfer to linked MMA account"
+   "subcategory": "Transfer to linked / own account"
   },
   {
    "month": "2026-03",
@@ -3656,7 +3662,7 @@
    "amount": 8000.0,
    "kind": "expense",
    "category": "Internal Transfer Out",
-   "subcategory": "Transfer to linked MMA account"
+   "subcategory": "Transfer to linked / own account"
   },
   {
    "month": "2026-03",
@@ -3722,7 +3728,7 @@
    "amount": 7000.0,
    "kind": "expense",
    "category": "Internal Transfer Out",
-   "subcategory": "Transfer to linked MMA account"
+   "subcategory": "Transfer to linked / own account"
   },
   {
    "month": "2026-03",
@@ -3744,7 +3750,7 @@
    "amount": 10000.0,
    "kind": "expense",
    "category": "Internal Transfer Out",
-   "subcategory": "Transfer to linked MMA account"
+   "subcategory": "Transfer to linked / own account"
   },
   {
    "month": "2026-03",
@@ -3788,7 +3794,7 @@
    "amount": 1500.0,
    "kind": "expense",
    "category": "Internal Transfer Out",
-   "subcategory": "Transfer to linked MMA account"
+   "subcategory": "Transfer to linked / own account"
   },
   {
    "month": "2026-03",
@@ -3876,7 +3882,7 @@
    "amount": 16000.0,
    "kind": "expense",
    "category": "Internal Transfer Out",
-   "subcategory": "Transfer to linked MMA account"
+   "subcategory": "Transfer to linked / own account"
   },
   {
    "month": "2026-03",
@@ -4514,7 +4520,7 @@
    "amount": 91.55,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4547,7 +4553,7 @@
    "amount": 46.47,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4580,7 +4586,7 @@
    "amount": 32.99,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4591,7 +4597,7 @@
    "amount": 34.56,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4602,7 +4608,7 @@
    "amount": 63.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4613,7 +4619,7 @@
    "amount": 9.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4624,7 +4630,7 @@
    "amount": 17.52,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4635,7 +4641,7 @@
    "amount": 15.42,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4646,7 +4652,7 @@
    "amount": 145.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4679,7 +4685,7 @@
    "amount": 13.25,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4690,7 +4696,7 @@
    "amount": 14.19,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4723,7 +4729,7 @@
    "amount": 51.53,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4734,7 +4740,7 @@
    "amount": 25.85,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4855,7 +4861,7 @@
    "amount": 18.62,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4866,7 +4872,7 @@
    "amount": 11.4,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4877,7 +4883,7 @@
    "amount": 10.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4921,7 +4927,7 @@
    "amount": 53.2,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4954,7 +4960,7 @@
    "amount": 250.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -4998,7 +5004,7 @@
    "amount": 50.11,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5009,7 +5015,7 @@
    "amount": 30.68,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5020,7 +5026,7 @@
    "amount": 10.97,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5053,7 +5059,7 @@
    "amount": 52.38,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5064,7 +5070,7 @@
    "amount": 38.27,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5108,7 +5114,7 @@
    "amount": 69.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5130,7 +5136,7 @@
    "amount": 27.42,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5141,7 +5147,7 @@
    "amount": 18.63,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5152,7 +5158,7 @@
    "amount": 15.26,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5185,7 +5191,7 @@
    "amount": 12.19,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5207,7 +5213,7 @@
    "amount": 39.61,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5218,7 +5224,7 @@
    "amount": 12.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5240,7 +5246,7 @@
    "amount": 58.23,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5317,7 +5323,7 @@
    "amount": 57.06,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5328,7 +5334,7 @@
    "amount": 10.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5339,7 +5345,7 @@
    "amount": 43.9,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5361,7 +5367,7 @@
    "amount": 20.15,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5372,7 +5378,7 @@
    "amount": 18.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5383,7 +5389,7 @@
    "amount": 67.48,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5427,7 +5433,7 @@
    "amount": 22.61,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5438,7 +5444,7 @@
    "amount": 32.29,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5449,7 +5455,7 @@
    "amount": 15.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5460,7 +5466,7 @@
    "amount": 53.42,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5482,7 +5488,7 @@
    "amount": 7.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5493,7 +5499,7 @@
    "amount": 19.91,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5515,7 +5521,7 @@
    "amount": 31.32,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5526,7 +5532,7 @@
    "amount": 30.3,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5537,7 +5543,7 @@
    "amount": 30.84,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5548,7 +5554,7 @@
    "amount": 51.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5636,7 +5642,7 @@
    "amount": 10.63,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5647,7 +5653,7 @@
    "amount": 10.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5658,7 +5664,7 @@
    "amount": 8.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5680,7 +5686,7 @@
    "amount": 225.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5757,7 +5763,7 @@
    "amount": 9.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5856,7 +5862,7 @@
    "amount": 10.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5867,7 +5873,7 @@
    "amount": 15.22,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5922,7 +5928,7 @@
    "amount": 11.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5933,7 +5939,7 @@
    "amount": 22.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -5999,7 +6005,7 @@
    "amount": 12.29,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6010,7 +6016,7 @@
    "amount": 5.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6065,7 +6071,7 @@
    "amount": 21.08,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6076,7 +6082,7 @@
    "amount": 12.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6087,7 +6093,7 @@
    "amount": 5.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6098,7 +6104,7 @@
    "amount": 8.73,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6120,7 +6126,7 @@
    "amount": 21.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6164,7 +6170,7 @@
    "amount": 14.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6175,7 +6181,7 @@
    "amount": 13.61,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6263,7 +6269,7 @@
    "amount": 7.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6307,7 +6313,7 @@
    "amount": 14.48,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6318,7 +6324,7 @@
    "amount": 33.97,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6362,7 +6368,7 @@
    "amount": 12.54,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6373,7 +6379,7 @@
    "amount": 9.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6406,7 +6412,7 @@
    "amount": 10.61,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6450,7 +6456,7 @@
    "amount": 16.56,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6472,7 +6478,7 @@
    "amount": 18.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -6483,7 +6489,7 @@
    "amount": 8.73,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-04",
@@ -7495,7 +7501,7 @@
    "amount": 11.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7517,7 +7523,7 @@
    "amount": 16.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7539,7 +7545,7 @@
    "amount": 17.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7594,7 +7600,7 @@
    "amount": 10.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7616,7 +7622,7 @@
    "amount": 10.98,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7660,7 +7666,7 @@
    "amount": 58.72,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7671,7 +7677,7 @@
    "amount": 9.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7682,7 +7688,7 @@
    "amount": 10.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7693,7 +7699,7 @@
    "amount": 12.11,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7726,7 +7732,7 @@
    "amount": 12.44,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7770,7 +7776,7 @@
    "amount": 25.85,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7813,8 +7819,8 @@
    "description": "Card Purchase 05/10 Flix 122-2237631 TX Card 5128",
    "amount": 259.97,
    "kind": "expense",
-   "category": "Other Card Purchases",
-   "subcategory": "Uncategorized card purchases"
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
   },
   {
    "month": "2026-05",
@@ -7825,7 +7831,7 @@
    "amount": 7.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7836,7 +7842,7 @@
    "amount": 8.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7913,7 +7919,7 @@
    "amount": 53.83,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7924,7 +7930,7 @@
    "amount": 9.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7946,7 +7952,7 @@
    "amount": 28.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7957,7 +7963,7 @@
    "amount": 9.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7968,7 +7974,7 @@
    "amount": 33.4,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7979,7 +7985,7 @@
    "amount": 28.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -7990,7 +7996,7 @@
    "amount": 30.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8001,7 +8007,7 @@
    "amount": 31.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8023,7 +8029,7 @@
    "amount": 9.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8034,7 +8040,7 @@
    "amount": 10.57,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8045,7 +8051,7 @@
    "amount": 55.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8067,7 +8073,7 @@
    "amount": 6.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8122,7 +8128,7 @@
    "amount": 42.33,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8232,7 +8238,7 @@
    "amount": 7.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8243,7 +8249,7 @@
    "amount": 8.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8276,7 +8282,7 @@
    "amount": 29.91,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8342,7 +8348,7 @@
    "amount": 62.04,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8441,7 +8447,7 @@
    "amount": 12.99,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8650,7 +8656,7 @@
    "amount": 20.48,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -8705,7 +8711,7 @@
    "amount": 68.84,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-05",
@@ -10168,7 +10174,7 @@
    "amount": 13.36,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10190,7 +10196,7 @@
    "amount": 32.33,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10201,7 +10207,7 @@
    "amount": 5.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10212,7 +10218,7 @@
    "amount": 27.08,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10223,7 +10229,7 @@
    "amount": 33.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10245,7 +10251,7 @@
    "amount": 44.99,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10322,7 +10328,7 @@
    "amount": 90.86,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10333,7 +10339,7 @@
    "amount": 7.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10355,7 +10361,7 @@
    "amount": 31.35,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10531,7 +10537,7 @@
    "amount": 28.12,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10575,7 +10581,7 @@
    "amount": 11.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10685,7 +10691,7 @@
    "amount": 31.14,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10696,7 +10702,7 @@
    "amount": 59.13,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10707,7 +10713,7 @@
    "amount": 54.25,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10773,7 +10779,7 @@
    "amount": 50.23,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10850,7 +10856,7 @@
    "amount": 50.48,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -10883,7 +10889,7 @@
    "amount": 19.98,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11048,7 +11054,7 @@
    "amount": 28.98,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11290,7 +11296,7 @@
    "amount": 33.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11312,7 +11318,7 @@
    "amount": 31.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11422,7 +11428,7 @@
    "amount": 30.84,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11620,7 +11626,7 @@
    "amount": 50.86,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11642,7 +11648,7 @@
    "amount": 3.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11730,7 +11736,7 @@
    "amount": 77.31,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11950,7 +11956,7 @@
    "amount": 30.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11961,7 +11967,7 @@
    "amount": 30.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -11972,7 +11978,7 @@
    "amount": 81.88,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -12060,7 +12066,7 @@
    "amount": 57.34,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-06",
@@ -13589,7 +13595,7 @@
    "amount": 11.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -13743,7 +13749,7 @@
    "amount": 48.49,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -13754,7 +13760,7 @@
    "amount": 62.02,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -13765,7 +13771,7 @@
    "amount": 19.44,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -13875,7 +13881,7 @@
    "amount": 55.11,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -13941,7 +13947,7 @@
    "amount": 13.03,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -13963,7 +13969,7 @@
    "amount": 70.32,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14062,7 +14068,7 @@
    "amount": 13.93,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14073,7 +14079,7 @@
    "amount": 10.99,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14260,7 +14266,7 @@
    "amount": 56.96,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14392,7 +14398,7 @@
    "amount": 29.95,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14403,7 +14409,7 @@
    "amount": 9.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14568,7 +14574,7 @@
    "amount": 19.12,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14579,7 +14585,7 @@
    "amount": 25.82,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14634,7 +14640,7 @@
    "amount": 5.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14656,7 +14662,7 @@
    "amount": 9.66,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14700,7 +14706,7 @@
    "amount": 61.53,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14733,7 +14739,7 @@
    "amount": 25.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14821,7 +14827,7 @@
    "amount": 25.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14832,7 +14838,7 @@
    "amount": 9.99,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14887,7 +14893,7 @@
    "amount": 25.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14920,7 +14926,7 @@
    "amount": 3.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14975,7 +14981,7 @@
    "amount": 26.94,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14986,7 +14992,7 @@
    "amount": 25.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -14997,7 +15003,7 @@
    "amount": 55.62,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -15063,7 +15069,7 @@
    "amount": 25.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -15107,7 +15113,7 @@
    "amount": 21.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -15404,7 +15410,7 @@
    "amount": 5.45,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -15426,7 +15432,7 @@
    "amount": 71.66,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -15547,7 +15553,7 @@
    "amount": 9.54,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -15679,7 +15685,7 @@
    "amount": 3.0,
    "kind": "expense",
    "category": "Transportation & Tolls",
-   "subcategory": "Rideshare, tolls, parking & trucking"
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
   },
   {
    "month": "2026-07",
@@ -16357,6 +16363,4285 @@
    "section": "fees",
    "date": "2026-07-31",
    "mmdd": "07/31",
+   "description": "Monthly Service Fee",
+   "amount": 15.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment From Mounkalla Doucoure Wfct22H35B4V",
+   "amount": 3498.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment From Fantis Import And Export LLC Pncaa0Cig04M",
+   "amount": 1000.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment From Fantis Import And Export LLC Pncaa0Chl34Y",
+   "amount": 950.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment From Ho Baczzksew0Uu",
+   "amount": 600.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment From Mounkalla Doucoure Wfct22H357Tz",
+   "amount": 2.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Payment Received 08/05 Cash App*Mamadou Diaby Oakland CA Card7688",
+   "amount": 263.56,
+   "kind": "revenue",
+   "category": "Cash App / P2P In",
+   "subcategory": "Inbound Cash App / P2P receipts"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-07",
+   "mmdd": "08/07",
+   "description": "Orig CO Name:We Recycle Solar Orig ID:9999750922 Desc Date:260807 CO Entry",
+   "amount": 3978.3,
+   "kind": "revenue",
+   "category": "ACH Credits",
+   "subcategory": "Business ACH deposits from customers / vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase Return 08/08 United 01621284292 United.Com TX Card7688",
+   "amount": 193.32,
+   "kind": "revenue",
+   "category": "Refunds & Returns",
+   "subcategory": "Merchant refunds / returns"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Zelle Payment From Man Da Ho Bacr2Ef7Yz3P",
+   "amount": 4000.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Zelle Payment From Star Solar Recycling Inc Bacd75Xkpx0A",
+   "amount": 4000.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Zelle Payment From Ho Bacstt9Zb3R8",
+   "amount": 4000.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-14",
+   "mmdd": "08/14",
+   "description": "Deposit 5430112913",
+   "amount": 18544.0,
+   "kind": "revenue",
+   "category": "Check & Mobile Deposits",
+   "subcategory": "Deposited checks / items"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Deposit 1289557750",
+   "amount": 11618.0,
+   "kind": "revenue",
+   "category": "Check & Mobile Deposits",
+   "subcategory": "Deposited checks / items"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Deposit 220194638",
+   "amount": 9571.0,
+   "kind": "revenue",
+   "category": "Check & Mobile Deposits",
+   "subcategory": "Deposited checks / items"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Orig CO Name:Fabtech Santan S Orig ID:1860967280 Desc Date:SD1104 CO Entry",
+   "amount": 62000.0,
+   "kind": "revenue",
+   "category": "ACH Credits",
+   "subcategory": "Business ACH deposits from customers / vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Deposit 5430104924",
+   "amount": 14818.0,
+   "kind": "revenue",
+   "category": "Check & Mobile Deposits",
+   "subcategory": "Deposited checks / items"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase Return 08/23 Experian* Credit Repor 479-3436237 CA Card6942",
+   "amount": 6.14,
+   "kind": "revenue",
+   "category": "Refunds & Returns",
+   "subcategory": "Merchant refunds / returns"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Deposit 2183896426",
+   "amount": 18360.0,
+   "kind": "revenue",
+   "category": "Check & Mobile Deposits",
+   "subcategory": "Deposited checks / items"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase Return 08/25 Foxrentacar Phoenix Los Angeles CA Card 7688",
+   "amount": 303.93,
+   "kind": "revenue",
+   "category": "Refunds & Returns",
+   "subcategory": "Merchant refunds / returns"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Deposit 220168593",
+   "amount": 8372.0,
+   "kind": "revenue",
+   "category": "Check & Mobile Deposits",
+   "subcategory": "Deposited checks / items"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Deposit 1305409735",
+   "amount": 9985.0,
+   "kind": "revenue",
+   "category": "Check & Mobile Deposits",
+   "subcategory": "Deposited checks / items"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Deposit 2179097689",
+   "amount": 6700.0,
+   "kind": "revenue",
+   "category": "Check & Mobile Deposits",
+   "subcategory": "Deposited checks / items"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Zelle Payment From Bulk Nexus LLC Wfct22L4Lpfd",
+   "amount": 5000.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Deposit 220187299",
+   "amount": 3395.5,
+   "kind": "revenue",
+   "category": "Check & Mobile Deposits",
+   "subcategory": "Deposited checks / items"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase Return 08/29 United 01621349927 United.Com TX Card6942",
+   "amount": 6.0,
+   "kind": "revenue",
+   "category": "Refunds & Returns",
+   "subcategory": "Merchant refunds / returns"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Book Transfer Credit B/O: JPMorgan Chase Bank National Columbus OH 43240 US",
+   "amount": 2500.0,
+   "kind": "revenue",
+   "category": "Incoming Wires",
+   "subcategory": "Customer wires, Fedwire, CHIPS & instant transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "deposits",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Zelle Payment From Fitaba Ventures Group, LLC 30628124421",
+   "amount": 1000.0,
+   "kind": "revenue",
+   "category": "Zelle Received",
+   "subcategory": "Inbound Zelle transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Card Purchase 07/31 Qt 1433 Inside Mesa AZ Card 0260",
+   "amount": 11.04,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Card Purchase 07/31 Maersk A/S Maersk.Com/Fi NJ Card 7688",
+   "amount": 2740.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight & container costs"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Card Purchase 07/31 Maersk A/S Maersk.Com/Fi NJ Card 7688",
+   "amount": 1020.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight & container costs"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Payment Sent 08/01 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 200.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Payment Sent 08/01 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 25.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Card Purchase 08/01 Maersk A/S Maersk.Com/Fi NJ Card 7688",
+   "amount": 2300.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight & container costs"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Non-Chase ATM Withdraw 08/01 410 N Scottsdale Rd Ste Tempe AZ Card 7688",
+   "amount": 69.0,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Card Purchase 08/02 T-Mobile Web Payment 877-453-1304 WA Card 0260",
+   "amount": 444.87,
+   "kind": "expense",
+   "category": "Telecom & Utilities",
+   "subcategory": "Phone, internet & utilities"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Recurring Card Purchase 08/03 Google *Workspace_Fa Cc@Google.Com CA Card 7688",
+   "amount": 12.0,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Card Purchase 08/02 Tst*Hokkaido Sushi Asia Scottsdale AZ Card 7688",
+   "amount": 94.18,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Card Purchase With Pin 08/03 The Home Depot #0404 - Mesa AZ Card 7688",
+   "amount": 129.9,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-04",
+   "mmdd": "08/04",
+   "description": "Card Purchase 08/03 Expedia 73512778148011 877-7877186 WA Card 7688",
+   "amount": 194.17,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-04",
+   "mmdd": "08/04",
+   "description": "Card Purchase 08/03 Prime Video Channels Amzn.Com/Bill WA Card 7688",
+   "amount": 16.99,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-04",
+   "mmdd": "08/04",
+   "description": "Recurring Card Purchase 08/04 Apple.Com/Bill 866-712-7753 CA Card 7688",
+   "amount": 9.99,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Card Purchase 08/04 Arties Ace Hardware Mesa AZ Card 0260",
+   "amount": 32.36,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Non-Chase ATM Withdraw 08/04 403 W University DR #10 Tempe AZ Card 7688",
+   "amount": 54.0,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Card Purchase With Pin 08/05 The Home Depot #0404 - Mesa AZ Card 7688",
+   "amount": 146.04,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Card Purchase With Pin 08/05 Wm Supercenter #1646 Mesa AZ Card 7688",
+   "amount": 123.97,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-06",
+   "mmdd": "08/06",
+   "description": "Card Purchase 08/06 Expedia 73515154602666 877-7877186 WA Card 7688",
+   "amount": 152.52,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-06",
+   "mmdd": "08/06",
+   "description": "Card Purchase With Pin 08/06 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 59.02,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-07",
+   "mmdd": "08/07",
+   "description": "Card Purchase 08/05 Burger King #28956 Mesa AZ Card 7688",
+   "amount": 13.85,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-07",
+   "mmdd": "08/07",
+   "description": "Card Purchase 08/06 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 68.04,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-07",
+   "mmdd": "08/07",
+   "description": "Payment Sent 08/06 Cash App*Diego Juan Hor Oakland CA Card 7688",
+   "amount": 56.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-07",
+   "mmdd": "08/07",
+   "description": "Payment Sent 08/06 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 500.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-07",
+   "mmdd": "08/07",
+   "description": "Payment Sent 08/06 Cash App*Vitalis Ndi Oakland CA Card 7688",
+   "amount": 500.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-07",
+   "mmdd": "08/07",
+   "description": "Payment Sent 08/06 Cash App*Vitalis Ndi Oakland CA Card 7688",
+   "amount": 250.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-07",
+   "mmdd": "08/07",
+   "description": "Card Purchase With Pin 08/06 Ubr* Pending.Uber.CO San Francisco CA Card 0260",
+   "amount": 61.56,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/07 Maersk A/S Maersk.Com/Fi NJ Card 7688",
+   "amount": 180.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight & container costs"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Payment Sent 08/07 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 400.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/08 Expedia 73517101415435 877-7877186 WA Card 7688",
+   "amount": 171.77,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Payment Sent 08/07 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 200.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/07 Sq *Dark Fader Barbersh Mesa AZ Card 0260",
+   "amount": 75.0,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/09 The Azure Hotel Mesa AZ Card 7688",
+   "amount": 100.0,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/07 Kickin Crab Dobson Mesa AZ Card 7688",
+   "amount": 89.27,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase With Pin 08/07 Ubr* Pending.Uber.CO San Francisco CA Card 0260",
+   "amount": 11.25,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/07 United 01621284292 United.Com TX Card 7688",
+   "amount": 193.32,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/08 Tst* Jalapeno Dragon Mesa AZ Card 0260",
+   "amount": 12.72,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/08 Haha Innovation Inc Katy TX Card 0260",
+   "amount": 9.0,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase With Pin 08/08 The Home Depot #0456 - Mesa AZ Card 7688",
+   "amount": 231.9,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase With Pin 08/08 The Home Depot #0456 - Mesa AZ Card 7688",
+   "amount": 202.36,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/08 Qt 1433 Inside Mesa AZ Card 0260",
+   "amount": 33.0,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/08 Starbucks Store 77716 Mesa AZ Card 7688",
+   "amount": 11.26,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/08 French Toast Cafe Mesa AZ Card 0260",
+   "amount": 49.15,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase 08/08 Arties Ace Hardware Mesa AZ Card 0260",
+   "amount": 32.36,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Payment Sent 08/08 Cash App*Diego Juan Hor Oakland CA Card 7688",
+   "amount": 260.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Payment Sent 08/08 Cash App*Cheick Oumar B Oakland CA Card 7688",
+   "amount": 1300.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase With Pin 08/08 Ubr* Pending.Uber.CO San Francisco CA Card 0260",
+   "amount": 24.45,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Recurring Card Purchase 08/09 Apple.Com/Bill 866-712-7753 CA Card 7688",
+   "amount": 21.76,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase With Pin 08/09 Ubr* Pending.Uber.CO San Francisco CA Card 0260",
+   "amount": 27.93,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Card Purchase With Pin 08/09 Ubr* Pending.Uber.CO San Francisco CA Card 0260",
+   "amount": 36.46,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Non-Chase ATM Withdraw 08/10 28451 N Vistancia Blvd Peoria AZ Card 7688",
+   "amount": 43.99,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Card Purchase 07/27 Nu Car Rentals ? Phx Phoenix AZ Card 7688",
+   "amount": 453.66,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Card Purchase 08/04 Nu Car Rentals - Phx 702-4622664 AZ Card 7688",
+   "amount": 304.85,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Card Purchase 08/08 Southwes 526218913 800-435-9792 TX Card 0260",
+   "amount": 288.4,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Card Purchase 08/10 Churchs Chicken 10555 Houston TX Card 0260",
+   "amount": 14.44,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Recurring Card Purchase 08/11 Amazon Prime*C32Ws8I Amzn.Com/Bill WA Card 7688",
+   "amount": 16.32,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Card Purchase With Pin 08/11 Wm Supercenter #5332 Mesa AZ Card 7688",
+   "amount": 190.46,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Card Purchase With Pin 08/11 Uber * Pending San Francisco CA Card 0260",
+   "amount": 72.06,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Card Purchase 08/10 Ubox Hongkong Card 0260",
+   "amount": 39.8,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight & container costs"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Card Purchase 08/11 Pick Up Stix Houston TX Card 0260",
+   "amount": 12.98,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Card Purchase 08/11 The Rustic Houston TX Card 0260",
+   "amount": 3.02,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Card Purchase 08/11 Sq *Southeast Valley Re Gosq.Com AZ Card 7688",
+   "amount": 580.0,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Card Purchase 08/11 Total Quality Logisti 180-058-0310 OH Card 7688",
+   "amount": 2400.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight & container costs"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Card Purchase With Pin 08/12 Circlek #2701250 Mesa AZ Card 0260",
+   "amount": 20.36,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Payment Sent 08/12 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 1900.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Payment Sent 08/12 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 250.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-13",
+   "mmdd": "08/13",
+   "description": "Card Purchase 08/12 Arties Ace Hardware Mesa AZ Card 0260",
+   "amount": 66.11,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-13",
+   "mmdd": "08/13",
+   "description": "Card Purchase 08/12 Sq *Southeast Valley Re Gosq.Com AZ Card 7688",
+   "amount": 32.0,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-13",
+   "mmdd": "08/13",
+   "description": "Card Purchase 08/13 Sq *Southeast Valley Re Gosq.Com AZ Card 7688",
+   "amount": 10.0,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-14",
+   "mmdd": "08/14",
+   "description": "Card Purchase 08/12 Qt 1433 Inside Mesa AZ Card 0260",
+   "amount": 15.96,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-14",
+   "mmdd": "08/14",
+   "description": "Card Purchase 08/13 Chevron 0376273 Chandler AZ Card 7688",
+   "amount": 100.9,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-14",
+   "mmdd": "08/14",
+   "description": "Card Purchase With Pin 08/14 Sfc Chandler Chandler AZ Card 7688",
+   "amount": 124.55,
+   "kind": "expense",
+   "category": "Other Card Purchases",
+   "subcategory": "Uncategorized card purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase 08/15 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 21.57,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase With Pin 08/15 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 31.26,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Recurring Card Purchase 08/15 Wix.Com 1256557465 Www.Wix.Com CA Card 0260",
+   "amount": 50.08,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "ATM Withdrawal 08/15 3572 S Power Rd Gilbert AZ Card 7688",
+   "amount": 125.0,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase With Pin 08/15 Wal-Mart #5332 Mesa AZ Card 7688",
+   "amount": 72.01,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase 08/15 Central Bbq Lakehouse Tempe AZ Card 7688",
+   "amount": 35.64,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase 08/16 Prime Video Channels Amzn.Com/Bill WA Card 7688",
+   "amount": 19.99,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Payment Sent 08/16 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 200.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Recurring Card Purchase 08/16 Apple.Com/Bill 866-712-7753 CA Card 7688",
+   "amount": 16.32,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase 08/16 Prime Video *5A0Tv0Zt 888-802-3080 WA Card 7688",
+   "amount": 14.99,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase With Pin 08/16 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 26.05,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase With Pin 08/16 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 20.0,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase With Pin 08/16 Wm Supercenter #3861 Gilbert AZ Card 7688",
+   "amount": 31.14,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase With Pin 08/17 Qt 1433 Outside Mesa AZ Card 7688",
+   "amount": 22.07,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Non-Chase ATM Withdraw 08/17 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 123.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase With Pin 08/17 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 15.24,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Card Purchase With Pin 08/17 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 2.81,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Payment Sent 08/17 Cash App*Fatoumata Maig Oakland CA Card 7688",
+   "amount": 2000.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Payment Sent 08/17 Cash App*Fatoumata Maig Oakland CA Card 7688",
+   "amount": 133.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "ATM Withdrawal 08/17 1528 E Buckeye Rd Phoenix AZ Card 7688",
+   "amount": 1000.0,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase 08/17 Arties Ace Hardware Mesa AZ Card 0260",
+   "amount": 64.23,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Recurring Card Purchase 08/17 Cloaked Subscription Cloaked.Com MA Card 0260",
+   "amount": 15.99,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase 08/17 Subway 57431 Phoenix AZ Card 0260",
+   "amount": 14.71,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase 08/18 Expedia 73524352832229 877-7877186 WA Card 7688",
+   "amount": 435.58,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase 08/17 Nu Car Rentals 877-5357117 TX Card 7688",
+   "amount": 317.35,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase 08/18 Expedia 73524375159610 877-7877186 WA Card 7688",
+   "amount": 144.0,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase 08/18 Expedia 73524390195031 877-7877186 WA Card 7688",
+   "amount": 398.23,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase 08/17 Foxrentacar Phoenix Los Angeles CA Card 7688",
+   "amount": 500.0,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase 08/17 IN-N-Out Mesa (Power) Mesa AZ Card 7688",
+   "amount": 17.22,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase 08/17 Sq *Southeast Valley Re Gosq.Com AZ Card 7688",
+   "amount": 160.05,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase With Pin 08/17 Uber * Pending San Francisco CA Card 0260",
+   "amount": 10.87,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase With Pin 08/18 Circlek #2701250 Mesa AZ Card 0260",
+   "amount": 2.81,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase With Pin 08/18 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 56.02,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase With Pin 08/18 Qt 1433 Outside Mesa AZ Card 7688",
+   "amount": 25.32,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase With Pin 08/18 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 41.13,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "ATM Withdrawal 08/18 3572 S Power Rd Gilbert AZ Card 7688",
+   "amount": 800.0,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Card Purchase With Pin 08/18 Sfc Chandler Chandler AZ Card 7688",
+   "amount": 147.31,
+   "kind": "expense",
+   "category": "Other Card Purchases",
+   "subcategory": "Uncategorized card purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Card Purchase 08/17 Nu Car Rentals - Phx 702-4622664 AZ Card 7688",
+   "amount": 396.42,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Card Purchase 08/18 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 14.99,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Card Purchase 08/18 IN-N-Out Mesa (Power) Mesa AZ Card 7688",
+   "amount": 9.42,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Card Purchase With Pin 08/18 Uber * Pending San Francisco CA Card 0260",
+   "amount": 44.98,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Card Purchase With Pin 08/19 Circlek #2705284 Mesa AZ Card 7688",
+   "amount": 46.27,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Card Purchase With Pin 08/19 Uber * Pending San Francisco CA Card 6942",
+   "amount": 28.96,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Card Purchase With Pin 08/19 Uber * Pending San Francisco CA Card 6942",
+   "amount": 32.01,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Card Purchase With Pin 08/20 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 20.0,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Payment Sent 08/20 Cash App*Fanta Oakland CA Card 7688",
+   "amount": 300.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Card Purchase With Pin 08/20 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 64.79,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Non-Chase ATM Withdraw 08/20 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 303.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Non-Chase ATM Withdraw 08/20 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 303.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Non-Chase ATM Withdraw 08/20 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 203.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Card Purchase With Pin 08/20 Uber * Pending San Francisco CA Card 6942",
+   "amount": 36.64,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Card Purchase 08/19 Extra Space 4276 Bronx NY Card 7688",
+   "amount": 413.0,
+   "kind": "expense",
+   "category": "Rent & Facilities",
+   "subcategory": "Storage unit rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Card Purchase 08/19 North Italia Gilbert Gilbert AZ Card 7688",
+   "amount": 210.0,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Card Purchase 08/20 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 8.77,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Card Purchase 08/20 IN *A.S.I Cyber Concep 510-4682642 CA Card 7688",
+   "amount": 2871.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase 08/21 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 52.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Payment Sent 08/21 Cash App*Smith Transpor Oakland CA Card 7688",
+   "amount": 700.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase With Pin 08/22 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 6.39,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Recurring Card Purchase 08/22 Tmobile*Auto Pay 800-937-8997 WA Card 6942",
+   "amount": 422.55,
+   "kind": "expense",
+   "category": "Telecom & Utilities",
+   "subcategory": "Phone, internet & utilities"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase 08/22 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 37.35,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase 08/22 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 32.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase 08/22 Sq *Jj Donuts LLC Mesa AZ Card 7688",
+   "amount": 11.65,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase With Pin 08/22 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 43.62,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Withdraw 08/22 310 N Mesa DR Mesa AZ Card 7688",
+   "amount": 303.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Withdraw 08/22 310 N Mesa DR Mesa AZ Card 7688",
+   "amount": 23.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase With Pin 08/22 Circlek #2701994 Mesa AZ Card 7688",
+   "amount": 3.99,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase With Pin 08/22 Uber * Pending San Francisco CA Card 6942",
+   "amount": 27.93,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Recurring Card Purchase 08/23 Experian* Credit Repor 479-3436237 CA Card 6942",
+   "amount": 43.54,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase With Pin 08/23 Wal-Mart #2482 - Mesa AZ Card 7688",
+   "amount": 99.97,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase With Pin 08/23 Wal-Mart #2482 Mesa AZ Card 7688",
+   "amount": 6.1,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase With Pin 08/24 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 6.27,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase 08/24 Sq *Jj Donuts LLC Mesa AZ Card 7688",
+   "amount": 5.83,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Withdraw 08/24 5215 S Ellsworth Rd Mesa AZ Card 7688",
+   "amount": 402.5,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Withdraw 08/24 5215 S Ellsworth Rd Mesa AZ Card 7688",
+   "amount": 82.5,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Withdraw 08/24 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 23.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Card Purchase With Pin 08/24 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 25.01,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Card Purchase 08/23 West Hut African Cuisi Phoenix AZ Card 7688",
+   "amount": 96.01,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Card Purchase 08/23 West Hut African Cuisi Phoenix AZ Card 7688",
+   "amount": 170.08,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Card Purchase 08/24 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 91.78,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Payment Sent 08/24 Cash App*Abdoulaye Kona Oakland CA Card 7688",
+   "amount": 97.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Recurring Card Purchase 08/25 Apple.Com/Bill 866-712-7753 CA Card 7688",
+   "amount": 21.21,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Card Purchase With Pin 08/25 The Home Depot #0477 - Phoenix AZ Card 7688",
+   "amount": 43.51,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Card Purchase With Pin 08/25 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 37.89,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Card Purchase 08/25 Sq *Jj Donuts LLC Mesa AZ Card 7688",
+   "amount": 11.65,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Card Purchase With Pin 08/25 Qt 1433 Outside Mesa AZ Card 7688",
+   "amount": 29.71,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Card Purchase With Pin 08/25 Circlek #2705405 Phoenix AZ Card 7688",
+   "amount": 52.97,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Card Purchase With Pin 08/25 Uber * Pending San Francisco CA Card 6942",
+   "amount": 32.24,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/25 Mta*Nyct Paygo New York NY Card 6942",
+   "amount": 8.75,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/25 Mta*Nyct Paygo New York NY Card 6942",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/25 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 64.76,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/25 Mta*Nyct Paygo New York NY Card 6942",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/25 Mta*Nyct Paygo New York NY Card 6942",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/25 Mta*Nyct Paygo New York NY Card 6942",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/26 Expedia 73530070694454 877-7877186 WA Card 7688",
+   "amount": 126.0,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/25 2829 Palace Food New York NY Card 6942",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/25 Clean Freak - 2709028 Phoenix AZ Card 7688",
+   "amount": 11.0,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/26 Tst* New Africa Superma Glendale AZ Card 7688",
+   "amount": 237.38,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/26 Tst* New Africa Superma Glendale AZ Card 7688",
+   "amount": 13.25,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Payment Sent 08/26 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 200.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/26 Ap011 - Preflight Phoen Phoenix AZ Card 7688",
+   "amount": 12.75,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase 08/26 Sq *Jj Donuts LLC Mesa AZ Card 7688",
+   "amount": 5.83,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase With Pin 08/26 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 70.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase With Pin 08/26 Qt 1433 Outside Mesa AZ Card 7688",
+   "amount": 31.05,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase With Pin 08/26 Shell Service Station New York NY Card 6942",
+   "amount": 20.0,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Non-Chase ATM Withdraw 08/26 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 303.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Non-Chase ATM Withdraw 08/26 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 303.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Non-Chase ATM Withdraw 08/26 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 243.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Card Purchase With Pin 08/26 Uber * Pending San Francisco CA Card 6942",
+   "amount": 30.97,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Card Purchase 08/26 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 6.5,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Card Purchase 08/26 138 Lube LLC Bronx NY Card 6942",
+   "amount": 108.84,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Card Purchase 08/27 Wanderu.Com Boston MA Card 6942",
+   "amount": 51.98,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Recurring Card Purchase 08/27 Linkedin*P3077198368 855-6535653 CA Card 6942",
+   "amount": 43.54,
+   "kind": "expense",
+   "category": "Software & Subscriptions",
+   "subcategory": "SaaS, subscriptions & online services"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Payment Sent 08/27 Cash App*Fantacoulibaly Oakland CA Card 7688",
+   "amount": 200.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Card Purchase With Pin 08/27 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 30.02,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Card Purchase With Pin 08/27 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 92.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Card Purchase With Pin 08/27 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 39.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Payment Sent 08/27 Cash App*Gante Traore Oakland CA Card 7688",
+   "amount": 620.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Card Purchase With Pin 08/27 Shell Service Station Mesa AZ Card 7688",
+   "amount": 49.86,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase 08/27 Flix Dallas TX Card 6942",
+   "amount": 40.98,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase 08/27 IN *A.S.I Cyber Concep 510-4682642 CA Card 7688",
+   "amount": 812.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase 08/28 Frontier Utilities 866-926-8192 TX Card 7688",
+   "amount": 309.42,
+   "kind": "expense",
+   "category": "Telecom & Utilities",
+   "subcategory": "Phone, internet & utilities"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase 08/27 Maersk A/S Maersk.Com/Fi NJ Card 7688",
+   "amount": 240.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight & container costs"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase 08/27 Maersk A/S Maersk.Com/Fi NJ Card 6942",
+   "amount": 6740.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight & container costs"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase 08/27 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 13.16,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase 08/28 Empower* Raheem Dial Driveempower. VA Card 6942",
+   "amount": 20.39,
+   "kind": "expense",
+   "category": "Other Card Purchases",
+   "subcategory": "Uncategorized card purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase With Pin 08/28 Qt 1433 Outside Mesa AZ Card 7688",
+   "amount": 27.99,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase With Pin 08/28 Dalaba African Americ- New York NY Card 6942",
+   "amount": 8.84,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Non-Chase ATM Withdraw 08/28 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 303.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Non-Chase ATM Withdraw 08/28 330 E Broadway Rd Mesa AZ Card 7688",
+   "amount": 103.95,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase With Pin 08/28 Wal-Mart #2482 - Mesa AZ Card 7688",
+   "amount": 16.24,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase With Pin 08/28 Uber * Pending San Francisco CA Card 6942",
+   "amount": 38.68,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Card Purchase With Pin 08/28 Uber * Pending San Francisco CA Card 6942",
+   "amount": 14.71,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/27 Utility Payment Onlin 832-782-5265 TX Card 7688",
+   "amount": 15.6,
+   "kind": "expense",
+   "category": "Telecom & Utilities",
+   "subcategory": "Phone, internet & utilities"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/27 Hcmud165 281-861-0215 TX Card 7688",
+   "amount": 390.0,
+   "kind": "expense",
+   "category": "Telecom & Utilities",
+   "subcategory": "Phone, internet & utilities"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/28 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 56.48,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/28 Gristedes # 524 New York NY Card 6942",
+   "amount": 6.99,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/28 Mta*Nyct Paygo New York NY Card 6942",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Payment Sent 08/28 Cash App*Souadou Bah*Ad Oakland CA Card 6942",
+   "amount": 4000.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/28 Uber * Eats Pendin San Francisco CA Card 6942",
+   "amount": 34.81,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/29 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 50.0,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/29 Circlek #2701250 Mesa AZ Card 7688",
+   "amount": 52.96,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/29 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 52.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/29 Qt 1433 Inside Mesa AZ Card 7688",
+   "amount": 13.16,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/29 Arties Ace Hardware Mesa AZ Card 7688",
+   "amount": 56.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Equipment, tools & hardware"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/29 United 01621349769 United.Com TX Card 6942",
+   "amount": 264.4,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/29 United 01647271467 United.Com TX Card 6942",
+   "amount": 80.09,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/29 Sq *Southeast Valley Re Gosq.Com AZ Card 7688",
+   "amount": 3414.4,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/29 Phx T3 Scramble 6291122 Phoenix AZ Card 6942",
+   "amount": 27.81,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "ATM Withdrawal 08/29 3572 S Power Rd Gilbert AZ Card 7688",
+   "amount": 510.0,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/29 Airbnb * Hmetbmsjrb Airbnb.Com CA Card 6942",
+   "amount": 624.92,
+   "kind": "expense",
+   "category": "Travel & Lodging",
+   "subcategory": "Flights, hotels & car rental"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/29 LA Raza Taqueria & Carn Houston TX Card 6942",
+   "amount": 43.18,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/29 Gamestop #1717 1440 Fr Houston TX Card 6942",
+   "amount": 646.12,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase 08/30 Cash App*Mamadou Diaby* Cash.App CA Card 7688",
+   "amount": 52.26,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Payment Sent 08/30 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 20.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/29 Uber * Pending San Francisco CA Card 6942",
+   "amount": 28.02,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/29 Uber * Pending San Francisco CA Card 6942",
+   "amount": 38.48,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Payment Sent 08/31 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 20.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/31 Qt 1433 Outside Mesa AZ Card 7688",
+   "amount": 35.63,
+   "kind": "expense",
+   "category": "Fuel & Gas",
+   "subcategory": "Vehicle fuel"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Payment Sent 08/31 Cash App*Mamadou Diaby* Oakland CA Card 7688",
+   "amount": 20.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Apple Cash / Cash App transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/31 Ubr* Pending.Uber.CO San Francisco CA Card 6942",
+   "amount": 67.82,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/31 Uber * Pending San Francisco CA Card 6942",
+   "amount": 5.0,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Non-Chase ATM Withdraw 08/31 5215 S Ellsworth Rd Mesa AZ Card 7688",
+   "amount": 402.5,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Non-Chase ATM Withdraw 08/31 5215 S Ellsworth Rd Mesa AZ Card 7688",
+   "amount": 462.5,
+   "kind": "expense",
+   "category": "Cash Withdrawals",
+   "subcategory": "ATM cash withdrawals"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/31 Feast Wave - Oakland CA Card 6942",
+   "amount": 29.0,
+   "kind": "expense",
+   "category": "Meals, Groceries & Retail",
+   "subcategory": "Food, groceries & retail purchases"
+  },
+  {
+   "month": "2026-08",
+   "section": "atm",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Card Purchase With Pin 08/31 Uber *Trip Help.Ub San Francisco CA Card 6942",
+   "amount": 11.96,
+   "kind": "expense",
+   "category": "Transportation & Tolls",
+   "subcategory": "Rideshare, tolls, parking & vehicle upkeep"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment To Abdoulaye Konate 30236890163",
+   "amount": 600.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment To Abbas Fetanat Jpm99Crjwrf4",
+   "amount": 850.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment To Hilaris Lantigua 30264901029",
+   "amount": 4000.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment To Siga Camara Jpm99Crnplmk",
+   "amount": 1000.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Crp6Lu7",
+   "amount": 450.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-04",
+   "mmdd": "08/04",
+   "description": "Zelle Payment To Abdoulaye Konate 30279057758",
+   "amount": 100.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-04",
+   "mmdd": "08/04",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Crtwq6L",
+   "amount": 800.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-04",
+   "mmdd": "08/04",
+   "description": "Zelle Payment To Abdoulaye Konate 30284056657",
+   "amount": 100.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Zelle Payment To Jose Tehuintle Jpm99Cry1De5",
+   "amount": 375.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Zelle Payment To My Wife 30293699638",
+   "amount": 500.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Crz66K8",
+   "amount": 632.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Zelle Payment To Abdoulaye Konate 30296205482",
+   "amount": 150.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Csa5Wdo",
+   "amount": 700.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Zelle Payment To Abdoulaye Konate 30333309728",
+   "amount": 400.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Zelle Payment To Souadou 30360865667",
+   "amount": 1800.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Zelle Payment To Abdoulaye Konate 30361047654",
+   "amount": 500.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Zelle Payment To Souadou 30362460685",
+   "amount": 630.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Zelle Payment To Abdoulaye Konate 30364443684",
+   "amount": 200.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Csp8K9A",
+   "amount": 1437.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-11",
+   "mmdd": "08/11",
+   "description": "Zelle Payment To Abdoulaye Konate 30372240128",
+   "amount": 150.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Zelle Payment To Abdoulaye Konate 30375308583",
+   "amount": 200.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-12",
+   "mmdd": "08/12",
+   "description": "Zelle Payment To Allassance Jpm99Csrc58D",
+   "amount": 800.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Zelle Payment To Mini Gang Jpm99CT7Qdha",
+   "amount": 3000.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Zelle Payment To My Wife 30425517268",
+   "amount": 500.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Zelle Payment To Allassance Jpm99CT96Avn",
+   "amount": 480.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Zelle Payment To Abdoulaye Konate 30426454976",
+   "amount": 555.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Zelle Payment To Souadou 30436026501",
+   "amount": 1500.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Zelle Payment To Kabine Dialo Ablaye Friend Jpm99Ctd7C62",
+   "amount": 480.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Zelle Payment To Dwight Aluminum Machine Guy Jpm99Ctgascp",
+   "amount": 1000.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Zelle Payment To Souadou 30450253634",
+   "amount": 822.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Zelle Payment To Abdoulaye Konate 30453926040",
+   "amount": 60.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Zelle Payment To Hilaris Lantigua 30457775689",
+   "amount": 5000.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Zelle Payment To Maman Jpm99Ctjwvvs",
+   "amount": 550.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-18",
+   "mmdd": "08/18",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Ctjynhv",
+   "amount": 140.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Zelle Payment To Fantis Import And Export LLC, Owing Jpm99Ctm77B9",
+   "amount": 850.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "08/19 Online Domestic Wire Transfer Via: Truist Bank/061000104 A/C: Tbf Computing Inc",
+   "amount": 20000.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "08/19 Online Domestic Wire Transfer Via: Wells Fargo NA/121000248 A/C: Maher Terminals",
+   "amount": 910.92,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "08/19 Telephone Transfer To Chk Xxxxxx0283",
+   "amount": 20000.0,
+   "kind": "expense",
+   "category": "Internal Transfer Out",
+   "subcategory": "Transfer to linked / own account"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Zelle Payment To Abdoulaye Konate 30471933270",
+   "amount": 1580.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "08/19 Online Domestic Wire Transfer Via: Natl Bk Tucson/122105320 A/C: Santan Solar",
+   "amount": 3335.0,
+   "kind": "expense",
+   "category": "Solar & Equipment Suppliers",
+   "subcategory": "Solar panels, inverters & equipment"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Zelle Payment To Janette Santan Solar Jpm99Ctodcaf",
+   "amount": 676.0,
+   "kind": "expense",
+   "category": "Solar & Equipment Suppliers",
+   "subcategory": "Solar panels, inverters & equipment"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Zelle Payment To Shine Logistics 30474394337",
+   "amount": 3600.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight, warehousing & carriers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Zelle Payment To Kabine Dialo Ablaye Friend Jpm99Ctoffqu",
+   "amount": 320.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Zelle Payment To Allassance Jpm99Ctofuho",
+   "amount": 320.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Zelle Payment To Abdoulaye Konate 30474600069",
+   "amount": 370.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Zelle Payment To Mini Gang Jpm99Ctogbyx",
+   "amount": 400.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Zelle Payment To Abdoulaye Konate 30478639207",
+   "amount": 80.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Zelle Payment To Day Worker Mesa Jpm99Ctr923Z",
+   "amount": 150.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Zelle Payment To Mini Gang Jpm99Ctrth0G",
+   "amount": 400.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Ctsbx3K",
+   "amount": 355.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Zelle Payment To Abdoulaye Konate 30488501579",
+   "amount": 232.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Zelle Payment To Allassance Jpm99Ctt32Zf",
+   "amount": 205.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Zelle Payment To Kabine Dialo Ablaye Friend Jpm99Ctt3B8Q",
+   "amount": 160.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Zelle Payment To Mini Gang Jpm99Ctt2X6O",
+   "amount": 160.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Zelle Payment To Mini Gang Jpm99Ctt3Jam",
+   "amount": 150.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-21",
+   "mmdd": "08/21",
+   "description": "Zelle Payment To Souadou 30506189581",
+   "amount": 110.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Oakland Warehouse 7Villagesshipp Jpm99Ctxr1Xa",
+   "amount": 2000.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight, warehousing & carriers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Allassance Jpm99Ctxvoa1",
+   "amount": 150.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Sandra Maraka Mother Jpm99Ctxybux",
+   "amount": 500.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Ctyickg",
+   "amount": 160.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Wilder Guy For The Aluminum Mach Jpm99CU1Dh7T",
+   "amount": 320.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Abdoulaye Konate 30517282241",
+   "amount": 470.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Mini Gang Jpm99CU1H5L2",
+   "amount": 300.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Allassance Jpm99CU1Hnk7",
+   "amount": 310.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Kabine Dialo Ablaye Friend Jpm99CU1I57F",
+   "amount": 283.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Souadou 30517928724",
+   "amount": 785.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Gante Traore Houston Sp Warehous 30519425403",
+   "amount": 1500.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Kabine Dialo Ablaye Friend Jpm99CU3K3En",
+   "amount": 37.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Souadou 30523086469",
+   "amount": 1000.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Souadou 30523087759",
+   "amount": 346.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "08/24 Online International Wire Transfer A/C: Foreign Cur Bus Acct Bk 1 Columbus Newark De",
+   "amount": 2500.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Zelle Payment To Abdoulaye Konate 30539864823",
+   "amount": 168.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Zelle Payment To Fatoumata Kaba Jpm99CU8Nb65",
+   "amount": 1300.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Zelle Payment To Mini Gang Jpm99CU8T24A",
+   "amount": 160.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Zelle Payment To Kabine Dialo Ablaye Friend Jpm99CU8T2Ja",
+   "amount": 160.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Zelle Payment To Allassance Jpm99CU8Tk8J",
+   "amount": 218.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99CU8T9N2",
+   "amount": 158.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Zelle Payment To Abdoulaye Konate 30548033147",
+   "amount": 490.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-25",
+   "mmdd": "08/25",
+   "description": "Zelle Payment To My Wife 30549906795",
+   "amount": 200.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Zelle Payment To Abdoulaye Konate 30561852652",
+   "amount": 400.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Zelle Payment To Mini Gang Jpm99Cuf3M87",
+   "amount": 320.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Zelle Payment To Allassance Jpm99Cuf4Bcd",
+   "amount": 409.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Cuf3Z4R",
+   "amount": 151.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Zelle Payment To Kabine Dialo Ablaye Friend Jpm99Cuf3Zs7",
+   "amount": 320.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "08/27 Online Domestic Wire Transfer Via: Byline Bank/071001533 A/C: First America Morris IL",
+   "amount": 10000.0,
+   "kind": "expense",
+   "category": "Suppliers & Inventory",
+   "subcategory": "Vendor wire (First America)"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Zelle Payment To Shine Logistics 30575040258",
+   "amount": 2000.0,
+   "kind": "expense",
+   "category": "Shipping & Logistics",
+   "subcategory": "Freight, warehousing & carriers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Zelle Payment To Fatoumata Kaba Jpm99Cuixsyj",
+   "amount": 2000.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "08/28 Online Domestic Wire Transfer Via: Natl Bk Tucson/122105320 A/C: Santan Solar",
+   "amount": 4400.0,
+   "kind": "expense",
+   "category": "Solar & Equipment Suppliers",
+   "subcategory": "Solar panels, inverters & equipment"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Zelle Payment To Day Worker Mesa Jpm99Culn12Q",
+   "amount": 550.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Zelle Payment To Souadou 30587881502",
+   "amount": 7000.0,
+   "kind": "expense",
+   "category": "Owner & Family Draws",
+   "subcategory": "Owner / related-party transfers"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Zelle Payment To Diaby Uncle Jpm99Cunytch",
+   "amount": 300.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Zelle Payment To Allassance Jpm99Cuoptuc",
+   "amount": 394.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Zelle Payment To Cheick Bagayoko Jpm99Cuoqbza",
+   "amount": 100.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Zelle Payment To Kabine Dialo Ablaye Friend Jpm99Cuoracx",
+   "amount": 240.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Zelle Payment To Mini Gang Jpm99Cuor3Lq",
+   "amount": 300.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "electronic",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Zelle Payment To Johnny Dorlus VAN/Truck Driver H Jpm99Cuqae58",
+   "amount": 200.0,
+   "kind": "expense",
+   "category": "Contractor & Vendor Payments",
+   "subcategory": "Zelle / wires to workers & vendors"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-03",
+   "mmdd": "08/03",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-05",
+   "mmdd": "08/05",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-10",
+   "mmdd": "08/10",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-13",
+   "mmdd": "08/13",
+   "description": "Overdraft Fee For A $1,900.00 Payment Sent - Details: 0812Cash App*Mamadou Diaby*",
+   "amount": 34.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-13",
+   "mmdd": "08/13",
+   "description": "Overdraft Fee For A $250.00 Payment Sent - Details: 0812Cash App*Mamadou Diaby*",
+   "amount": 34.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-17",
+   "mmdd": "08/17",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Online Domestic Wire Fee",
+   "amount": 25.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Online Domestic Wire Fee",
+   "amount": 25.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-19",
+   "mmdd": "08/19",
+   "description": "Online Domestic Wire Fee",
+   "amount": 25.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-20",
+   "mmdd": "08/20",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Online Fx International Wire Fee",
+   "amount": 5.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-24",
+   "mmdd": "08/24",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-26",
+   "mmdd": "08/26",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-27",
+   "mmdd": "08/27",
+   "description": "Online Domestic Wire Fee",
+   "amount": 25.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Online Domestic Wire Fee",
+   "amount": 25.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-28",
+   "mmdd": "08/28",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Non-Chase ATM Fee-With",
+   "amount": 3.0,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
+   "description": "Cash Deposit Immediate",
+   "amount": 5.1,
+   "kind": "expense",
+   "category": "Bank Fees & Charges",
+   "subcategory": "Chase fees, overdraft, wire & ATM fees"
+  },
+  {
+   "month": "2026-08",
+   "section": "fees",
+   "date": "2026-08-31",
+   "mmdd": "08/31",
    "description": "Monthly Service Fee",
    "amount": 15.0,
    "kind": "expense",

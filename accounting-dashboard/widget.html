@@ -1,5 +1,5 @@
 <title>AESENERGY Ledger</title>
-<meta name="description" content="Revenue & expense dashboard for AESENERGY LLC, Jan–Jul 2026">
+<meta name="description" content="Revenue & expense dashboard for AESENERGY LLC, Jan–Aug 2026">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -222,11 +222,11 @@ textarea{width:100%;height:230px;border:1px solid var(--hair);border-radius:10px
     </div>
     <div>
       <div class="brandname">AESENERGY <span style="color:var(--brand-ink)">Ledger</span></div>
-      <div class="brandsub">Revenue &amp; Expense Dashboard · Jan – Jul 2026</div>
+      <div class="brandsub">Revenue &amp; Expense Dashboard · Jan – Aug 2026</div>
     </div>
     <div class="acct">
       <b>Chase Business Complete Checking</b>
-      Account ····1863 · 7 statements
+      Account ····1863 · 8 statements
     </div>
     <div class="hbtns">
       <button class="btn primary" id="extractBtn" title="Extract data">
@@ -242,7 +242,7 @@ textarea{width:100%;height:230px;border:1px solid var(--hair);border-radius:10px
 
 <div class="wrap">
   <div class="period">
-    <span class="eyebrow" id="periodLabel">7-month overview</span>
+    <span class="eyebrow" id="periodLabel">8-month overview</span>
     <div class="toggle" role="group" aria-label="Cash-flow view">
       <button id="viewAll" aria-pressed="true">All cash flow</button>
       <button id="viewOp" aria-pressed="false">Operating only</button>
@@ -329,7 +329,7 @@ const EXP_COLOR = {
 const REV_COLOR = {
   'Incoming Wires':'--c-blue','Check & Mobile Deposits':'--c-aqua','Cash Deposits':'--c-yellow',
   'Zelle Received':'--c-magenta','Refunds & Returns':'--c-orange','Other Income':'--c-violet',
-  'Cash App / P2P In':'--c-red','Internal Transfer In':'--c-gray','Owner Contributions':'--c-gray2'
+  'Cash App / P2P In':'--c-red','ACH Credits':'--c-green','Internal Transfer In':'--c-gray','Owner Contributions':'--c-gray2'
 };
 const colorOf = (cat, isRev)=>{
   const m = isRev?REV_COLOR:EXP_COLOR;
