@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#221F1C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Guest Studio">
+<title>Guest Studio</title>
+<meta name="description" content="A quiet-luxury booking board for podcast topics and guests — accordion topics, a date view, and a status board, saved to your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Mulish:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F1ECE2;        /* ivory / cream ground */
+  --surface:#FAF7F1;      /* raised card */
+  --surface-2:#F4EFE6;    /* inset / sunken */
+  --ink:#221F1C;          /* charcoal text */
+  --ink-2:#5A544C;        /* muted text */
+  --ink-3:#8C8478;        /* faint text */
+  --brass:#C9A227;        /* accent */
+  --brass-deep:#A5811A;
+  --taupe:#C9B08E;        /* warm secondary */
+  --line:rgba(34,31,28,.12);
+  --line-soft:rgba(34,31,28,.07);
+  --shadow:0 1px 2px rgba(34,31,28,.05),0 8px 30px rgba(34,31,28,.06);
+  --shadow-lift:0 4px 14px rgba(34,31,28,.10),0 18px 50px rgba(34,31,28,.14);
+  --radius:14px;
+
+  /* status hues — muted, sophisticated */
+  --s-identified:#8C8478;
+  --s-contacted:#B98A17;
+  --s-confirmed:#5E7D4F;
+  --s-recorded:#4A6D8C;
+  --s-aired:#6E5A8C;
+
+  --backdrop:rgba(34,31,28,.42);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1B1916;
+    --surface:#242019;
+    --surface-2:#201C16;
+    --ink:#F1ECE2;
+    --ink-2:#C3BAAC;
+    --ink-3:#8C8478;
+    --brass:#D8B23E;
+    --brass-deep:#C9A227;
+    --taupe:#C9B08E;
+    --line:rgba(241,236,226,.14);
+    --line-soft:rgba(241,236,226,.08);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 34px rgba(0,0,0,.4);
+    --shadow-lift:0 6px 18px rgba(0,0,0,.4),0 22px 60px rgba(0,0,0,.55);
+    --s-identified:#A79E90;
+    --s-contacted:#D8AE3C;
+    --s-confirmed:#84A56F;
+    --s-recorded:#7CA0BF;
+    --s-aired:#A38FC0;
+    --backdrop:rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1B1916;
+  --surface:#242019;
+  --surface-2:#201C16;
+  --ink:#F1ECE2;
+  --ink-2:#C3BAAC;
+  --ink-3:#8C8478;
+  --brass:#D8B23E;
+  --brass-deep:#C9A227;
+  --taupe:#C9B08E;
+  --line:rgba(241,236,226,.14);
+  --line-soft:rgba(241,236,226,.08);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 34px rgba(0,0,0,.4);
+  --shadow-lift:0 6px 18px rgba(0,0,0,.4),0 22px 60px rgba(0,0,0,.55);
+  --s-identified:#A79E90;
+  --s-contacted:#D8AE3C;
+  --s-confirmed:#84A56F;
+  --s-recorded:#7CA0BF;
+  --s-aired:#A38FC0;
+  --backdrop:rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Mulish",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:64px;
+}
+img{max-width:100%;display:block}
+[hidden]{display:none!important}
+button{font-family:inherit;cursor:pointer}
+::selection{background:color-mix(in srgb,var(--brass) 32%,transparent)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:4px}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+/* ---------- Header ---------- */
+header.top{
+  position:sticky;top:0;z-index:40;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:saturate(1.2) blur(12px);
+  -webkit-backdrop-filter:saturate(1.2) blur(12px);
+  border-bottom:1px solid var(--line-soft);
+}
+.top-row{display:flex;align-items:center;gap:16px;padding:15px 0 13px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.mark{
+  width:38px;height:38px;flex:none;border-radius:11px;
+  background:linear-gradient(150deg,var(--brass),var(--brass-deep));
+  display:grid;place-items:center;color:#221F1C;box-shadow:var(--shadow);
+}
+.mark svg{width:20px;height:20px}
+.brand-txt{min-width:0}
+.brand-txt h1{
+  font-family:"Fraunces",Georgia,serif;font-weight:500;
+  font-size:21px;line-height:1;margin:0;letter-spacing:.2px;
+}
+.brand-txt p{margin:3px 0 0;font-size:11.5px;color:var(--ink-2);letter-spacing:.28px;text-transform:uppercase}
+.spacer{flex:1}
+.hbtns{display:flex;gap:8px;align-items:center}
+
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  padding:9px 14px;border-radius:10px;font-weight:600;font-size:13.5px;
+  transition:transform .12s ease,box-shadow .12s ease,background .15s ease;
+  white-space:nowrap;
+}
+.btn:hover{box-shadow:var(--shadow)}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:16px;height:16px;flex:none}
+.btn.primary{background:linear-gradient(150deg,var(--brass),var(--brass-deep));border-color:transparent;color:#221F1C}
+.btn.ghost{background:transparent}
+.btn.icon{padding:9px}
+.btn.sm{padding:7px 11px;font-size:12.5px}
+
+/* ---------- View switcher ---------- */
+.switcher{display:flex;gap:4px;padding:5px;background:var(--surface-2);border:1px solid var(--line-soft);border-radius:12px;margin:2px 0 18px}
+.switcher button{
+  flex:1;border:0;background:transparent;color:var(--ink-2);
+  padding:9px 10px;border-radius:9px;font-weight:600;font-size:13.5px;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  transition:background .15s ease,color .15s ease,box-shadow .15s ease;
+}
+.switcher button svg{width:15px;height:15px}
+.switcher button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+
+/* ---------- Section intro ---------- */
+.view-head{display:flex;align-items:baseline;gap:12px;margin:0 0 16px;flex-wrap:wrap}
+.view-head h2{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:26px;margin:0;letter-spacing:.2px}
+.view-head .sub{color:var(--ink-2);font-size:13.5px}
+
+/* ---------- Topic accordion ---------- */
+.topics{display:flex;flex-direction:column;gap:14px}
+.topic{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.topic-head{
+  display:flex;align-items:center;gap:14px;width:100%;
+  padding:16px 16px;border:0;background:transparent;text-align:left;color:inherit;
+}
+.chev{width:20px;height:20px;flex:none;color:var(--ink-3);transition:transform .22s ease}
+.topic.open .chev{transform:rotate(90deg);color:var(--brass-deep)}
+.topic-title{min-width:0;flex:1}
+.topic-title .name{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:18px;line-height:1.2;letter-spacing:.15px}
+.topic-title .desc{color:var(--ink-2);font-size:12.5px;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topic-meta{display:flex;align-items:center;gap:10px;flex:none}
+.count{
+  font-variant-numeric:tabular-nums;font-weight:700;font-size:12px;color:var(--ink-2);
+  background:var(--surface-2);border:1px solid var(--line-soft);border-radius:999px;padding:3px 9px;
+}
+.topic-body{padding:0 16px 16px;border-top:1px solid var(--line-soft)}
+
+/* ---------- Guest cards ---------- */
+.guest-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:14px}
+.guest{
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px;
+  display:flex;flex-direction:column;gap:10px;position:relative;transition:box-shadow .14s ease,transform .14s ease;
+}
+.guest:hover{box-shadow:var(--shadow)}
+.guest-top{display:flex;gap:11px;align-items:flex-start}
+.avatar{
+  width:46px;height:46px;flex:none;border-radius:50%;object-fit:cover;
+  background:var(--surface-2);border:1px solid var(--line);
+  display:grid;place-items:center;font-family:"Fraunces",serif;font-size:17px;color:var(--brass-deep);font-weight:600;overflow:hidden;
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.guest-id{min-width:0;flex:1}
+.guest-id .gname{font-weight:700;font-size:14.5px;line-height:1.25;word-break:break-word}
+.guest-id .grole{color:var(--ink-2);font-size:12px;margin-top:2px}
+.guest-bio{color:var(--ink-2);font-size:12.5px;line-height:1.45;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.guest-facts{display:flex;flex-wrap:wrap;gap:6px}
+.fact{
+  display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:var(--ink-2);
+  background:var(--surface-2);border:1px solid var(--line-soft);border-radius:8px;padding:4px 8px;
+}
+.fact svg{width:12px;height:12px;flex:none;color:var(--ink-3)}
+.fact a{color:var(--ink);text-decoration:none}
+.fact a:hover{color:var(--brass-deep);text-decoration:underline}
+.guest-notes{font-size:12px;color:var(--ink-2);font-style:italic;border-left:2px solid var(--taupe);padding-left:9px}
+.guest-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:2px}
+.mini{border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);border-radius:8px;padding:5px 9px;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+.mini:hover{color:var(--ink);box-shadow:var(--shadow)}
+.mini svg{width:13px;height:13px}
+.mini.danger:hover{color:#a13b2f;border-color:color-mix(in srgb,#a13b2f 40%,var(--line))}
+
+.add-guest{margin-top:14px}
+.add-guest.dashed{
+  width:100%;justify-content:center;border-style:dashed;background:transparent;color:var(--ink-2);
+}
+.add-guest.dashed:hover{color:var(--brass-deep);border-color:var(--brass)}
+
+/* ---------- Badges ---------- */
+.badge{
+  --c:var(--s-identified);
+  display:inline-flex;align-items:center;gap:6px;flex:none;
+  font-size:11px;font-weight:700;letter-spacing:.2px;
+  padding:4px 9px 4px 8px;border-radius:999px;
+  background:color-mix(in srgb,var(--c) 15%,transparent);
+  color:color-mix(in srgb,var(--c) 78%,var(--ink));
+  border:1px solid color-mix(in srgb,var(--c) 34%,transparent);
+  white-space:nowrap;text-transform:uppercase;
+}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none}
+.badge.identified{--c:var(--s-identified)}
+.badge.contacted{--c:var(--s-contacted)}
+.badge.confirmed{--c:var(--s-confirmed)}
+.badge.recorded{--c:var(--s-recorded)}
+.badge.aired{--c:var(--s-aired)}
+/* topic status badge — brass family, subtler */
+.tstat{
+  font-size:10.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+  color:var(--brass-deep);background:color-mix(in srgb,var(--brass) 14%,transparent);
+  border:1px solid color-mix(in srgb,var(--brass) 30%,transparent);
+  padding:3px 8px;border-radius:999px;white-space:nowrap;
+}
+
+/* ---------- By Date view ---------- */
+.month-group{margin-bottom:22px}
+.month-label{
+  font-family:"Fraunces",serif;font-weight:500;font-size:16px;color:var(--ink);
+  display:flex;align-items:center;gap:10px;margin:0 0 10px;
+}
+.month-label::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+.date-row{
+  display:flex;align-items:center;gap:14px;background:var(--surface);
+  border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:9px;box-shadow:var(--shadow);
+}
+.date-chip{
+  flex:none;width:52px;text-align:center;background:var(--surface-2);border:1px solid var(--line-soft);
+  border-radius:10px;padding:6px 4px;
+}
+.date-chip .d{font-family:"Fraunces",serif;font-size:20px;line-height:1;font-weight:600}
+.date-chip .m{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-2);margin-top:3px}
+.date-main{flex:1;min-width:0}
+.date-main .dg{font-weight:700;font-size:14.5px}
+.date-main .dt{color:var(--ink-2);font-size:12px;margin-top:2px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.date-time{font-variant-numeric:tabular-nums}
+
+/* ---------- By Status board ---------- */
+.board-scroll{overflow-x:auto;margin:0 -20px;padding:0 20px 8px;-webkit-overflow-scrolling:touch}
+.board{display:flex;gap:14px;min-width:min-content}
+.col{flex:0 0 250px;background:var(--surface-2);border:1px solid var(--line-soft);border-radius:14px;padding:12px;display:flex;flex-direction:column}
+.col-head{display:flex;align-items:center;gap:8px;margin-bottom:11px;padding:0 2px}
+.col-head .dot{width:9px;height:9px;border-radius:50%;flex:none}
+.col-head .cname{font-weight:700;font-size:13px;letter-spacing:.2px}
+.col-head .cnum{margin-left:auto;font-variant-numeric:tabular-nums;font-size:11.5px;font-weight:700;color:var(--ink-2);background:var(--surface);border:1px solid var(--line-soft);border-radius:999px;padding:1px 8px}
+.col-body{display:flex;flex-direction:column;gap:9px;min-height:26px}
+.kcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 11px;box-shadow:var(--shadow);cursor:pointer;transition:box-shadow .14s,transform .14s}
+.kcard:hover{box-shadow:var(--shadow-lift);transform:translateY(-1px)}
+.kcard .kname{font-weight:700;font-size:13.5px;display:flex;gap:8px;align-items:center}
+.kcard .ktopic{color:var(--brass-deep);font-size:11px;font-weight:600;margin-top:3px;letter-spacing:.2px}
+.kcard .kmeta{color:var(--ink-2);font-size:11.5px;margin-top:5px;display:flex;gap:8px;flex-wrap:wrap}
+.col-empty{color:var(--ink-3);font-size:12px;text-align:center;padding:14px 6px;font-style:italic}
+
+/* ---------- Empty state ---------- */
+.empty{text-align:center;padding:48px 20px;color:var(--ink-2)}
+.empty svg{width:40px;height:40px;color:var(--taupe);margin-bottom:10px}
+.empty h3{font-family:"Fraunces",serif;font-weight:500;font-size:19px;margin:0 0 4px;color:var(--ink)}
+.empty p{margin:0;font-size:13.5px}
+
+/* ---------- Modal ---------- */
+.backdrop{position:fixed;inset:0;background:var(--backdrop);backdrop-filter:blur(3px);z-index:80;display:grid;place-items:end center;padding:0;animation:fade .18s ease}
+@media(min-width:640px){.backdrop{place-items:center;padding:24px}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--surface);width:100%;max-width:560px;max-height:92vh;overflow:auto;
+  border:1px solid var(--line);border-radius:20px 20px 0 0;box-shadow:var(--shadow-lift);
+  animation:slideup .24s cubic-bezier(.2,.8,.2,1);
+}
+@media(min-width:640px){.modal{border-radius:20px;animation:pop .2s ease}}
+@keyframes slideup{from{transform:translateY(24px)}to{transform:translateY(0)}}
+@keyframes pop{from{transform:scale(.97);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-head{position:sticky;top:0;background:var(--surface);display:flex;align-items:center;gap:12px;padding:18px 20px 12px;border-bottom:1px solid var(--line-soft);z-index:2}
+.modal-head h3{font-family:"Fraunces",serif;font-weight:500;font-size:19px;margin:0;flex:1}
+.modal-body{padding:16px 20px 20px;display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:11.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--ink-2)}
+.field input,.field textarea,.field select{
+  font-family:inherit;font-size:14.5px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;
+  transition:border-color .15s,box-shadow .15s;
+}
+.field textarea{resize:vertical;min-height:76px;line-height:1.5}
+.field input:focus,.field textarea:focus,.field select:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 22%,transparent)}
+.field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238C8478' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.row2{grid-template-columns:1fr}}
+.hint{font-size:11px;color:var(--ink-3)}
+.photo-field{display:flex;gap:12px;align-items:center}
+.photo-prev{width:56px;height:56px;border-radius:50%;flex:none;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;display:grid;place-items:center;color:var(--ink-3)}
+.photo-prev img{width:100%;height:100%;object-fit:cover}
+.photo-inputs{flex:1;display:flex;flex-direction:column;gap:8px;min-width:0}
+.file-btn{border:1px dashed var(--line);background:var(--surface-2);color:var(--ink-2);border-radius:9px;padding:8px 10px;font-size:12.5px;font-weight:600;text-align:center}
+.file-btn:hover{border-color:var(--brass);color:var(--brass-deep)}
+.modal-foot{display:flex;gap:10px;padding:14px 20px 20px;position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line-soft)}
+.modal-foot .btn{flex:1;justify-content:center;padding:11px}
+.del-link{margin-right:auto;flex:none!important;color:#a13b2f;background:transparent;border-color:transparent}
+.del-link:hover{background:color-mix(in srgb,#a13b2f 10%,transparent)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);z-index:120;
+  background:var(--ink);color:var(--paper);padding:11px 18px;border-radius:11px;font-size:13.5px;font-weight:600;
+  box-shadow:var(--shadow-lift);opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;display:flex;gap:9px;align-items:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast svg{width:16px;height:16px;color:var(--brass)}
+
+footer{max-width:1080px;margin:32px auto 0;padding:18px 20px 0;border-top:1px solid var(--line-soft);color:var(--ink-3);font-size:12px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+footer .spacer{flex:1}
+.link-btn{background:transparent;border:0;color:var(--ink-2);font-weight:600;font-size:12px;text-decoration:underline;text-underline-offset:2px;padding:0}
+.link-btn:hover{color:var(--brass-deep)}
+
+@media (prefers-reduced-motion: reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-row">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg>
+      </div>
+      <div class="brand-txt">
+        <h1>Guest Studio</h1>
+        <p>Booking board</p>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <div class="hbtns">
+      <button class="btn ghost icon" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5 19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5 19 5"/><circle cx="12" cy="12" r="3.5"/></svg>
+      </button>
+      <button class="btn ghost sm" id="exportBtn" title="Download a JSON backup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>
+        <span class="lbl-full">Export</span>
+      </button>
+      <button class="btn primary sm" id="addTopicBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        <span class="lbl-full">Topic</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap" style="padding-top:18px">
+  <div class="switcher" role="tablist" aria-label="Views">
+    <button role="tab" aria-selected="true" data-view="topics">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Topics
+    </button>
+    <button role="tab" aria-selected="false" data-view="date">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>By Date
+    </button>
+    <button role="tab" aria-selected="false" data-view="status">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="11" rx="1"/><rect x="17" y="4" width="4" height="14" rx="1"/></svg>By Status
+    </button>
+  </div>
+
+  <section id="view-topics"></section>
+  <section id="view-date" hidden></section>
+  <section id="view-status" hidden></section>
+</main>
+
+<footer>
+  <span>Saved in this browser · <span id="statLine"></span></span>
+  <span class="spacer"></span>
+  <button class="link-btn" id="importBtn">Import backup</button>
+  <button class="link-btn" id="resetBtn">Reset to starter topics</button>
+  <input type="file" id="importFile" accept="application/json,.json" hidden>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+/* ---------------- Constants ---------------- */
+const STORE_KEY = "guestStudio.v1";
+const THEME_KEY = "guestStudio.theme";
+
+const GUEST_STATUSES = [
+  {key:"identified", label:"Identified"},
+  {key:"contacted",  label:"Contacted"},
+  {key:"confirmed",  label:"Confirmed"},
+  {key:"recorded",   label:"Recorded"},
+  {key:"aired",      label:"Aired"},
+];
+const TOPIC_STATUSES = ["Planning","Booking","Recording","Published"];
+const LOCATIONS = ["In-Studio","Remote"];
+
+const STATUS_COLOR = {
+  identified:"--s-identified", contacted:"--s-contacted",
+  confirmed:"--s-confirmed", recorded:"--s-recorded", aired:"--s-aired"
+};
+
+/* ---------------- Starter data ---------------- */
+function seed(){
+  const t = (name,description,status)=>({id:uid(),name,description,status,guests:[]});
+  const g = (o)=>Object.assign({id:uid(),name:"",role:"",bio:"",photo:"",email:"",phone:"",instagram:"",status:"identified",date:"",time:"",location:"In-Studio",notes:""},o);
+
+  const topics = [
+    t("School & Education Pathways","Regular school → medical school, nursing, engineering — plus trade school routes.","Planning"),
+    t("Joining the Military","Interviews with recruiters and serving military personnel.","Planning"),
+    t("Home Buying & Investing","First-time buyers, mortgages, and building a property portfolio.","Booking"),
+    t("Starting a Business","Forming an LLC, business insurance, and tapping city resources.","Planning"),
+    t("Working in Healthcare & Nursing","Life on the floor — from CNA to RN to specialised care.","Recording"),
+    t("Starting an African Market","Sourcing, licensing, and running a neighbourhood grocery.","Planning"),
+  ];
+
+  // A few clearly-labelled sample guests so the Date & Status views show what they do.
+  topics[0].guests.push(g({name:"Sample — Nursing School Advisor", role:"Admissions counsellor",
+    bio:"Guides applicants from prerequisites through the NCLEX. Good on the difference between ADN and BSN routes.",
+    status:"confirmed", date:isoIn(9), time:"14:00", location:"Remote",
+    notes:"Sample entry — edit or delete. Wants questions a week ahead."}));
+  topics[1].guests.push(g({name:"Sample — Army Recruiter", role:"SFC, local recruiting station",
+    bio:"Walks through enlistment, ASVAB, MOS selection and what basic training is actually like.",
+    status:"contacted", location:"In-Studio",
+    notes:"Sample entry — awaiting a callback on availability."}));
+  topics[4].guests.push(g({name:"Sample — ICU Nurse", role:"RN, 8 years",
+    bio:"Frank about burnout, shift work and why she still loves the job.",
+    status:"recorded", date:isoIn(-4), time:"10:30", location:"In-Studio",
+    notes:"Sample entry — recorded, needs edit before airing."}));
+  return {topics, openId:topics[0].id};
+}
+
+/* ---------------- Utilities ---------------- */
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function isoIn(days){const d=new Date();d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function labelFor(k){const s=GUEST_STATUSES.find(x=>x.key===k);return s?s.label:k}
+function initials(name){return (name||"?").trim().split(/\s+/).filter(w=>!/^[—–-]$/.test(w)).slice(0,2).map(w=>w[0]||"").join("").toUpperCase()||"?"}
+
+/* ---------------- State ---------------- */
+let state = load();
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){const d=JSON.parse(raw); if(d&&Array.isArray(d.topics)) return d;}
+  }catch(e){}
+  const s = seed(); save(s); return s;
+}
+function save(s){
+  s = s||state;
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(s)); }
+  catch(e){ toast("Couldn’t save — storage may be full", true); }
+}
+function findTopic(id){return state.topics.find(t=>t.id===id)}
+function findGuest(tid,gid){const t=findTopic(tid);return t?t.guests.find(g=>g.id===gid):null}
+
+/* ---------------- Rendering ---------------- */
+let currentView = "topics";
+const views = {
+  topics: document.getElementById("view-topics"),
+  date:   document.getElementById("view-date"),
+  status: document.getElementById("view-status"),
+};
+
+function renderAll(){
+  renderTopics();
+  renderDate();
+  renderStatus();
+  renderStat();
+}
+
+function renderStat(){
+  const nT = state.topics.length;
+  const nG = state.topics.reduce((a,t)=>a+t.guests.length,0);
+  const conf = allGuests().filter(x=>x.g.status==="confirmed").length;
+  document.getElementById("statLine").textContent =
+    `${nT} topic${nT!==1?"s":""} · ${nG} guest${nG!==1?"s":""} · ${conf} confirmed`;
+}
+
+function badge(status){
+  return `<span class="badge ${status}"><span class="dot"></span>${esc(labelFor(status))}</span>`;
+}
+
+/* ----- Topics (accordion) ----- */
+function renderTopics(){
+  const el = views.topics;
+  if(!state.topics.length){
+    el.innerHTML = emptyState("No topics yet","Add a topic to start lining up guests.");
+    return;
+  }
+  el.innerHTML = `
+    <div class="view-head">
+      <h2>Topics</h2>
+      <span class="sub">Tap a topic to see its guests</span>
+    </div>
+    <div class="topics">
+      ${state.topics.map(topicCard).join("")}
+    </div>`;
+}
+
+function topicCard(t){
+  const open = state.openId===t.id;
+  const chev = `<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>`;
+  return `
+  <div class="topic ${open?"open":""}" data-topic="${t.id}">
+    <button class="topic-head" data-act="toggle" data-topic="${t.id}" aria-expanded="${open}">
+      ${chev}
+      <span class="topic-title">
+        <span class="name">${esc(t.name)}</span>
+        <span class="desc">${esc(t.description||"")}</span>
+      </span>
+      <span class="topic-meta">
+        <span class="tstat">${esc(t.status)}</span>
+        <span class="count">${t.guests.length}</span>
+      </span>
+    </button>
+    ${open?`<div class="topic-body">
+      <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn sm ghost" data-act="edit-topic" data-topic="${t.id}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Edit topic
+        </button>
+        <button class="btn sm ghost" data-act="del-topic" data-topic="${t.id}" style="color:#a13b2f">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>Delete
+        </button>
+      </div>
+      ${t.guests.length
+        ? `<div class="guest-list">${t.guests.map(g=>guestCard(t.id,g)).join("")}</div>`
+        : `<p style="color:var(--ink-3);font-size:13px;margin:16px 2px 0;font-style:italic">No guests yet for this topic.</p>`}
+      <button class="btn add-guest dashed" data-act="add-guest" data-topic="${t.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add guest
+      </button>
+    </div>`:""}
+  </div>`;
+}
+
+function guestCard(tid,g){
+  const av = g.photo
+    ? `<span class="avatar"><img src="${esc(g.photo)}" alt="" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='${esc(initials(g.name))}'"></span>`
+    : `<span class="avatar">${esc(initials(g.name))}</span>`;
+  const facts = [];
+  if(g.date) facts.push(fact("cal", fmtDate(g.date)+(g.time?" · "+g.time:"")));
+  facts.push(fact(g.location==="Remote"?"remote":"studio", g.location||"—"));
+  if(g.email) facts.push(fact("mail", `<a href="mailto:${esc(g.email)}">${esc(g.email)}</a>`));
+  if(g.phone) facts.push(fact("phone", `<a href="tel:${esc(g.phone.replace(/[^+\d]/g,''))}">${esc(g.phone)}</a>`));
+  if(g.instagram) facts.push(fact("ig", `<a href="https://instagram.com/${esc(g.instagram.replace(/^@/,''))}" target="_blank" rel="noopener">@${esc(g.instagram.replace(/^@/,''))}</a>`));
+
+  return `
+  <div class="guest" data-topic="${tid}" data-guest="${g.id}">
+    <div class="guest-top">
+      ${av}
+      <div class="guest-id">
+        <div class="gname">${esc(g.name||"Unnamed guest")}</div>
+        ${g.role?`<div class="grole">${esc(g.role)}</div>`:""}
+      </div>
+      ${badge(g.status)}
+    </div>
+    ${g.bio?`<div class="guest-bio">${esc(g.bio)}</div>`:""}
+    ${facts.length?`<div class="guest-facts">${facts.join("")}</div>`:""}
+    ${g.notes?`<div class="guest-notes">${esc(g.notes)}</div>`:""}
+    <div class="guest-actions">
+      <button class="mini" data-act="edit-guest" data-topic="${tid}" data-guest="${g.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Edit
+      </button>
+      <button class="mini danger" data-act="del-guest" data-topic="${tid}" data-guest="${g.id}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>
+      </button>
+    </div>
+  </div>`;
+}
+
+function fact(kind, html){
+  const icons = {
+    cal:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>',
+    studio:'<path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/>',
+    remote:'<path d="M5 12a7 7 0 0 1 14 0M8.5 12a3.5 3.5 0 0 1 7 0M12 12v0"/><path d="M2 9a11 11 0 0 1 20 0"/>',
+    mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+    phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',
+    ig:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/>',
+  };
+  return `<span class="fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${icons[kind]||icons.studio}</svg>${html}</span>`;
+}
+
+/* ----- helpers for cross-topic views ----- */
+function allGuests(){
+  const out=[];
+  state.topics.forEach(t=>t.guests.forEach(g=>out.push({t,g})));
+  return out;
+}
+function fmtDate(iso){
+  if(!iso) return "";
+  const d=new Date(iso+"T00:00:00");
+  return d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
+}
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+/* ----- By Date ----- */
+function renderDate(){
+  const el = views.date;
+  const dated = allGuests().filter(x=>x.g.date).sort((a,b)=>(a.g.date+a.g.time).localeCompare(b.g.date+b.g.time));
+  let body;
+  if(!dated.length){
+    body = emptyState("No dates yet","Set an interview date on a guest and it appears here, sorted soonest first.","cal");
+  }else{
+    const groups={};
+    dated.forEach(x=>{const d=new Date(x.g.date+"T00:00:00");const k=d.getFullYear()+"-"+String(d.getMonth()).padStart(2,"0");(groups[k]=groups[k]||{y:d.getFullYear(),m:d.getMonth(),items:[]}).items.push(x)});
+    body = Object.keys(groups).sort().map(k=>{
+      const gr=groups[k];
+      return `<div class="month-group">
+        <div class="month-label">${MONTHS[gr.m]} ${gr.y}</div>
+        ${gr.items.map(dateRow).join("")}
+      </div>`;
+    }).join("");
+  }
+  el.innerHTML = `
+    <div class="view-head"><h2>By Date</h2><span class="sub">All scheduled interviews, soonest first</span></div>
+    ${body}`;
+}
+function dateRow({t,g}){
+  const d=new Date(g.date+"T00:00:00");
+  return `<div class="date-row" data-topic="${t.id}" data-guest="${g.id}" data-act="open-guest">
+    <div class="date-chip"><div class="d">${d.getDate()}</div><div class="m">${MONTHS[d.getMonth()].slice(0,3)}</div></div>
+    <div class="date-main">
+      <div class="dg">${esc(g.name||"Unnamed guest")}</div>
+      <div class="dt">
+        <span style="color:var(--brass-deep);font-weight:600">${esc(t.name)}</span>
+        ${g.time?`<span class="date-time">· ${esc(g.time)}</span>`:""}
+        <span>· ${esc(g.location||"—")}</span>
+      </div>
+    </div>
+    ${badge(g.status)}
+  </div>`;
+}
+
+/* ----- By Status (kanban) ----- */
+function renderStatus(){
+  const el = views.status;
+  const cols = GUEST_STATUSES.map(s=>{
+    const items = allGuests().filter(x=>x.g.status===s.key);
+    return `<div class="col">
+      <div class="col-head">
+        <span class="dot" style="background:var(${STATUS_COLOR[s.key]})"></span>
+        <span class="cname">${s.label}</span>
+        <span class="cnum">${items.length}</span>
+      </div>
+      <div class="col-body">
+        ${items.length?items.map(kcard).join(""):`<div class="col-empty">—</div>`}
+      </div>
+    </div>`;
+  }).join("");
+  el.innerHTML = `
+    <div class="view-head"><h2>By Status</h2><span class="sub">Everyone across every topic, by stage</span></div>
+    <div class="board-scroll"><div class="board">${cols}</div></div>`;
+}
+function kcard({t,g}){
+  return `<div class="kcard" data-topic="${t.id}" data-guest="${g.id}" data-act="open-guest">
+    <div class="kname">${esc(g.name||"Unnamed guest")}</div>
+    <div class="ktopic">${esc(t.name)}</div>
+    <div class="kmeta">
+      ${g.date?`<span>${fmtDate(g.date)}</span>`:""}
+      <span>${esc(g.location||"—")}</span>
+    </div>
+  </div>`;
+}
+
+function emptyState(title,msg,icon){
+  const icons={
+    default:'<circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0 1 16 0"/>',
+    cal:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>'
+  };
+  return `<div class="empty">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icons[icon]||icons.default}</svg>
+    <h3>${esc(title)}</h3><p>${esc(msg)}</p>
+  </div>`;
+}
+
+/* ---------------- View switching ---------------- */
+function switchView(v){
+  currentView=v;
+  document.querySelectorAll(".switcher button").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.view===v)));
+  Object.keys(views).forEach(k=>views[k].hidden = k!==v);
+}
+document.querySelector(".switcher").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-view]"); if(b) switchView(b.dataset.view);
+});
+
+/* ---------------- Delegated actions ---------------- */
+document.body.addEventListener("click",e=>{
+  const el=e.target.closest("[data-act]"); if(!el) return;
+  const act=el.dataset.act, tid=el.dataset.topic, gid=el.dataset.guest;
+  switch(act){
+    case "toggle": state.openId = state.openId===tid?null:tid; save(); renderTopics(); break;
+    case "add-guest": openGuestModal(tid,null); break;
+    case "edit-guest": openGuestModal(tid,gid); break;
+    case "open-guest": switchView("topics"); state.openId=tid; save(); renderTopics(); openGuestModal(tid,gid); break;
+    case "del-guest": delGuest(tid,gid); break;
+    case "edit-topic": openTopicModal(tid); break;
+    case "del-topic": delTopic(tid); break;
+  }
+});
+
+/* ---------------- Modal machinery ---------------- */
+const overlay = (()=>{ let node=null; return {
+  open(html){
+    close();
+    node=document.createElement("div");
+    node.className="backdrop";
+    node.innerHTML=html;
+    node.addEventListener("mousedown",ev=>{ if(ev.target===node) close(); });
+    document.body.appendChild(node);
+    document.body.style.overflow="hidden";
+    const f=node.querySelector("input,textarea,select,button"); if(f&&window.innerWidth>640) f.focus();
+    return node;
+  },
+  close, node:()=>node
+}; function close(){ if(node){node.remove();node=null;document.body.style.overflow="";} } })();
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") overlay.close(); });
+
+function opt(list,val){return list.map(o=>{const v=typeof o==="string"?o:o.key,l=typeof o==="string"?o:o.label;return `<option value="${esc(v)}" ${v===val?"selected":""}>${esc(l)}</option>`}).join("")}
+
+/* ----- Topic modal ----- */
+function openTopicModal(tid){
+  const t = tid?findTopic(tid):null;
+  const node = overlay.open(`
+  <form class="modal" id="topicForm">
+    <div class="modal-head"><h3>${t?"Edit topic":"New topic"}</h3>
+      <button type="button" class="btn ghost icon" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="field"><label>Topic name</label><input name="name" required maxlength="80" value="${esc(t?t.name:"")}" placeholder="e.g. Home Buying &amp; Investing"></div>
+      <div class="field"><label>Description</label><textarea name="description" maxlength="240" placeholder="One line on the angle for this series.">${esc(t?t.description:"")}</textarea></div>
+      <div class="field"><label>Status</label><select name="status">${opt(TOPIC_STATUSES,t?t.status:"Planning")}</select></div>
+    </div>
+    <div class="modal-foot">
+      ${t?`<button type="button" class="btn del-link" data-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>Delete</button>`:""}
+      <button type="button" class="btn ghost" data-close>Cancel</button>
+      <button type="submit" class="btn primary">${t?"Save":"Add topic"}</button>
+    </div>
+  </form>`);
+
+  node.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>overlay.close());
+  const del=node.querySelector("[data-del]"); if(del) del.onclick=()=>{overlay.close();delTopic(tid);};
+  node.querySelector("#topicForm").addEventListener("submit",ev=>{
+    ev.preventDefault();
+    const f=new FormData(ev.target);
+    const data={name:(f.get("name")||"").trim(),description:(f.get("description")||"").trim(),status:f.get("status")};
+    if(!data.name) return;
+    if(t){ Object.assign(t,data); toast("Topic updated"); }
+    else { const nt={id:uid(),...data,guests:[]}; state.topics.push(nt); state.openId=nt.id; toast("Topic added"); }
+    save(); overlay.close(); renderAll();
+  });
+}
+
+/* ----- Guest modal ----- */
+let photoData=""; // holds pending photo (data URL or url)
+function openGuestModal(tid,gid){
+  const g = gid?findGuest(tid,gid):null;
+  photoData = g?g.photo:"";
+  const node = overlay.open(`
+  <form class="modal" id="guestForm">
+    <div class="modal-head"><h3>${g?"Edit guest":"New guest"}</h3>
+      <button type="button" class="btn ghost icon" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="row2">
+        <div class="field"><label>Name</label><input name="name" required maxlength="80" value="${esc(g?g.name:"")}" placeholder="Full name"></div>
+        <div class="field"><label>Role / title</label><input name="role" maxlength="80" value="${esc(g?g.role:"")}" placeholder="e.g. RN, 8 years"></div>
+      </div>
+
+      <div class="field"><label>Photo / headshot</label>
+        <div class="photo-field">
+          <div class="photo-prev" id="photoPrev">${photoData?`<img src="${esc(photoData)}" alt="">`:`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>`}</div>
+          <div class="photo-inputs">
+            <input name="photoUrl" type="url" placeholder="Paste an image URL…" value="${esc(g&&g.photo&&/^https?:/.test(g.photo)?g.photo:"")}">
+            <button type="button" class="file-btn" id="fileBtn">…or upload from device</button>
+            <input type="file" id="photoFile" accept="image/*" hidden>
+          </div>
+        </div>
+      </div>
+
+      <div class="field"><label>Bio</label><textarea name="bio" maxlength="1200" placeholder="Background, why they’re a great guest, talking points…">${esc(g?g.bio:"")}</textarea></div>
+
+      <div class="row2">
+        <div class="field"><label>Status</label><select name="status">${opt(GUEST_STATUSES,g?g.status:"identified")}</select></div>
+        <div class="field"><label>Location</label><select name="location">${opt(LOCATIONS,g?g.location:"In-Studio")}</select></div>
+      </div>
+
+      <div class="row2">
+        <div class="field"><label>Interview date</label><input name="date" type="date" value="${esc(g?g.date:"")}"></div>
+        <div class="field"><label>Time</label><input name="time" type="time" value="${esc(g?g.time:"")}"></div>
+      </div>
+
+      <div class="field"><label>Email</label><input name="email" type="email" maxlength="120" value="${esc(g?g.email:"")}" placeholder="name@email.com"></div>
+      <div class="row2">
+        <div class="field"><label>Phone</label><input name="phone" type="tel" maxlength="40" value="${esc(g?g.phone:"")}" placeholder="+1 555 000 0000"></div>
+        <div class="field"><label>Instagram</label><input name="instagram" maxlength="40" value="${esc(g?g.instagram:"")}" placeholder="@handle"></div>
+      </div>
+
+      <div class="field"><label>Notes</label><textarea name="notes" maxlength="800" placeholder="Scheduling notes, prep, follow-ups…">${esc(g?g.notes:"")}</textarea></div>
+    </div>
+    <div class="modal-foot">
+      ${g?`<button type="button" class="btn del-link" data-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>Delete</button>`:""}
+      <button type="button" class="btn ghost" data-close>Cancel</button>
+      <button type="submit" class="btn primary">${g?"Save guest":"Add guest"}</button>
+    </div>
+  </form>`);
+
+  const prev=node.querySelector("#photoPrev");
+  const urlInput=node.querySelector('input[name="photoUrl"]');
+  const fileInput=node.querySelector("#photoFile");
+  node.querySelector("#fileBtn").onclick=()=>fileInput.click();
+  urlInput.addEventListener("input",()=>{ photoData=urlInput.value.trim(); paintPrev(prev,photoData); });
+  fileInput.addEventListener("change",()=>{
+    const file=fileInput.files[0]; if(!file) return;
+    if(file.size>2.5*1024*1024){ toast("Image too large (max 2.5 MB)",true); return; }
+    const r=new FileReader();
+    r.onload=()=>{ photoData=r.result; urlInput.value=""; paintPrev(prev,photoData); };
+    r.readAsDataURL(file);
+  });
+
+  node.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>overlay.close());
+  const del=node.querySelector("[data-del]"); if(del) del.onclick=()=>{overlay.close();delGuest(tid,gid);};
+
+  node.querySelector("#guestForm").addEventListener("submit",ev=>{
+    ev.preventDefault();
+    const f=new FormData(ev.target);
+    const name=(f.get("name")||"").trim();
+    if(!name) return;
+    const data={
+      name, role:(f.get("role")||"").trim(), bio:(f.get("bio")||"").trim(),
+      photo:photoData||"", email:(f.get("email")||"").trim(), phone:(f.get("phone")||"").trim(),
+      instagram:(f.get("instagram")||"").trim().replace(/^@/,""), status:f.get("status"),
+      date:f.get("date")||"", time:f.get("time")||"", location:f.get("location"), notes:(f.get("notes")||"").trim()
+    };
+    const t=findTopic(tid);
+    if(g){ Object.assign(g,data); toast("Guest updated"); }
+    else { t.guests.push({id:uid(),...data}); toast("Guest added"); }
+    save(); overlay.close(); renderAll();
+  });
+}
+function paintPrev(prev,src){
+  prev.innerHTML = src
+    ? `<img src="${esc(src)}" alt="" onerror="this.replaceWith(document.createTextNode('⚠'))">`
+    : `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>`;
+}
+
+/* ---------------- Delete confirms ---------------- */
+function delGuest(tid,gid){
+  const g=findGuest(tid,gid); if(!g) return;
+  if(!confirm(`Delete “${g.name||"this guest"}”? This can’t be undone.`)) return;
+  const t=findTopic(tid); t.guests=t.guests.filter(x=>x.id!==gid);
+  save(); renderAll(); toast("Guest deleted");
+}
+function delTopic(tid){
+  const t=findTopic(tid); if(!t) return;
+  const n=t.guests.length;
+  if(!confirm(`Delete “${t.name}”${n?` and its ${n} guest${n!==1?"s":""}`:""}? This can’t be undone.`)) return;
+  state.topics=state.topics.filter(x=>x.id!==tid);
+  if(state.openId===tid) state.openId=null;
+  save(); renderAll(); toast("Topic deleted");
+}
+
+/* ---------------- Export / Import / Reset ---------------- */
+document.getElementById("exportBtn").onclick=()=>{
+  const payload={app:"Guest Studio",version:1,exportedAt:new Date().toISOString(),topics:state.topics};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url; a.download=`guest-studio-backup-${isoIn(0)}.json`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  toast("Backup downloaded");
+};
+document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
+document.getElementById("importFile").addEventListener("change",e=>{
+  const file=e.target.files[0]; if(!file) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const d=JSON.parse(r.result);
+      const topics=Array.isArray(d)?d:d.topics;
+      if(!Array.isArray(topics)) throw new Error("no topics");
+      if(!confirm("Replace all current data with this backup?")) return;
+      state={topics:topics.map(t=>({id:t.id||uid(),name:t.name||"Untitled",description:t.description||"",status:t.status||"Planning",
+        guests:Array.isArray(t.guests)?t.guests.map(g=>({id:g.id||uid(),name:g.name||"",role:g.role||"",bio:g.bio||"",photo:g.photo||"",
+          email:g.email||"",phone:g.phone||"",instagram:g.instagram||"",status:g.status||"identified",date:g.date||"",time:g.time||"",
+          location:g.location||"In-Studio",notes:g.notes||""})):[]})), openId:null};
+      save(); renderAll(); toast("Backup imported");
+    }catch(err){ toast("Couldn’t read that file",true); }
+    finally{ e.target.value=""; }
+  };
+  r.readAsText(file);
+});
+document.getElementById("resetBtn").onclick=()=>{
+  if(!confirm("Reset to the 6 starter topics? Your current data will be replaced.")) return;
+  state=seed(); save(); renderAll(); toast("Reset to starter topics");
+};
+
+/* ---------------- Theme ---------------- */
+const themeBtn=document.getElementById("themeBtn");
+(function initTheme(){ try{const s=localStorage.getItem(THEME_KEY); if(s) document.documentElement.setAttribute("data-theme",s);}catch(e){} })();
+themeBtn.onclick=()=>{
+  const cur=document.documentElement.getAttribute("data-theme");
+  const sysDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = cur ? (cur==="dark"?"light":"dark") : (sysDark?"light":"dark");
+  document.documentElement.setAttribute("data-theme",next);
+  try{localStorage.setItem(THEME_KEY,next);}catch(e){}
+};
+
+/* ---------------- Toast ---------------- */
+let toastTimer;
+function toast(msg,isErr){
+  const t=document.getElementById("toast");
+  t.innerHTML=`${isErr?"":'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'}<span>${esc(msg)}</span>`;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove("show"),2200);
+}
+
+/* ---------------- Go ---------------- */
+renderAll();
+</script>
+</body>
+</html>
