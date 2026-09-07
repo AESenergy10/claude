@@ -374,22 +374,8 @@ footer .spacer{flex:1}
   </div>
 </header>
 
-<main class="wrap" style="padding-top:18px">
-  <div class="switcher" role="tablist" aria-label="Views">
-    <button role="tab" aria-selected="true" data-view="topics">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Topics
-    </button>
-    <button role="tab" aria-selected="false" data-view="date">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>By Date
-    </button>
-    <button role="tab" aria-selected="false" data-view="status">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1"/><rect x="10" y="4" width="5" height="11" rx="1"/><rect x="17" y="4" width="4" height="14" rx="1"/></svg>By Status
-    </button>
-  </div>
-
+<main class="wrap" style="padding-top:22px">
   <section id="view-topics"></section>
-  <section id="view-date" hidden></section>
-  <section id="view-status" hidden></section>
 </main>
 
 <footer>
@@ -512,17 +498,10 @@ function findTopic(id){return state.topics.find(t=>t.id===id)}
 function findGuest(tid,gid){const t=findTopic(tid);return t?t.guests.find(g=>g.id===gid):null}
 
 /* ---------------- Rendering ---------------- */
-let currentView = "topics";
-const views = {
-  topics: document.getElementById("view-topics"),
-  date:   document.getElementById("view-date"),
-  status: document.getElementById("view-status"),
-};
+const views = { topics: document.getElementById("view-topics") };
 
 function renderAll(){
   renderTopics();
-  renderDate();
-  renderStatus();
   renderStat();
 }
 
@@ -648,77 +627,6 @@ function fmtDate(iso){
   const d=new Date(iso+"T00:00:00");
   return d.toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
 }
-const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
-
-/* ----- By Date ----- */
-function renderDate(){
-  const el = views.date;
-  const dated = allGuests().filter(x=>x.g.date).sort((a,b)=>(a.g.date+a.g.time).localeCompare(b.g.date+b.g.time));
-  let body;
-  if(!dated.length){
-    body = emptyState("No dates yet","Set an interview date on a guest and it appears here, sorted soonest first.","cal");
-  }else{
-    const groups={};
-    dated.forEach(x=>{const d=new Date(x.g.date+"T00:00:00");const k=d.getFullYear()+"-"+String(d.getMonth()).padStart(2,"0");(groups[k]=groups[k]||{y:d.getFullYear(),m:d.getMonth(),items:[]}).items.push(x)});
-    body = Object.keys(groups).sort().map(k=>{
-      const gr=groups[k];
-      return `<div class="month-group">
-        <div class="month-label">${MONTHS[gr.m]} ${gr.y}</div>
-        ${gr.items.map(dateRow).join("")}
-      </div>`;
-    }).join("");
-  }
-  el.innerHTML = `
-    <div class="view-head"><h2>By Date</h2><span class="sub">All scheduled interviews, soonest first</span></div>
-    ${body}`;
-}
-function dateRow({t,g}){
-  const d=new Date(g.date+"T00:00:00");
-  return `<div class="date-row" data-topic="${t.id}" data-guest="${g.id}" data-act="open-guest">
-    <div class="date-chip"><div class="d">${d.getDate()}</div><div class="m">${MONTHS[d.getMonth()].slice(0,3)}</div></div>
-    <div class="date-main">
-      <div class="dg">${esc(g.name||"Unnamed guest")}</div>
-      <div class="dt">
-        <span style="color:var(--brass-deep);font-weight:600">${esc(t.name)}</span>
-        ${g.time?`<span class="date-time">· ${esc(g.time)}</span>`:""}
-        <span>· ${esc(g.location||"—")}</span>
-      </div>
-    </div>
-    ${badge(g.status)}
-  </div>`;
-}
-
-/* ----- By Status (kanban) ----- */
-function renderStatus(){
-  const el = views.status;
-  const cols = GUEST_STATUSES.map(s=>{
-    const items = allGuests().filter(x=>x.g.status===s.key);
-    return `<div class="col">
-      <div class="col-head">
-        <span class="dot" style="background:var(${STATUS_COLOR[s.key]})"></span>
-        <span class="cname">${s.label}</span>
-        <span class="cnum">${items.length}</span>
-      </div>
-      <div class="col-body">
-        ${items.length?items.map(kcard).join(""):`<div class="col-empty">—</div>`}
-      </div>
-    </div>`;
-  }).join("");
-  el.innerHTML = `
-    <div class="view-head"><h2>By Status</h2><span class="sub">Everyone across every topic, by stage</span></div>
-    <div class="board-scroll"><div class="board">${cols}</div></div>`;
-}
-function kcard({t,g}){
-  return `<div class="kcard" data-topic="${t.id}" data-guest="${g.id}" data-act="open-guest">
-    <div class="kname">${esc(g.name||"Unnamed guest")}</div>
-    <div class="ktopic">${esc(t.name)}</div>
-    <div class="kmeta">
-      ${g.date?`<span>${fmtDate(g.date)}</span>`:""}
-      <span>${esc(g.location||"—")}</span>
-    </div>
-  </div>`;
-}
-
 function emptyState(title,msg,icon){
   const icons={
     default:'<circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0 1 16 0"/>',
@@ -730,16 +638,6 @@ function emptyState(title,msg,icon){
   </div>`;
 }
 
-/* ---------------- View switching ---------------- */
-function switchView(v){
-  currentView=v;
-  document.querySelectorAll(".switcher button").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.view===v)));
-  Object.keys(views).forEach(k=>views[k].hidden = k!==v);
-}
-document.querySelector(".switcher").addEventListener("click",e=>{
-  const b=e.target.closest("button[data-view]"); if(b) switchView(b.dataset.view);
-});
-
 /* ---------------- Delegated actions ---------------- */
 document.body.addEventListener("click",e=>{
   const el=e.target.closest("[data-act]"); if(!el) return;
@@ -748,7 +646,6 @@ document.body.addEventListener("click",e=>{
     case "toggle": state.openId = state.openId===tid?null:tid; save(); renderTopics(); break;
     case "add-guest": openGuestModal(tid,null); break;
     case "edit-guest": openGuestModal(tid,gid); break;
-    case "open-guest": switchView("topics"); state.openId=tid; save(); renderTopics(); openGuestModal(tid,gid); break;
     case "del-guest": delGuest(tid,gid); break;
     case "edit-topic": openTopicModal(tid); break;
     case "del-topic": delTopic(tid); break;
