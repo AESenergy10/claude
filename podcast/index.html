@@ -220,6 +220,13 @@ header.top{
 .fact a{color:var(--ink);text-decoration:none}
 .fact a:hover{color:var(--brass-deep);text-decoration:underline}
 .guest-notes{font-size:12px;color:var(--ink-2);font-style:italic;border-left:2px solid var(--taupe);padding-left:9px}
+.social-chip{display:inline-flex;align-items:center;gap:5px;margin-top:4px;font-size:12px;font-weight:600;
+  color:var(--brass-deep);text-decoration:none}
+.social-chip svg{width:14px;height:14px;flex:none}
+.social-chip:hover{text-decoration:underline}
+.social-row{display:flex;gap:10px}
+.social-row select{flex:0 0 40%}
+.social-row input{flex:1;min-width:0}
 .guest-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:2px}
 .mini{border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2);border-radius:8px;padding:5px 9px;font-size:11.5px;font-weight:600;display:inline-flex;align-items:center;gap:5px}
 .mini:hover{color:var(--ink);box-shadow:var(--shadow)}
@@ -369,19 +376,9 @@ footer .spacer{flex:1}
     </div>
     <div class="spacer"></div>
     <div class="hbtns">
-      <button class="btn ghost icon" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5 19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5 19 5"/><circle cx="12" cy="12" r="3.5"/></svg>
-      </button>
-      <button class="btn ghost icon" id="exportBtn" title="Download a JSON backup" aria-label="Export backup">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4M4 21h16"/></svg>
-      </button>
-      <button class="btn ghost sm" id="addTopicBtn" title="Add a topic">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-        <span class="lbl-full">Topic</span>
-      </button>
-      <button class="btn primary sm" id="addGuestBtn" title="Add a guest — paste a bio and it finds the topic">
+      <button class="btn primary sm" id="addGuestBtn" title="Add a guest — paste a bio and it finds the category">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0M18 7v6M15 10h6"/></svg>
-        <span class="lbl-full">Guest</span>
+        <span class="lbl-full">Add guest</span>
       </button>
     </div>
   </div>
@@ -418,6 +415,26 @@ const GUEST_STATUSES = [
 ];
 const TOPIC_STATUSES = ["Planning","Booking","Recording","Published"];
 const LOCATIONS = ["In-Studio","Remote"];
+const SOCIALS = [
+  {key:"instagram", label:"Instagram", icon:"ig"},
+  {key:"tiktok",    label:"TikTok",    icon:"tiktok"},
+  {key:"facebook",  label:"Facebook",  icon:"fb"},
+  {key:"linkedin",  label:"LinkedIn",  icon:"in"},
+];
+function socialMeta(k){return SOCIALS.find(s=>s.key===k)||SOCIALS[0];}
+function socialUrl(platform,handle){
+  if(!handle) return "";
+  const h=String(handle).trim();
+  if(/^https?:\/\//i.test(h)) return h;
+  const u=h.replace(/^@/,"");
+  switch(platform){
+    case "instagram": return "https://instagram.com/"+u;
+    case "tiktok":    return "https://tiktok.com/@"+u;
+    case "facebook":  return "https://facebook.com/"+u;
+    case "linkedin":  return "https://linkedin.com/in/"+u;
+    default:          return h;
+  }
+}
 
 const STATUS_COLOR = {
   identified:"--s-identified", contacted:"--s-contacted",
@@ -538,9 +555,8 @@ function renderAll(){
 function renderStat(){
   const nT = state.topics.length;
   const nG = state.topics.reduce((a,t)=>a+t.guests.length,0);
-  const conf = allGuests().filter(x=>x.g.status==="confirmed").length;
   document.getElementById("statLine").textContent =
-    `${nT} categor${nT!==1?"ies":"y"} · ${nG} guest${nG!==1?"s":""} · ${conf} confirmed`;
+    `${nT} categor${nT!==1?"ies":"y"} · ${nG} guest${nG!==1?"s":""}`;
 }
 
 function badge(status){
@@ -575,10 +591,8 @@ function topicCard(t,i){
       ${chev}
       <span class="topic-title">
         <span class="name">${esc(t.name)}</span>
-        <span class="desc">${esc(t.description||"")}</span>
       </span>
       <span class="topic-meta">
-        <span class="tstat">${esc(t.status)}</span>
         <span class="count">${t.guests.length}</span>
       </span>
     </button>
@@ -602,29 +616,24 @@ function topicCard(t,i){
 }
 
 function guestCard(tid,g){
-  const av = g.photo
-    ? `<span class="avatar"><img src="${esc(g.photo)}" alt="" loading="lazy" onerror="this.style.display='none';this.parentNode.textContent='${esc(initials(g.name))}'"></span>`
-    : `<span class="avatar">${esc(initials(g.name))}</span>`;
-  const facts = [];
-  if(g.date) facts.push(fact("cal", fmtDate(g.date)+(g.time?" · "+g.time:"")));
-  facts.push(fact(g.location==="Remote"?"remote":"studio", g.location||"—"));
-  if(g.email) facts.push(fact("mail", `<a href="mailto:${esc(g.email)}">${esc(g.email)}</a>`));
-  if(g.phone) facts.push(fact("phone", `<a href="tel:${esc(g.phone.replace(/[^+\d]/g,''))}">${esc(g.phone)}</a>`));
-  if(g.instagram) facts.push(fact("ig", `<a href="https://instagram.com/${esc(g.instagram.replace(/^@/,''))}" target="_blank" rel="noopener">@${esc(g.instagram.replace(/^@/,''))}</a>`));
-
+  const av = `<span class="avatar">${esc(initials(g.name))}</span>`;
+  let social = "";
+  if(g.socialHandle){
+    const m = socialMeta(g.socialPlatform);
+    const url = socialUrl(g.socialPlatform, g.socialHandle);
+    const shown = /^https?:\/\//i.test(g.socialHandle) ? m.label : "@"+String(g.socialHandle).replace(/^@/,"");
+    social = `<a class="social-chip" href="${esc(url)}" target="_blank" rel="noopener">${socialIcon(m.icon)}<span>${esc(shown)}</span></a>`;
+  }
   return `
   <div class="guest" data-topic="${tid}" data-guest="${g.id}">
     <div class="guest-top">
       ${av}
       <div class="guest-id">
         <div class="gname">${esc(g.name||"Unnamed guest")}</div>
-        ${g.role?`<div class="grole">${esc(g.role)}</div>`:""}
+        ${social}
       </div>
-      ${badge(g.status)}
     </div>
     ${g.bio?`<div class="guest-bio">${esc(g.bio)}</div>`:""}
-    ${facts.length?`<div class="guest-facts">${facts.join("")}</div>`:""}
-    ${g.notes?`<div class="guest-notes">${esc(g.notes)}</div>`:""}
     <div class="guest-actions">
       <button class="mini" data-act="edit-guest" data-topic="${tid}" data-guest="${g.id}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Edit
@@ -636,16 +645,14 @@ function guestCard(tid,g){
   </div>`;
 }
 
-function fact(kind, html){
+function socialIcon(kind){
   const icons = {
-    cal:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>',
-    studio:'<path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/>',
-    remote:'<path d="M5 12a7 7 0 0 1 14 0M8.5 12a3.5 3.5 0 0 1 7 0M12 12v0"/><path d="M2 9a11 11 0 0 1 20 0"/>',
-    mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
-    phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/>',
     ig:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/>',
+    tiktok:'<path d="M15 4c.5 2.5 2 4 4.5 4.3v3C17.8 11.2 16.3 10.6 15 9.6V15a5 5 0 1 1-5-5c.3 0 .7 0 1 .1v3.1A2 2 0 1 0 12 15V4h3Z"/>',
+    fb:'<path d="M14 8h2.5V4.5H14A4 4 0 0 0 10 8.5V11H7.5v3.5H10V21h3.5v-6.5H16L16.5 11H13.5V9a1 1 0 0 1 1-1Z"/>',
+    in:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 10v7M7 7v0M11 17v-4a2 2 0 0 1 4 0v4M11 10v7" stroke-linecap="round"/>',
   };
-  return `<span class="fact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${icons[kind]||icons.studio}</svg>${html}</span>`;
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${icons[kind]||icons.ig}</svg>`;
 }
 
 /* ----- helpers for cross-topic views ----- */
@@ -737,60 +744,33 @@ function openTopicModal(tid){
 }
 
 /* ----- Guest modal ----- */
-let photoData=""; // holds pending photo (data URL or url)
 function openGuestModal(tid,gid){
   const g = gid?findGuest(tid,gid):null;
-  photoData = g?g.photo:"";
   const node = overlay.open(`
   <form class="modal" id="guestForm">
     <div class="modal-head"><h3>${g?"Edit guest":"New guest"}</h3>
       <button type="button" class="btn ghost icon" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="modal-body">
-      <div class="row2">
-        <div class="field"><label>Name</label><input name="name" required maxlength="80" value="${esc(g?g.name:"")}" placeholder="Full name"></div>
-        <div class="field"><label>Role / title</label><input name="role" maxlength="80" value="${esc(g?g.role:"")}" placeholder="e.g. RN, 8 years"></div>
-      </div>
+      <div class="field"><label>Name</label><input name="name" required maxlength="80" value="${esc(g?g.name:"")}" placeholder="Full name"></div>
 
       <div class="field"><label>Bio <span id="topicSugg" class="sugg"></span></label>
-        <textarea name="bio" id="bioInput" maxlength="1600" placeholder="Paste the guest’s bio here — the topic is detected automatically as you type.">${esc(g?g.bio:"")}</textarea>
+        <textarea name="bio" id="bioInput" maxlength="1600" placeholder="Paste the guest’s bio here — the category is chosen automatically as you type.">${esc(g?g.bio:"")}</textarea>
       </div>
 
-      <div class="field"><label>Topic</label>
+      <div class="field"><label>Category</label>
         <select name="topicId" id="topicSel">
-          <option value="">— Choose a topic —</option>
+          <option value="">— Choose a category —</option>
           ${state.topics.map(tt=>`<option value="${tt.id}" ${tt.id===tid?"selected":""}>${esc(tt.name)}</option>`).join("")}
         </select>
       </div>
 
-      <div class="field"><label>Photo / headshot</label>
-        <div class="photo-field">
-          <div class="photo-prev" id="photoPrev">${photoData?`<img src="${esc(photoData)}" alt="">`:`<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>`}</div>
-          <div class="photo-inputs">
-            <input name="photoUrl" type="url" placeholder="Paste an image URL…" value="${esc(g&&g.photo&&/^https?:/.test(g.photo)?g.photo:"")}">
-            <button type="button" class="file-btn" id="fileBtn">…or upload from device</button>
-            <input type="file" id="photoFile" accept="image/*" hidden>
-          </div>
+      <div class="field"><label>Social media</label>
+        <div class="social-row">
+          <select name="socialPlatform">${opt(SOCIALS,g?g.socialPlatform:"instagram")}</select>
+          <input name="socialHandle" maxlength="120" value="${esc(g?g.socialHandle:"")}" placeholder="@handle or link">
         </div>
       </div>
-
-      <div class="row2">
-        <div class="field"><label>Status</label><select name="status">${opt(GUEST_STATUSES,g?g.status:"identified")}</select></div>
-        <div class="field"><label>Location</label><select name="location">${opt(LOCATIONS,g?g.location:"In-Studio")}</select></div>
-      </div>
-
-      <div class="row2">
-        <div class="field"><label>Interview date</label><input name="date" type="date" value="${esc(g?g.date:"")}"></div>
-        <div class="field"><label>Time</label><input name="time" type="time" value="${esc(g?g.time:"")}"></div>
-      </div>
-
-      <div class="field"><label>Email</label><input name="email" type="email" maxlength="120" value="${esc(g?g.email:"")}" placeholder="name@email.com"></div>
-      <div class="row2">
-        <div class="field"><label>Phone</label><input name="phone" type="tel" maxlength="40" value="${esc(g?g.phone:"")}" placeholder="+1 555 000 0000"></div>
-        <div class="field"><label>Instagram</label><input name="instagram" maxlength="40" value="${esc(g?g.instagram:"")}" placeholder="@handle"></div>
-      </div>
-
-      <div class="field"><label>Notes</label><textarea name="notes" maxlength="800" placeholder="Scheduling notes, prep, follow-ups…">${esc(g?g.notes:"")}</textarea></div>
     </div>
     <div class="modal-foot">
       ${g?`<button type="button" class="btn del-link" data-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>Delete</button>`:""}
@@ -799,35 +779,21 @@ function openGuestModal(tid,gid){
     </div>
   </form>`);
 
-  const prev=node.querySelector("#photoPrev");
-  const urlInput=node.querySelector('input[name="photoUrl"]');
-  const fileInput=node.querySelector("#photoFile");
-  node.querySelector("#fileBtn").onclick=()=>fileInput.click();
-  urlInput.addEventListener("input",()=>{ photoData=urlInput.value.trim(); paintPrev(prev,photoData); });
-  fileInput.addEventListener("change",()=>{
-    const file=fileInput.files[0]; if(!file) return;
-    if(file.size>2.5*1024*1024){ toast("Image too large (max 2.5 MB)",true); return; }
-    const r=new FileReader();
-    r.onload=()=>{ photoData=r.result; urlInput.value=""; paintPrev(prev,photoData); };
-    r.readAsDataURL(file);
-  });
-
-  /* ---- Auto-detect topic from the bio (and name/role) ---- */
+  /* ---- Auto-detect category from the bio (and name) ---- */
   const bioEl = node.querySelector("#bioInput");
   const nameEl = node.querySelector('input[name="name"]');
-  const roleEl = node.querySelector('input[name="role"]');
   const sel = node.querySelector("#topicSel");
   const suggTag = node.querySelector("#topicSugg");
-  // Auto-routing is on only for a brand-new guest with no topic chosen yet.
+  // Auto-routing is on only for a brand-new guest with no category chosen yet.
   let auto = !g && !tid;
   function runSuggest(){
-    if(!auto){ suggTag.textContent = sel.value ? "" : ""; return; }
-    const best = classifyTopic(`${nameEl.value} ${roleEl.value} ${bioEl.value}`);
-    if(best){ sel.value = best.id; suggTag.className="sugg"; suggTag.textContent = "✦ topic auto-detected — " + best.name; }
+    if(!auto) return;
+    const best = classifyTopic(`${nameEl.value} ${bioEl.value}`);
+    if(best){ sel.value = best.id; suggTag.className="sugg"; suggTag.textContent = "✦ auto-filed under — " + best.name; }
     else { sel.value=""; suggTag.textContent=""; }
   }
-  sel.addEventListener("change", ()=>{ auto=false; suggTag.className="sugg manual"; suggTag.textContent = sel.value?"· topic set manually":""; });
-  [bioEl,nameEl,roleEl].forEach(el=>el.addEventListener("input", runSuggest));
+  sel.addEventListener("change", ()=>{ auto=false; suggTag.className="sugg manual"; suggTag.textContent = sel.value?"· set manually":""; });
+  [bioEl,nameEl].forEach(el=>el.addEventListener("input", runSuggest));
   runSuggest();
 
   node.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>overlay.close());
@@ -839,16 +805,15 @@ function openGuestModal(tid,gid){
     const name=(f.get("name")||"").trim();
     if(!name){ nameEl.focus(); return; }
     const targetTid = f.get("topicId");
-    if(!targetTid){ toast("Add a bio or pick a topic",true); sel.focus(); return; }
+    if(!targetTid){ toast("Add a bio or pick a category",true); sel.focus(); return; }
     const data={
-      name, role:(f.get("role")||"").trim(), bio:(f.get("bio")||"").trim(),
-      photo:photoData||"", email:(f.get("email")||"").trim(), phone:(f.get("phone")||"").trim(),
-      instagram:(f.get("instagram")||"").trim().replace(/^@/,""), status:f.get("status"),
-      date:f.get("date")||"", time:f.get("time")||"", location:f.get("location"), notes:(f.get("notes")||"").trim()
+      name, bio:(f.get("bio")||"").trim(),
+      socialPlatform:f.get("socialPlatform")||"instagram",
+      socialHandle:(f.get("socialHandle")||"").trim(),
     };
     if(g){
       Object.assign(g,data);
-      if(targetTid!==tid){ // moved to another topic
+      if(targetTid!==tid){ // moved to another category
         const from=findTopic(tid); if(from) from.guests=from.guests.filter(x=>x.id!==g.id);
         findTopic(targetTid).guests.push(g);
       }
@@ -860,11 +825,6 @@ function openGuestModal(tid,gid){
     state.openId = targetTid;
     save(); overlay.close(); renderAll();
   });
-}
-function paintPrev(prev,src){
-  prev.innerHTML = src
-    ? `<img src="${esc(src)}" alt="" onerror="this.replaceWith(document.createTextNode('⚠'))">`
-    : `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>`;
 }
 
 /* ---------------- Delete confirms ---------------- */
@@ -883,17 +843,7 @@ function delTopic(tid){
   save(); renderAll(); toast("Topic deleted");
 }
 
-/* ---------------- Export / Import / Reset ---------------- */
-document.getElementById("exportBtn").onclick=()=>{
-  const payload={app:"La Diaspora Gagnante",version:2,exportedAt:new Date().toISOString(),topics:state.topics};
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url; a.download=`guest-studio-backup-${isoIn(0)}.json`;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1000);
-  toast("Backup downloaded");
-};
+/* ---------------- Import / Reset ---------------- */
 document.getElementById("importBtn").onclick=()=>document.getElementById("importFile").click();
 document.getElementById("importFile").addEventListener("change",e=>{
   const file=e.target.files[0]; if(!file) return;
@@ -905,9 +855,8 @@ document.getElementById("importFile").addEventListener("change",e=>{
       if(!Array.isArray(topics)) throw new Error("no topics");
       if(!confirm("Replace all current data with this backup?")) return;
       state={topics:topics.map(t=>({id:t.id||uid(),cat:t.cat||"",name:t.name||"Untitled",description:t.description||"",status:t.status||"Planning",
-        guests:Array.isArray(t.guests)?t.guests.map(g=>({id:g.id||uid(),name:g.name||"",role:g.role||"",bio:g.bio||"",photo:g.photo||"",
-          email:g.email||"",phone:g.phone||"",instagram:g.instagram||"",status:g.status||"identified",date:g.date||"",time:g.time||"",
-          location:g.location||"In-Studio",notes:g.notes||""})):[]})), openId:null};
+        guests:Array.isArray(t.guests)?t.guests.map(g=>({id:g.id||uid(),name:g.name||"",bio:g.bio||"",
+          socialPlatform:g.socialPlatform||"instagram",socialHandle:g.socialHandle||g.instagram||""})):[]})), openId:null};
       save(); renderAll(); toast("Backup imported");
     }catch(err){ toast("Couldn’t read that file",true); }
     finally{ e.target.value=""; }
@@ -915,19 +864,8 @@ document.getElementById("importFile").addEventListener("change",e=>{
   r.readAsText(file);
 });
 document.getElementById("resetBtn").onclick=()=>{
-  if(!confirm("Reset to the 6 starter topics? Your current data will be replaced.")) return;
-  state=seed(); save(); renderAll(); toast("Reset to starter topics");
-};
-
-/* ---------------- Theme ---------------- */
-const themeBtn=document.getElementById("themeBtn");
-(function initTheme(){ try{const s=localStorage.getItem(THEME_KEY); if(s) document.documentElement.setAttribute("data-theme",s);}catch(e){} })();
-themeBtn.onclick=()=>{
-  const cur=document.documentElement.getAttribute("data-theme");
-  const sysDark=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const next = cur ? (cur==="dark"?"light":"dark") : (sysDark?"light":"dark");
-  document.documentElement.setAttribute("data-theme",next);
-  try{localStorage.setItem(THEME_KEY,next);}catch(e){}
+  if(!confirm("Reset to the starter categories? Your current data will be replaced.")) return;
+  state=seed(); save(); renderAll(); toast("Reset to starter categories");
 };
 
 /* ---------------- Toast ---------------- */
@@ -942,7 +880,6 @@ function toast(msg,isErr){
 
 /* ---------------- Header actions ---------------- */
 document.getElementById("brandMark").src = LOGO;
-document.getElementById("addTopicBtn").onclick = ()=>openTopicModal(null);
 document.getElementById("addGuestBtn").onclick = ()=>openGuestModal(null,null);
 
 /* ---------------- Go ---------------- */
