@@ -338,6 +338,14 @@ header.top{
 .hint{font-size:11px;color:var(--ink-3)}
 .sugg{font-size:10px;font-weight:700;letter-spacing:.2px;color:var(--brass-deep);text-transform:none;margin-left:6px}
 .sugg.manual{color:var(--ink-3)}
+.detect{margin-top:8px;font-size:13px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;min-height:20px}
+.detect:empty{display:none}
+.detect-lead{color:var(--brass-deep);font-weight:700}
+.detect-name{font-weight:700;color:var(--ink)}
+.detect-cat{font-weight:700;color:var(--brass-deep);background:color-mix(in srgb,var(--brass) 13%,transparent);
+  border:1px solid color-mix(in srgb,var(--brass) 26%,transparent);border-radius:999px;padding:2px 10px}
+.detect-sep{color:var(--ink-3)}
+.detect-warn{color:var(--ink-2);font-style:italic;font-weight:500}
 .photo-field{display:flex;gap:12px;align-items:center}
 .photo-prev{width:56px;height:56px;border-radius:50%;flex:none;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;display:grid;place-items:center;color:var(--ink-3)}
 .photo-prev img{width:100%;height:100%;object-fit:cover}
@@ -575,7 +583,7 @@ function renderTopics(){
       <h2>Interview Plan</h2>
       <span class="sub">Categories in the order to interview them — tap one to see its guests</span>
     </div>
-    <p class="plan-intro">Tap <b>Guest</b> at the top, paste someone's bio, and the app files them under the right category automatically. Work the list <b>top to bottom</b> — that's the order to interview.</p>
+    <p class="plan-intro">Tap <b>Add guest</b> at the top and paste someone's bio — the app reads their <b>name</b> and files them under the right <b>category</b> automatically. Work the list <b>top to bottom</b>: that's the order to interview.</p>
     <div class="topics">
       ${state.topics.map((t,i)=>topicCard(t,i)).join("")}
     </div>`;
@@ -743,7 +751,36 @@ function openTopicModal(tid){
   });
 }
 
-/* ----- Guest modal ----- */
+/* Pull the person's name from the start of a bio (best-effort). */
+function extractName(bio){
+  let s=(bio||"").replace(/\s+/g,' ').trim();
+  if(!s) return "";
+  const title=/^(dr|prof|mr|mrs|ms|mx|sir|dame|rev|hon|eng|imam|sheikh|hajj|hajja|alhaji)\.?$/i;
+  const particle=/^(de|del|della|van|von|da|di|bin|ben|al|la|le|el|dos|das|ould|ag|mac|mc|o)$/i;
+  const stop=/^(is|was|are|were|has|have|had|a|an|the|works?|worked|runs?|owns?|owned|founded|co-founded|based|from|who|grew|built|serves?|served|leads?|led|helps?|helped|studies|studied|graduated|teaches|taught|and|of|an?)$/i;
+  const words=s.split(' ');
+  const out=[];
+  for(let i=0;i<words.length && out.length<5;i++){
+    const w=words[i];
+    const clean=w.replace(/[,.;:—–]+$/,"");
+    const ended=/[,.;:—–]$/.test(w);
+    if(!clean) break;
+    if(out.length===0 && title.test(clean.replace(/\.$/,""))){ out.push(clean); continue; }
+    const isCap=/^[A-ZÀ-Ý][A-Za-zÀ-ÿ'’.\-]*$/.test(clean);
+    if(isCap && !stop.test(clean)){
+      out.push(clean);
+      if(ended) break;
+    } else if(particle.test(clean) && out.length>0){
+      out.push(clean.toLowerCase());
+    } else break;
+  }
+  let name=out.join(' ').replace(/\s+/g,' ').trim();
+  if(/^[A-Z]{2,5}$/.test(name)) name="";            // reject a lone acronym (ICU, RN…)
+  if(name.split(' ').length===1 && name.length<2) name="";
+  return name;
+}
+
+/* ----- Guest modal (bio + social only; name & category are auto) ----- */
 function openGuestModal(tid,gid){
   const g = gid?findGuest(tid,gid):null;
   const node = overlay.open(`
@@ -752,17 +789,9 @@ function openGuestModal(tid,gid){
       <button type="button" class="btn ghost icon" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="modal-body">
-      <div class="field"><label>Name</label><input name="name" required maxlength="80" value="${esc(g?g.name:"")}" placeholder="Full name"></div>
-
-      <div class="field"><label>Bio <span id="topicSugg" class="sugg"></span></label>
-        <textarea name="bio" id="bioInput" maxlength="1600" placeholder="Paste the guest’s bio here — the category is chosen automatically as you type.">${esc(g?g.bio:"")}</textarea>
-      </div>
-
-      <div class="field"><label>Category</label>
-        <select name="topicId" id="topicSel">
-          <option value="">— Choose a category —</option>
-          ${state.topics.map(tt=>`<option value="${tt.id}" ${tt.id===tid?"selected":""}>${esc(tt.name)}</option>`).join("")}
-        </select>
+      <div class="field"><label>Bio</label>
+        <textarea name="bio" id="bioInput" maxlength="1600" placeholder="Paste the person’s bio here. Start it with their name — the app reads the name and files them under the right category automatically.">${esc(g?g.bio:"")}</textarea>
+        <div id="detectBox" class="detect"></div>
       </div>
 
       <div class="field"><label>Social media</label>
@@ -779,22 +808,24 @@ function openGuestModal(tid,gid){
     </div>
   </form>`);
 
-  /* ---- Auto-detect category from the bio (and name) ---- */
+  /* ---- The app reads the name and category from the bio ---- */
   const bioEl = node.querySelector("#bioInput");
-  const nameEl = node.querySelector('input[name="name"]');
-  const sel = node.querySelector("#topicSel");
-  const suggTag = node.querySelector("#topicSugg");
-  // Auto-routing is on only for a brand-new guest with no category chosen yet.
-  let auto = !g && !tid;
-  function runSuggest(){
-    if(!auto) return;
-    const best = classifyTopic(`${nameEl.value} ${bioEl.value}`);
-    if(best){ sel.value = best.id; suggTag.className="sugg"; suggTag.textContent = "✦ auto-filed under — " + best.name; }
-    else { sel.value=""; suggTag.textContent=""; }
+  const detectBox = node.querySelector("#detectBox");
+  function runDetect(){
+    const bio = bioEl.value.trim();
+    if(!bio){ detectBox.innerHTML=""; return; }
+    const nm = extractName(bio);
+    const best = classifyTopic(bio);
+    const nmHtml = nm
+      ? `<span class="detect-name">${esc(nm)}</span>`
+      : `<span class="detect-warn">Start the bio with the name</span>`;
+    const catHtml = best
+      ? `<span class="detect-cat">${esc(best.name)}</span>`
+      : `<span class="detect-warn">add a bit more detail to pick a category</span>`;
+    detectBox.innerHTML = `<span class="detect-lead">✦</span> ${nmHtml} <span class="detect-sep">·</span> ${catHtml}`;
   }
-  sel.addEventListener("change", ()=>{ auto=false; suggTag.className="sugg manual"; suggTag.textContent = sel.value?"· set manually":""; });
-  [bioEl,nameEl].forEach(el=>el.addEventListener("input", runSuggest));
-  runSuggest();
+  bioEl.addEventListener("input", runDetect);
+  runDetect();
 
   node.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>overlay.close());
   const del=node.querySelector("[data-del]"); if(del) del.onclick=()=>{overlay.close();delGuest(tid,gid);};
@@ -802,18 +833,20 @@ function openGuestModal(tid,gid){
   node.querySelector("#guestForm").addEventListener("submit",ev=>{
     ev.preventDefault();
     const f=new FormData(ev.target);
-    const name=(f.get("name")||"").trim();
-    if(!name){ nameEl.focus(); return; }
-    const targetTid = f.get("topicId");
-    if(!targetTid){ toast("Add a bio or pick a category",true); sel.focus(); return; }
+    const bio=(f.get("bio")||"").trim();
+    if(!bio){ bioEl.focus(); toast("Paste a bio first",true); return; }
+    const best = classifyTopic(bio);
+    if(!best){ bioEl.focus(); toast("Add a bit more detail so it can pick a category",true); return; }
+    const targetTid = best.id;
     const data={
-      name, bio:(f.get("bio")||"").trim(),
+      name: extractName(bio) || "Unnamed guest",
+      bio,
       socialPlatform:f.get("socialPlatform")||"instagram",
       socialHandle:(f.get("socialHandle")||"").trim(),
     };
     if(g){
       Object.assign(g,data);
-      if(targetTid!==tid){ // moved to another category
+      if(targetTid!==tid){ // re-filed into another category
         const from=findTopic(tid); if(from) from.guests=from.guests.filter(x=>x.id!==g.id);
         findTopic(targetTid).guests.push(g);
       }
