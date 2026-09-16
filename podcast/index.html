@@ -157,6 +157,54 @@ header.top{
 .view-head h2{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:26px;margin:0;letter-spacing:.2px}
 .view-head .sub{color:var(--ink-2);font-size:13.5px}
 
+/* ---------- Strategy ladder ---------- */
+.strategy-intro{margin:0 0 18px;color:var(--ink-2);font-size:14px;line-height:1.55;max-width:64ch;
+  border-left:3px solid var(--brass);padding:2px 0 2px 14px}
+.strategy-intro b{color:var(--ink);font-weight:700}
+.ladder{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;counter-reset:rung}
+.cat{
+  display:flex;gap:16px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 16px 16px 0;position:relative;overflow:hidden;
+}
+.cat::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(var(--brass),var(--brass-deep))}
+.cat-rank{
+  flex:none;width:54px;display:flex;align-items:flex-start;justify-content:center;padding-top:2px;
+  font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:30px;line-height:1;
+  color:var(--brass-deep);font-variant-numeric:tabular-nums;
+}
+.cat-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.cat-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.cat-name{font-family:"Fraunces",Georgia,serif;font-weight:500;font-size:18.5px;line-height:1.15;letter-spacing:.15px;flex:1;min-width:140px}
+.cat-who{color:var(--ink-2);font-size:13px;line-height:1.5}
+.cat-when,.cat-how{font-size:13px;line-height:1.55;color:var(--ink)}
+.cat-lbl{display:block;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--brass-deep);margin-bottom:3px}
+.cat-when{background:var(--surface-2);border:1px solid var(--line-soft);border-radius:10px;padding:9px 11px;color:var(--ink-2)}
+.cat-how ul{margin:2px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+.cat-how li{position:relative;padding-left:16px;color:var(--ink-2);font-size:12.5px;line-height:1.5}
+.cat-how li::before{content:"";position:absolute;left:2px;top:8px;width:5px;height:5px;border-radius:50%;background:var(--taupe)}
+.stage-pill{
+  --c:var(--s-identified);
+  display:inline-flex;align-items:center;gap:6px;flex:none;cursor:pointer;
+  font-size:11px;font-weight:700;letter-spacing:.2px;text-transform:uppercase;
+  padding:5px 11px 5px 9px;border-radius:999px;
+  background:color-mix(in srgb,var(--c) 15%,transparent);
+  color:color-mix(in srgb,var(--c) 78%,var(--ink));
+  border:1px solid color-mix(in srgb,var(--c) 34%,transparent);
+  transition:box-shadow .14s,transform .12s;
+}
+.stage-pill:hover{box-shadow:var(--shadow)}
+.stage-pill:active{transform:translateY(1px)}
+.stage-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none}
+.stage-pill.todo{--c:var(--s-identified)}
+.stage-pill.research{--c:var(--s-contacted)}
+.stage-pill.outreach{--c:var(--s-recorded)}
+.stage-pill.landed{--c:var(--s-confirmed)}
+.stage-pill.done{--c:var(--s-aired)}
+@media(max-width:520px){
+  .cat{gap:6px;padding-left:0}
+  .cat-rank{width:40px;font-size:24px}
+}
+
 /* ---------- Topic accordion ---------- */
 .topics{display:flex;flex-direction:column;gap:14px}
 .topic{
@@ -374,8 +422,18 @@ footer .spacer{flex:1}
   </div>
 </header>
 
-<main class="wrap" style="padding-top:22px">
+<main class="wrap" style="padding-top:18px">
+  <div class="switcher" role="tablist" aria-label="Views">
+    <button role="tab" aria-selected="true" data-view="topics">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Topics
+    </button>
+    <button role="tab" aria-selected="false" data-view="strategy">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M12 6l7-2v6l-7 2M12 6 5 4v6l7 2"/></svg>Strategy
+    </button>
+  </div>
+
   <section id="view-topics"></section>
+  <section id="view-strategy" hidden></section>
 </main>
 
 <footer>
@@ -405,6 +463,46 @@ const GUEST_STATUSES = [
 ];
 const TOPIC_STATUSES = ["Planning","Booking","Recording","Published"];
 const LOCATIONS = ["In-Studio","Remote"];
+
+/* Interview strategy — guest tiers in the order to book them, and how to
+   land & interview each. Ordered top-to-bottom = who to approach first. */
+const STAGES = [
+  {key:"todo",     label:"Not started"},
+  {key:"research", label:"Researching"},
+  {key:"outreach", label:"Outreach"},
+  {key:"landed",   label:"Booked"},
+  {key:"done",     label:"Aired"},
+];
+const CATEGORIES = [
+  {key:"achievers", rank:1, name:"Everyday Achievers",
+    who:"Relatable people who built something real — nurses, tradespeople, small-business owners, first-generation graduates.",
+    when:"Start here. They're the easiest “yes,” and every episode builds the catalogue and credibility you'll use to pitch bigger names.",
+    how:["Lead with their turning point, then the practical steps they took.","Keep it story-first — let them teach the audience.","Ask about the setback, not just the win — that's what people remember."]},
+  {key:"influencers", rank:2, name:"Influencers & Creators",
+    who:"People with an engaged online audience — content creators, community builders, niche experts.",
+    when:"Book early. They cross-promote the episode and hand you a whole new audience.",
+    how:["Agree how you'll both share it before you record.","Give them clips and tags so posting is effortless.","Open with the questions their community keeps asking."]},
+  {key:"artists", rank:3, name:"Artists & Entertainers",
+    who:"Musicians, actors, comedians, dancers, visual artists.",
+    when:"Book to bring energy and shareable moments once you have a few episodes out.",
+    how:["Blend the craft with the backstory — how they got here.","Fish for anecdotes; plan one clip-worthy moment or mini-performance.","Send topics ahead so they arrive relaxed."]},
+  {key:"wealth", rank:4, name:"Entrepreneurs & Wealthy Builders",
+    who:"Founders, investors, self-made business owners — the “rich people” with a story behind the money.",
+    when:"Approach once you have social proof — a real catalogue and a few recognisable guests.",
+    how:["Go past the money to the decisions and the failures.","Ask numbers respectfully, and only after rapport.","Prepare thoroughly — they can tell in 30 seconds if you did your homework."]},
+  {key:"vip", rank:5, name:"VIPs & Respected Leaders",
+    who:"High-status figures — industry leaders, community elders, well-known professionals.",
+    when:"Book after a strong catalogue proves the show is worth their time.",
+    how:["A warm introduction beats a cold ask every time.","Be concise: one clear, high-value reason to say yes.","Respect their protocol and keep the ask short."]},
+  {key:"ambassadors", rank:6, name:"Ambassadors & Diplomats",
+    who:"Embassy officials, cultural attachés, consuls.",
+    when:"Approach through the formal channel once the show reads as credible and non-partisan.",
+    how:["Go through the press / protocol office, not their personal inbox.","Send a short formal brief with the agreed topics.","Steer clear of partisan traps — confirm what's on and off the table."]},
+  {key:"officials", rank:7, name:"Mayors, Ministers & Presidents",
+    who:"Elected officials and heads of state.",
+    when:"Save for last — highest prestige, hardest to land. Your catalogue is the pitch.",
+    how:["Work through the comms / press team and be flexible on timing.","Tie your ask to their agenda and to the diaspora audience.","Expect vetting and a tight window — come fully prepared."]},
+];
 
 const STATUS_COLOR = {
   identified:"--s-identified", contacted:"--s-contacted",
@@ -469,7 +567,7 @@ function seed(){
     t("Working in Healthcare & Nursing","Life on the floor — from CNA to RN to specialised care.","Planning"),
     t("Starting an African Market","Sourcing, licensing, and running a neighbourhood grocery.","Planning"),
   ];
-  return {topics, openId:topics[0].id};
+  return {topics, openId:topics[0].id, strategy:{}};
 }
 
 /* ---------------- Utilities ---------------- */
@@ -485,7 +583,7 @@ let state = load();
 function load(){
   try{
     const raw = localStorage.getItem(STORE_KEY);
-    if(raw){const d=JSON.parse(raw); if(d&&Array.isArray(d.topics)) return d;}
+    if(raw){const d=JSON.parse(raw); if(d&&Array.isArray(d.topics)){ if(!d.strategy||typeof d.strategy!=="object") d.strategy={}; return d; }}
   }catch(e){}
   const s = seed(); save(s); return s;
 }
@@ -498,10 +596,14 @@ function findTopic(id){return state.topics.find(t=>t.id===id)}
 function findGuest(tid,gid){const t=findTopic(tid);return t?t.guests.find(g=>g.id===gid):null}
 
 /* ---------------- Rendering ---------------- */
-const views = { topics: document.getElementById("view-topics") };
+const views = {
+  topics:   document.getElementById("view-topics"),
+  strategy: document.getElementById("view-strategy"),
+};
 
 function renderAll(){
   renderTopics();
+  renderStrategy();
   renderStat();
 }
 
@@ -638,6 +740,52 @@ function emptyState(title,msg,icon){
   </div>`;
 }
 
+/* ----- Strategy (interview ladder) ----- */
+function stageOf(catKey){
+  const k = state.strategy[catKey] || "todo";
+  return STAGES.find(s=>s.key===k) || STAGES[0];
+}
+function renderStrategy(){
+  views.strategy.innerHTML = `
+    <div class="view-head"><h2>Interview Strategy</h2><span class="sub">Who to book first — and how to land &amp; interview each tier</span></div>
+    <p class="strategy-intro">Work the ladder <b>top to bottom</b>. Each tier you record becomes the social proof that helps you land the next one, so start with the guests who are easiest to book and climb toward the hardest. Tap a stage pill to track your progress.</p>
+    <ol class="ladder">${CATEGORIES.map(catCard).join("")}</ol>`;
+}
+function catCard(c){
+  const st = stageOf(c.key);
+  return `<li class="cat">
+    <div class="cat-rank">${c.rank}</div>
+    <div class="cat-main">
+      <div class="cat-head">
+        <div class="cat-name">${esc(c.name)}</div>
+        <button class="stage-pill ${st.key}" data-act="cycle-stage" data-cat="${c.key}" title="Tap to advance the stage">
+          <span class="dot"></span>${esc(st.label)}
+        </button>
+      </div>
+      <div class="cat-who">${esc(c.who)}</div>
+      <div class="cat-when"><span class="cat-lbl">Book when</span>${esc(c.when)}</div>
+      <div class="cat-how"><span class="cat-lbl">How to land &amp; interview</span>
+        <ul>${c.how.map(h=>`<li>${esc(h)}</li>`).join("")}</ul>
+      </div>
+    </div>
+  </li>`;
+}
+function cycleStage(catKey){
+  const cur = state.strategy[catKey] || "todo";
+  const i = STAGES.findIndex(s=>s.key===cur);
+  state.strategy[catKey] = STAGES[(i+1)%STAGES.length].key;
+  save(); renderStrategy();
+}
+
+/* ---------------- View switching ---------------- */
+function switchView(v){
+  document.querySelectorAll(".switcher button").forEach(b=>b.setAttribute("aria-selected", String(b.dataset.view===v)));
+  Object.keys(views).forEach(k=>views[k].hidden = k!==v);
+}
+document.querySelector(".switcher").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-view]"); if(b) switchView(b.dataset.view);
+});
+
 /* ---------------- Delegated actions ---------------- */
 document.body.addEventListener("click",e=>{
   const el=e.target.closest("[data-act]"); if(!el) return;
@@ -649,6 +797,7 @@ document.body.addEventListener("click",e=>{
     case "del-guest": delGuest(tid,gid); break;
     case "edit-topic": openTopicModal(tid); break;
     case "del-topic": delTopic(tid); break;
+    case "cycle-stage": cycleStage(el.dataset.cat); break;
   }
 });
 
@@ -853,7 +1002,7 @@ function delTopic(tid){
 
 /* ---------------- Export / Import / Reset ---------------- */
 document.getElementById("exportBtn").onclick=()=>{
-  const payload={app:"Guest Studio",version:1,exportedAt:new Date().toISOString(),topics:state.topics};
+  const payload={app:"La Diaspora Gagnante",version:1,exportedAt:new Date().toISOString(),topics:state.topics,strategy:state.strategy||{}};
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
@@ -875,7 +1024,8 @@ document.getElementById("importFile").addEventListener("change",e=>{
       state={topics:topics.map(t=>({id:t.id||uid(),name:t.name||"Untitled",description:t.description||"",status:t.status||"Planning",
         guests:Array.isArray(t.guests)?t.guests.map(g=>({id:g.id||uid(),name:g.name||"",role:g.role||"",bio:g.bio||"",photo:g.photo||"",
           email:g.email||"",phone:g.phone||"",instagram:g.instagram||"",status:g.status||"identified",date:g.date||"",time:g.time||"",
-          location:g.location||"In-Studio",notes:g.notes||""})):[]})), openId:null};
+          location:g.location||"In-Studio",notes:g.notes||""})):[]})), openId:null,
+        strategy:(d&&typeof d.strategy==="object"&&d.strategy)||{}};
       save(); renderAll(); toast("Backup imported");
     }catch(err){ toast("Couldn’t read that file",true); }
     finally{ e.target.value=""; }
