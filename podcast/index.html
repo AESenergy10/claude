@@ -192,7 +192,13 @@ header.top{
 }
 .gate-form input:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 22%,transparent)}
 .gate-form .btn-hero{width:100%}
-.org-bar{display:flex;justify-content:center;padding:22px 20px 8px}
+.seg{display:flex;gap:4px;padding:5px;background:var(--surface-2);border:1px solid var(--line-soft);
+  border-radius:12px;margin:0 auto 6px;max-width:320px}
+.seg-btn{flex:1;border:0;background:transparent;color:var(--ink-2);padding:10px 10px;border-radius:9px;
+  font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;
+  justify-content:center;gap:7px;transition:background .15s,color .15s,box-shadow .15s}
+.seg-btn svg{width:15px;height:15px}
+.seg-btn.is-active{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
 .cat-locked{display:flex;align-items:center;gap:8px;color:var(--ink-3);font-size:12.5px;font-style:italic;
   margin:14px 2px 2px}
 .cat-locked svg{width:15px;height:15px;flex:none;color:var(--taupe)}
@@ -429,7 +435,15 @@ footer .spacer{flex:1}
   </div>
 </header>
 
-<main class="wrap" style="padding-top:18px">
+<main class="wrap" style="padding-top:14px">
+  <div class="seg" role="tablist" aria-label="Mode">
+    <button class="seg-btn is-active" data-mode="nominate" role="tab">Nominate</button>
+    <button class="seg-btn" data-mode="organizer" role="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      Organizer
+    </button>
+  </div>
+
   <section class="hero">
     <div class="hero-cover"><img id="coverArt" alt="La Diaspora Gagnante — Le Podcast, avec Souadou Bah"></div>
 
@@ -455,9 +469,6 @@ footer .spacer{flex:1}
        until the organizer unlocks with the code. -->
   <div id="tracker" hidden>
     <section id="view-topics"></section>
-    <div class="org-bar">
-      <button class="link-btn" id="orgBtn">🔒 Organizer access — see who was nominated</button>
-    </div>
   </div>
 </main>
 
@@ -1024,33 +1035,56 @@ document.getElementById("gateForm").addEventListener("submit", ev=>{
   showNominate();
 });
 
-/* ---------------- Organizer code (reveals nominee names) ---------------- */
+/* ---------------- Nominate / Organizer toggle ---------------- */
 function isUnlocked(){ try{ return localStorage.getItem(UNLOCK_KEY)==="1"; }catch(e){ return false; } }
 function getPass(){ try{ return localStorage.getItem(PASS_KEY)||""; }catch(e){ return ""; } }
+function setSeg(mode){
+  document.querySelectorAll(".seg-btn").forEach(b=>b.classList.toggle("is-active", b.dataset.mode===mode));
+}
 function applyUnlock(){
   unlocked = isUnlocked();
   ["lockBtn","importBtn","resetBtn"].forEach(id=>{ const el=document.getElementById(id); if(el) el.hidden = !unlocked; });
-  const org=document.getElementById("orgBtn"); if(org) org.hidden = unlocked;
+  setSeg(unlocked ? "organizer" : "nominate");
+  // tracker is visible once an email is entered (public counts) or when unlocked (names)
+  document.getElementById("tracker").hidden = !(getEmail() || unlocked);
   renderTopics();
 }
-document.getElementById("orgBtn").onclick = ()=>{
+// Returns true if we end up unlocked.
+function organizerUnlock(){
   const stored = getPass();
   if(!stored){
-    const a = prompt("Set your organizer code (only you should know it):");
-    if(a===null) return;
-    const pass=a.trim(); if(!pass){ toast("Code can’t be empty",true); return; }
+    const a = prompt("Set your organizer password (only you should know it):");
+    if(a===null) return false;
+    const pass=a.trim(); if(!pass){ toast("Password can’t be empty",true); return false; }
     try{ localStorage.setItem(PASS_KEY,pass); localStorage.setItem(UNLOCK_KEY,"1"); }catch(e){}
-    applyUnlock(); toast("Code set — names unlocked");
-  } else {
-    const a = prompt("Enter your organizer code:");
-    if(a===null) return;
-    if(a.trim()===stored){ try{ localStorage.setItem(UNLOCK_KEY,"1"); }catch(e){} applyUnlock(); toast("Names unlocked"); }
-    else toast("Wrong code",true);
+    toast("Password set — nominees unlocked"); return true;
   }
-};
+  const a = prompt("Enter your organizer password:");
+  if(a===null) return false;
+  if(a.trim()===stored){ try{ localStorage.setItem(UNLOCK_KEY,"1"); }catch(e){} toast("Nominees unlocked"); return true; }
+  toast("Wrong password",true); return false;
+}
+document.querySelectorAll(".seg-btn").forEach(btn=>{
+  btn.onclick = ()=>{
+    if(btn.dataset.mode==="organizer"){
+      if(unlocked){ setSeg("organizer"); return; }
+      if(organizerUnlock()){
+        showNominate();                 // also drop the email gate for the organizer
+        applyUnlock();
+        document.getElementById("tracker").scrollIntoView({behavior:"smooth",block:"start"});
+      } else {
+        setSeg("nominate");
+      }
+    } else {
+      try{ localStorage.removeItem(UNLOCK_KEY); }catch(e){}
+      applyUnlock();
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+  };
+});
 document.getElementById("lockBtn").onclick = ()=>{
   try{ localStorage.removeItem(UNLOCK_KEY); }catch(e){}
-  applyUnlock(); toast("Names hidden again");
+  applyUnlock(); window.scrollTo({top:0,behavior:"smooth"}); toast("Nominees hidden");
 };
 applyUnlock();
 
