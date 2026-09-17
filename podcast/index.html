@@ -178,11 +178,16 @@ header.top{
 .btn-hero:hover{transform:translateY(-2px);box-shadow:0 10px 28px color-mix(in srgb,var(--brass) 48%,transparent)}
 .btn-hero:active{transform:translateY(0)}
 .hero-hint{font-size:12px;color:var(--ink-3);margin:0}
-.hero-count{font-size:13px;color:var(--ink-2);font-weight:600;margin:0}
-.locked-note{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;
-  color:var(--ink-3);padding:30px 20px 10px}
-.locked-note svg{width:26px;height:26px;color:var(--taupe)}
-.locked-note p{margin:0;font-size:13px}
+.hero-count{font-size:13px;color:var(--ink-2);font-weight:600;margin:10px 0 0}
+.gate-form{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:340px;margin:0 auto}
+.gate-form input{
+  width:100%;font-family:inherit;font-size:16px;color:var(--ink);background:var(--surface);
+  border:1px solid var(--line);border-radius:12px;padding:14px 16px;text-align:center;
+  transition:border-color .15s,box-shadow .15s;
+}
+.gate-form input:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 22%,transparent)}
+.gate-form .btn-hero{width:100%}
+.locked-note{display:flex;justify-content:center;padding:26px 20px 8px}
 
 /* ---------- Plan intro + order number ---------- */
 .plan-intro{margin:0 0 18px;color:var(--ink-2);font-size:13.5px;line-height:1.55;max-width:66ch;
@@ -419,13 +424,23 @@ footer .spacer{flex:1}
 <main class="wrap" style="padding-top:18px">
   <section class="hero">
     <div class="hero-cover"><img id="coverArt" alt="La Diaspora Gagnante — Le Podcast, avec Souadou Bah"></div>
-    <h2 class="hero-title">Nominate a guest for the podcast</h2>
-    <p class="hero-sub">Know someone with a story worth telling? Nominate them to be interviewed on <b>La Diaspora Gagnante</b>.</p>
-    <button class="btn-hero" id="heroAddBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.4"/><path d="M3 20a6 6 0 0 1 12 0M18 8v6M15 11h6"/></svg>
-      Nominate a guest
-    </button>
-    <p class="hero-count" id="heroCount"></p>
+
+    <div id="gate">
+      <h2 class="hero-title">Access with your email</h2>
+      <form id="gateForm" class="gate-form">
+        <input id="gateEmail" type="email" required autocomplete="email" placeholder="you@email.com">
+        <button type="submit" class="btn-hero">Continue</button>
+      </form>
+    </div>
+
+    <div id="nominate" hidden>
+      <h2 class="hero-title">Nominate a guest</h2>
+      <button class="btn-hero" id="heroAddBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.4"/><path d="M3 20a6 6 0 0 1 12 0M18 8v6M15 11h6"/></svg>
+        Nominate a guest
+      </button>
+      <p class="hero-count" id="heroCount"></p>
+    </div>
   </section>
 
   <!-- Tracker: organizer-only, hidden until unlocked -->
@@ -434,9 +449,7 @@ footer .spacer{flex:1}
   </div>
 
   <div id="lockedNote" class="locked-note">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-    <p>Nominations are reviewed privately by the organizer.</p>
-    <button class="link-btn" id="orgBtn">Organizer? Unlock the tracker</button>
+    <button class="link-btn" id="orgBtn">Organizer</button>
   </div>
 </main>
 
@@ -459,6 +472,8 @@ const STORE_KEY = "diasporaGagnante.v2";
 const THEME_KEY = "diasporaGagnante.theme";
 const PASS_KEY  = "diasporaGagnante.pass";
 const UNLOCK_KEY= "diasporaGagnante.unlocked";
+const EMAIL_KEY = "diasporaGagnante.email";
+function getEmail(){ try{ return localStorage.getItem(EMAIL_KEY)||""; }catch(e){ return ""; } }
 /* Public nomination form (Google Form, etc.). When set, the big
    "Nominate a guest" button opens it in a new tab so anyone — with or
    without a Claude account — can submit. Empty = use the built-in form. */
@@ -844,10 +859,6 @@ function openGuestModal(tid,gid){
       <button type="button" class="btn ghost icon" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="modal-body">
-      <div class="field"><label>Your name</label>
-        <input name="nominatedBy" maxlength="80" value="${esc(g?g.nominatedBy:"")}" placeholder="Who's nominating? (your name)">
-      </div>
-
       <div class="field"><label>Tell me about your nominee</label>
         <textarea name="bio" id="bioInput" maxlength="1600" placeholder="Who are they and why would they be a great guest? Start with their name — the app reads it and files them under the right category automatically.">${esc(g?g.bio:"")}</textarea>
         <div id="detectBox" class="detect"></div>
@@ -900,7 +911,7 @@ function openGuestModal(tid,gid){
     const data={
       name: extractName(bio) || "Unnamed guest",
       bio,
-      nominatedBy:(f.get("nominatedBy")||"").trim(),
+      nominatedBy: (g&&g.nominatedBy) || getEmail(),
       socialPlatform:f.get("socialPlatform")||"instagram",
       socialHandle:(f.get("socialHandle")||"").trim(),
     };
@@ -981,6 +992,20 @@ document.getElementById("heroAddBtn").onclick = ()=>{
   if(FORM_URL){ window.open(FORM_URL, "_blank", "noopener"); }
   else { openGuestModal(null,null); }
 };
+
+// Email gate: enter an email to reach the Nominate button.
+function showNominate(){
+  document.getElementById("gate").hidden = true;
+  document.getElementById("nominate").hidden = false;
+}
+if(getEmail()) showNominate();
+document.getElementById("gateForm").addEventListener("submit", ev=>{
+  ev.preventDefault();
+  const email=(document.getElementById("gateEmail").value||"").trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast("Enter a valid email",true); return; }
+  try{ localStorage.setItem(EMAIL_KEY,email); }catch(e){}
+  showNominate();
+});
 
 /* ---------------- Organizer lock ---------------- */
 function isUnlocked(){ try{ return localStorage.getItem(UNLOCK_KEY)==="1"; }catch(e){ return false; } }
