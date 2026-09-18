@@ -158,6 +158,7 @@
       <div class="field">
         <label>Container weight (kg)</label>
         <input type="number" id="containerWeight" step="1" min="0">
+        <span class="derived" id="packsInContainerDerived"></span>
       </div>
       <div class="field">
         <label>Number of containers</label>
@@ -167,6 +168,11 @@
         <label>Pack size (lb)</label>
         <input type="number" id="packSizeLb" step="0.1" min="0.01">
         <span class="derived" id="packKgDerived"></span>
+      </div>
+      <div class="field">
+        <label>Carton weight (kg)</label>
+        <input type="number" id="cartonWeight" step="1" min="0.01">
+        <span class="derived" id="cartonDerived"></span>
       </div>
       <div class="field">
         <label>Selling price / pack (USD)</label>
@@ -331,7 +337,7 @@
 
   function defaults(){
     return {
-      settings:{ containerWeight:16000, numContainers:1, packSizeLb:3, sellingPrice:2.50, exchangeRate:575 },
+      settings:{ containerWeight:16000, numContainers:1, packSizeLb:3, cartonWeight:20, sellingPrice:2.50, exchangeRate:575 },
       costs:[
         {category:"Product", description:"Attiéké purchase", amount:600, currency:"CFA", basis:"Per kg"},
         {category:"Logistics/Freight", description:"Container shipping", amount:6000, currency:"USD", basis:"Per container"},
@@ -354,7 +360,10 @@
       var raw = localStorage.getItem(STORE_KEY);
       if(!raw) return null;
       var obj = JSON.parse(raw);
-      if(obj && obj.settings && Array.isArray(obj.costs)) return obj;
+      if(obj && obj.settings && Array.isArray(obj.costs)){
+        obj.settings = Object.assign({}, defaults().settings, obj.settings); // backfill new keys
+        return obj;
+      }
       return null;
     }catch(e){ return null; }
   }
@@ -386,6 +395,11 @@
     var ratio = packKg>0 ? containerKg / packKg : 0;
     var packsPerContainer = (Math.ceil(ratio) - ratio) < 0.02 ? Math.ceil(ratio) : Math.floor(ratio);
     var containers = s.numContainers>0 ? s.numContainers : 1;
+
+    // Carton figures (informational): how the container splits into cartons
+    var cartonWeight = s.cartonWeight>0 ? s.cartonWeight : 0;
+    var cartonsPerContainer = cartonWeight>0 ? Math.floor(containerKg / cartonWeight) : 0;
+    var packsPerCarton = (cartonWeight>0 && packKg>0) ? Math.floor(cartonWeight / packKg) : 0;
 
     function amtUSD(line){ return line.currency==="CFA" ? (Number(line.amount)||0)/rate : (Number(line.amount)||0); }
     // total USD for this line for ONE container
@@ -431,6 +445,7 @@
     return {
       s:s, rate:rate, packKg:packKg, containerKg:containerKg,
       packsPerContainer:packsPerContainer, containers:containers,
+      cartonWeight:cartonWeight, cartonsPerContainer:cartonsPerContainer, packsPerCarton:packsPerCarton,
       lines:lines, cats:cats,
       totalPerContainer:totalPerContainer, revenuePerContainer:revenuePerContainer, profitPerContainer:profitPerContainer,
       totalPacks:totalPacks, totalCost:totalCost, revenue:revenue, profit:profit,
@@ -449,9 +464,10 @@
     setVal("containerWeight", state.settings.containerWeight);
     setVal("numContainers", state.settings.numContainers);
     setVal("packSizeLb", state.settings.packSizeLb);
+    setVal("cartonWeight", state.settings.cartonWeight);
     setVal("sellingPrice", state.settings.sellingPrice);
     setVal("exchangeRate", state.settings.exchangeRate);
-    document.getElementById("packKgDerived").textContent = "= "+num(c.packKg,4)+" kg / pack";
+    renderDerived(c);
     document.getElementById("packLbLabel").textContent = num(state.settings.packSizeLb,2);
 
     renderCosts(c);
@@ -463,6 +479,17 @@
   }
 
   function setVal(id,v){ var el=document.getElementById(id); if(el && document.activeElement!==el) el.value=v; }
+
+  function renderDerived(c){
+    document.getElementById("packKgDerived").textContent = "= "+num(c.packKg,4)+" kg / pack";
+    document.getElementById("packsInContainerDerived").textContent = "= "+num(c.packsPerContainer,0)+" packs in container";
+    var cartonEl = document.getElementById("cartonDerived");
+    if(c.cartonsPerContainer>0){
+      cartonEl.textContent = "= "+num(c.cartonsPerContainer,0)+" cartons · ~"+num(c.packsPerCarton,0)+" packs / carton";
+    } else {
+      cartonEl.textContent = "";
+    }
+  }
 
   /* COSTS TAB */
   function renderCosts(c){
@@ -690,13 +717,13 @@
     }
   }
 
-  ["containerWeight","numContainers","packSizeLb","sellingPrice","exchangeRate"].forEach(function(id){
+  ["containerWeight","numContainers","packSizeLb","cartonWeight","sellingPrice","exchangeRate"].forEach(function(id){
     document.getElementById(id).addEventListener("input",function(){
       var v=parseFloat(this.value);
       state.settings[id]= isFinite(v)? v : 0;
       // light update to keep focus
       var c=compute();
-      document.getElementById("packKgDerived").textContent = "= "+num(c.packKg,4)+" kg / pack";
+      renderDerived(c);
       document.getElementById("packLbLabel").textContent = num(state.settings.packSizeLb,2);
       renderCosts(c); renderSummary(c); renderPerContainer(c); renderPerPack(c); renderPerKg(c); renderSensitivity(c);
       save();
@@ -745,6 +772,10 @@
     rows.push(["Number of containers",state.settings.numContainers]);
     rows.push(["Pack size (lb)",state.settings.packSizeLb]);
     rows.push(["Pack size (kg)",c.packKg.toFixed(6)]);
+    rows.push(["Carton weight (kg)",state.settings.cartonWeight]);
+    rows.push(["Cartons per container",c.cartonsPerContainer]);
+    rows.push(["Packs per carton",c.packsPerCarton]);
+    rows.push(["Packs in container",c.packsPerContainer]);
     rows.push(["Selling price / pack (USD)",state.settings.sellingPrice]);
     rows.push(["Exchange rate (CFA per USD)",state.settings.exchangeRate]);
     rows.push([]);
@@ -787,7 +818,7 @@
     rd.onload=function(){
       try{
         var obj=JSON.parse(rd.result);
-        if(obj && obj.settings && Array.isArray(obj.costs)){ state=obj; render(); save(); setStatus("Imported backup."); }
+        if(obj && obj.settings && Array.isArray(obj.costs)){ obj.settings=Object.assign({}, defaults().settings, obj.settings); state=obj; render(); save(); setStatus("Imported backup."); }
         else alert("That file doesn't look like a valid backup.");
       }catch(err){ alert("Could not read that JSON file."); }
       e.target.value="";
