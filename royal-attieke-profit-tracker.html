@@ -153,9 +153,6 @@
 
   <div class="toolbar">
     <button class="btn primary" id="btnCSV">⬇ Export CSV</button>
-    <button class="btn" id="btnJSON">⬇ Export JSON</button>
-    <button class="btn" id="btnImport">⬆ Import JSON</button>
-    <input type="file" id="fileImport" accept="application/json" hidden>
     <button class="btn danger" id="btnReset">↺ Reset to defaults</button>
   </div>
 
@@ -195,7 +192,6 @@
   <!-- TABS -->
   <div class="tabs" id="tabs">
     <button class="tab active" data-tab="summary">Summary</button>
-    <button class="tab" data-tab="costs">Costs</button>
     <button class="tab" data-tab="percontainer">Per Container</button>
     <button class="tab" data-tab="perboule">Per Boule</button>
     <button class="tab" data-tab="perkg">Per Kg</button>
@@ -216,37 +212,6 @@
         <div><svg class="chart-svg" id="bars" viewBox="0 0 300 220" role="img" aria-label="Cost by category bar chart"></svg></div>
       </div>
       <div class="legend" id="legend"></div>
-    </div>
-  </section>
-
-  <!-- COSTS -->
-  <section class="panel" id="panel-costs">
-    <div class="card">
-      <h2>Cost Lines</h2>
-      <p class="hint">Enter each cost with its currency and basis. CFA amounts are converted to USD using the exchange rate below.</p>
-      <div class="field fxfield">
-        <label>Exchange rate (CFA per $1)</label>
-        <input type="number" id="exchangeRate" step="1" min="1">
-      </div>
-      <div class="tblwrap">
-        <table class="costtable">
-          <thead>
-            <tr>
-              <th>Category</th><th>Description</th>
-              <th class="num">Amount</th><th>Currency</th><th>Cost basis</th>
-              <th class="num">USD / container</th><th></th>
-            </tr>
-          </thead>
-          <tbody id="costBody"></tbody>
-          <tfoot>
-            <tr>
-              <td colspan="5">Total landed cost — per container</td>
-              <td class="num" id="costTotalPC"></td><td></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-      <button class="btn addrow" id="btnAddRow">＋ Add cost line</button>
     </div>
   </section>
 
@@ -474,11 +439,9 @@
     setVal("bouleKg", state.settings.bouleKg);
     setVal("boulesPerCarton", state.settings.boulesPerCarton);
     setVal("sellingPrice", state.settings.sellingPrice);
-    setVal("exchangeRate", state.settings.exchangeRate);
     document.getElementById("bouleKgLabel").textContent = num(state.settings.bouleKg,2);
 
     renderBreakdown(c);
-    renderCosts(c);
     renderSummary(c);
     renderPerContainer(c);
     renderPerBoule(c);
@@ -499,47 +462,6 @@
     document.getElementById("breakdown").innerHTML = tiles.map(function(t){
       return '<div class="bdtile"><div class="bd-val">'+t.v+'</div><div class="bd-label">'+t.l+'</div></div>';
     }).join("");
-  }
-
-  /* COSTS TAB */
-  function renderCosts(c){
-    var body = document.getElementById("costBody");
-    body.innerHTML="";
-    state.costs.forEach(function(line,i){
-      var tr = document.createElement("tr");
-      tr.appendChild(cellSelect(CATEGORIES, line.category, function(v){ state.costs[i].category=v; changed(); }));
-      tr.appendChild(cellText(line.description, function(v){ state.costs[i].description=v; changed(true); }));
-      tr.appendChild(cellNumber(line.amount, function(v){ state.costs[i].amount=v; changed(true); }));
-      tr.appendChild(cellSelect(["CFA","USD"], line.currency, function(v){ state.costs[i].currency=v; changed(); }));
-      tr.appendChild(cellSelect(BASES, line.basis, function(v){ state.costs[i].basis=v; changed(); }));
-      var td = document.createElement("td"); td.className="num"; td.textContent = usd(c.lines[i].perContainer); tr.appendChild(td);
-      var tdd = document.createElement("td");
-      var del = document.createElement("button"); del.className="rowdel"; del.textContent="✕"; del.title="Delete line";
-      del.onclick=function(){ state.costs.splice(i,1); changed(); };
-      tdd.appendChild(del); tr.appendChild(tdd);
-      body.appendChild(tr);
-    });
-    document.getElementById("costTotalPC").textContent = usd(c.totalPerContainer);
-  }
-
-  function cellText(val, cb){
-    var td=document.createElement("td");
-    var inp=document.createElement("input"); inp.type="text"; inp.value=val;
-    inp.oninput=function(){ cb(inp.value); };
-    td.appendChild(inp); return td;
-  }
-  function cellNumber(val, cb){
-    var td=document.createElement("td"); td.className="num";
-    var inp=document.createElement("input"); inp.type="number"; inp.step="any"; inp.value=val;
-    inp.oninput=function(){ cb(parseFloat(inp.value)||0); };
-    td.appendChild(inp); return td;
-  }
-  function cellSelect(opts, val, cb){
-    var td=document.createElement("td");
-    var sel=document.createElement("select");
-    opts.forEach(function(o){ var op=document.createElement("option"); op.value=o; op.textContent=o; if(o===val)op.selected=true; sel.appendChild(op); });
-    sel.onchange=function(){ cb(sel.value); };
-    td.appendChild(sel); return td;
   }
 
   /* SUMMARY TAB */
@@ -710,36 +632,16 @@
   function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m];}); }
 
   /* ---------- events ---------- */
-  function changed(defer){
-    if(defer){
-      var c=compute();
-      document.getElementById("costTotalPC").textContent = usd(c.totalPerContainer);
-      var rows=document.getElementById("costBody").children;
-      for(var i=0;i<rows.length && i<c.lines.length;i++){
-        rows[i].children[5].textContent = usd(c.lines[i].perContainer);
-      }
-      renderBreakdown(c); renderSummary(c); renderPerContainer(c); renderPerBoule(c); renderPerKg(c); renderSensitivity(c);
-      save();
-    } else {
-      render(); save();
-    }
-  }
-
-  ["containerWeight","numContainers","bouleKg","boulesPerCarton","sellingPrice","exchangeRate"].forEach(function(id){
+  ["containerWeight","numContainers","bouleKg","boulesPerCarton","sellingPrice"].forEach(function(id){
     document.getElementById(id).addEventListener("input",function(){
       var v=parseFloat(this.value);
       state.settings[id]= isFinite(v)? v : 0;
       var c=compute();
       document.getElementById("bouleKgLabel").textContent = num(state.settings.bouleKg,2);
-      renderBreakdown(c); renderCosts(c); renderSummary(c); renderPerContainer(c); renderPerBoule(c); renderPerKg(c); renderSensitivity(c);
+      renderBreakdown(c); renderSummary(c); renderPerContainer(c); renderPerBoule(c); renderPerKg(c); renderSensitivity(c);
       save();
     });
   });
-
-  document.getElementById("btnAddRow").onclick=function(){
-    state.costs.push({category:"Miscellaneous",description:"New cost",amount:0,currency:"USD",basis:"Per container"});
-    changed();
-  };
 
   // tabs
   document.getElementById("tabs").addEventListener("click",function(e){
@@ -809,26 +711,6 @@
     download("royal-attieke-tracker.csv","text/csv;charset=utf-8", "﻿"+csv);
   };
   function csvCell(v){ v=String(v==null?"":v); if(/[",\n]/.test(v)) return '"'+v.replace(/"/g,'""')+'"'; return v; }
-
-  // JSON export
-  document.getElementById("btnJSON").onclick=function(){
-    download("royal-attieke-backup.json","application/json", JSON.stringify(state,null,2));
-  };
-  // JSON import
-  document.getElementById("btnImport").onclick=function(){ document.getElementById("fileImport").click(); };
-  document.getElementById("fileImport").onchange=function(e){
-    var f=e.target.files[0]; if(!f) return;
-    var rd=new FileReader();
-    rd.onload=function(){
-      try{
-        var obj=JSON.parse(rd.result);
-        if(obj && obj.settings && Array.isArray(obj.costs)){ obj.settings=Object.assign({}, defaults().settings, obj.settings); state=obj; render(); save(); setStatus("Imported backup."); }
-        else alert("That file doesn't look like a valid backup.");
-      }catch(err){ alert("Could not read that JSON file."); }
-      e.target.value="";
-    };
-    rd.readAsText(f);
-  };
 
   // Resolve the artifact "downloads" capability once (null when running as a
   // plain local file or when the viewer can't run it).
