@@ -192,6 +192,10 @@ header.top{
 }
 .gate-form input:focus{outline:0;border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 22%,transparent)}
 .gate-form .btn-hero{width:100%}
+.lang{display:flex;gap:2px;padding:3px;background:var(--surface-2);border:1px solid var(--line-soft);border-radius:9px;flex:none}
+.lang-btn{border:0;background:transparent;color:var(--ink-3);font-family:inherit;font-weight:800;font-size:11.5px;
+  letter-spacing:.3px;padding:5px 9px;border-radius:6px;cursor:pointer;transition:background .15s,color .15s}
+.lang-btn.is-active{background:var(--surface);color:var(--brass-deep);box-shadow:var(--shadow)}
 .org-corner{flex:none;width:30px;height:30px;display:grid;place-items:center;border:0;background:transparent;
   color:var(--ink-3);opacity:.55;cursor:pointer;border-radius:8px;transition:opacity .15s,color .15s,background .15s;padding:0}
 .org-corner svg{width:16px;height:16px}
@@ -356,15 +360,13 @@ header.top{
 .empty p{margin:0;font-size:13.5px}
 
 /* ---------- Modal ---------- */
-.backdrop{position:fixed;inset:0;background:var(--backdrop);backdrop-filter:blur(3px);z-index:80;display:grid;place-items:end center;padding:0;animation:fade .18s ease}
-@media(min-width:640px){.backdrop{place-items:center;padding:24px}}
+.backdrop{position:fixed;inset:0;background:var(--backdrop);backdrop-filter:blur(3px);z-index:80;display:grid;place-items:center;padding:16px;animation:fade .18s ease}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 .modal{
-  background:var(--surface);width:100%;max-width:560px;max-height:92vh;overflow:auto;
-  border:1px solid var(--line);border-radius:20px 20px 0 0;box-shadow:var(--shadow-lift);
-  animation:slideup .24s cubic-bezier(.2,.8,.2,1);
+  background:var(--surface);width:100%;max-width:560px;max-height:88vh;overflow:auto;
+  border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-lift);
+  animation:pop .2s ease;
 }
-@media(min-width:640px){.modal{border-radius:20px;animation:pop .2s ease}}
 @keyframes slideup{from{transform:translateY(24px)}to{transform:translateY(0)}}
 @keyframes pop{from{transform:scale(.97);opacity:0}to{transform:scale(1);opacity:1}}
 .modal-head{position:sticky;top:0;background:var(--surface);display:flex;align-items:center;gap:12px;padding:18px 20px 12px;border-bottom:1px solid var(--line-soft);z-index:2}
@@ -433,6 +435,10 @@ footer .spacer{flex:1}
       </div>
     </div>
     <div class="spacer"></div>
+    <div class="lang" role="group" aria-label="Language / Langue">
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+    </div>
   </div>
 </header>
 
@@ -441,18 +447,18 @@ footer .spacer{flex:1}
     <div class="hero-cover"><img id="coverArt" alt="La Diaspora Gagnante — Le Podcast, avec Souadou Bah"></div>
 
     <div id="gate">
-      <h2 class="hero-title">Access with your email</h2>
+      <h2 class="hero-title" id="gateTitle">Access with your email</h2>
       <form id="gateForm" class="gate-form">
         <input id="gateEmail" type="email" required autocomplete="email" placeholder="you@email.com">
-        <button type="submit" class="btn-hero">Continue</button>
+        <button type="submit" class="btn-hero" id="continueBtn">Continue</button>
       </form>
     </div>
 
     <div id="nominate" hidden>
-      <h2 class="hero-title">Nominate a guest</h2>
+      <h2 class="hero-title" id="nomTitle">Nominate a guest</h2>
       <button class="btn-hero" id="heroAddBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.4"/><path d="M3 20a6 6 0 0 1 12 0M18 8v6M15 11h6"/></svg>
-        Nominate a guest
+        <span id="heroBtnText">Nominate a guest</span>
       </button>
       <p class="hero-count" id="heroCount"></p>
     </div>
@@ -466,9 +472,9 @@ footer .spacer{flex:1}
 </main>
 
 <footer>
-  <span>Saved in this browser · <span id="statLine"></span></span>
+  <span><span id="savedLabel">Saved in this browser</span> · <span id="statLine"></span></span>
   <span class="spacer"></span>
-  <button class="link-btn" id="lockBtn" hidden>Lock tracker</button>
+  <button class="link-btn" id="lockBtn" hidden>Hide nominees</button>
   <button class="link-btn" id="importBtn" hidden>Import backup</button>
   <button class="link-btn" id="resetBtn" hidden>Reset categories</button>
   <input type="file" id="importFile" accept="application/json,.json" hidden>
@@ -486,6 +492,101 @@ const PASS_KEY  = "diasporaGagnante.pass";
 const UNLOCK_KEY= "diasporaGagnante.unlocked";
 const EMAIL_KEY = "diasporaGagnante.email";
 function getEmail(){ try{ return localStorage.getItem(EMAIL_KEY)||""; }catch(e){ return ""; } }
+
+/* ---------------- Language (English / French) ---------------- */
+const LANG_KEY = "diasporaGagnante.lang";
+let lang = "en";
+try{ const l=localStorage.getItem(LANG_KEY); if(l==="en"||l==="fr") lang=l; }catch(e){}
+const STR = {
+  en:{
+    gateTitle:"Access with your email", emailPh:"you@email.com", continue:"Continue",
+    nominateTitle:"Nominate a guest", nominateBtn:"Nominate a guest",
+    savedIn:"Saved in this browser", hideNominees:"Hide nominees",
+    importBackup:"Import backup", resetCats:"Reset categories", organizer:"Organizer",
+    categories:"categories", category:"category", nominees:"nominees", nominee:"nominee",
+    nomineesSoFar:"{n} nominees so far", oneNomineeSoFar:"1 nominee so far",
+    byCategory:"Nominations by category", byCategorySub:"{n} nominees so far · tap the button below to add one",
+    interviewPlan:"Interview Plan", planSub:"Categories in interview order — tap to see nominees",
+    planIntro:"Tap <b>Nominate a guest</b> and paste a bio — the app reads the <b>name</b> and files them under the right <b>category</b> automatically. Work the list <b>top to bottom</b>: that's the order to interview.",
+    lockedNote:"{n} nominated — names are private to the organizer.",
+    noNominees:"No nominees yet in this category.",
+    addGuest:"Add guest", editTopic:"Edit topic", del:"Delete", nominatedBy:"Nominated by",
+    newGuest:"New guest", editGuest:"Edit guest", yourEmail:"Your email",
+    aboutNominee:"Tell me about your nominee",
+    aboutPh:"Who are they and why would they be a great guest? Start with their name — the app reads it and files them under the right category automatically.",
+    catLabel:"Category", chooseCat:"— Choose a category —", social:"Their social media", socialPh:"@handle or link",
+    saveGuest:"Save guest", cancel:"Cancel",
+    startName:"Start the bio with the name", moreDetail:"add a bit more detail to pick a category", filedUnder:"filed under",
+    newTopic:"New topic", topicName:"Topic name", description:"Description", status:"Status", addTopic:"Add topic", save:"Save",
+    tGuestAdded:"Guest added", tGuestUpdated:"Guest updated", tGuestDeleted:"Guest deleted",
+    tTopicAdded:"Topic added", tTopicUpdated:"Topic updated", tTopicDeleted:"Topic deleted",
+    tPasteBio:"Paste a bio first", tPickCat:"Add a bit more detail so it can pick a category",
+    tValidEmail:"Enter a valid email", tUnlocked:"Nominees unlocked", tWrongPass:"Wrong password", tHidden:"Nominees hidden",
+    tImported:"Backup imported", tBadFile:"Couldn’t read that file", tReset:"Reset to starter categories",
+    confDelGuest:"Delete “{name}”? This can’t be undone.",
+    confDelTopic:"Delete “{name}”{extra}? This can’t be undone.",
+    confDelTopicGuests:" and its {n} nominees",
+    confReset:"Reset to the starter categories? Your current data will be replaced.",
+    confImport:"Replace all current data with this backup?",
+    orgPrompt:"Organizer password:",
+  },
+  fr:{
+    gateTitle:"Accédez avec votre e-mail", emailPh:"vous@email.com", continue:"Continuer",
+    nominateTitle:"Proposer un invité", nominateBtn:"Proposer un invité",
+    savedIn:"Enregistré dans ce navigateur", hideNominees:"Masquer les invités",
+    importBackup:"Importer une sauvegarde", resetCats:"Réinitialiser les catégories", organizer:"Organisatrice",
+    categories:"catégories", category:"catégorie", nominees:"invités", nominee:"invité",
+    nomineesSoFar:"{n} invités proposés", oneNomineeSoFar:"1 invité proposé",
+    byCategory:"Propositions par catégorie", byCategorySub:"{n} invités proposés · touchez le bouton ci-dessous pour en ajouter",
+    interviewPlan:"Plan d’interviews", planSub:"Catégories dans l’ordre des interviews — touchez pour voir les invités",
+    planIntro:"Touchez <b>Proposer un invité</b> et collez une bio — l’appli lit le <b>nom</b> et le classe automatiquement dans la bonne <b>catégorie</b>. Suivez la liste <b>de haut en bas</b> : c’est l’ordre des interviews.",
+    lockedNote:"{n} proposé(s) — les noms sont réservés à l’organisatrice.",
+    noNominees:"Aucun invité proposé dans cette catégorie.",
+    addGuest:"Ajouter un invité", editTopic:"Modifier la catégorie", del:"Supprimer", nominatedBy:"Proposé par",
+    newGuest:"Nouvel invité", editGuest:"Modifier l’invité", yourEmail:"Votre e-mail",
+    aboutNominee:"Parlez-moi de votre invité",
+    aboutPh:"Qui est-ce et pourquoi serait-ce un bon invité ? Commencez par son nom — l’appli le lit et le classe automatiquement dans la bonne catégorie.",
+    catLabel:"Catégorie", chooseCat:"— Choisir une catégorie —", social:"Ses réseaux sociaux", socialPh:"@pseudo ou lien",
+    saveGuest:"Enregistrer", cancel:"Annuler",
+    startName:"Commencez la bio par le nom", moreDetail:"ajoutez un détail pour choisir une catégorie", filedUnder:"classé dans",
+    newTopic:"Nouvelle catégorie", topicName:"Nom de la catégorie", description:"Description", status:"Statut", addTopic:"Ajouter la catégorie", save:"Enregistrer",
+    tGuestAdded:"Invité ajouté", tGuestUpdated:"Invité mis à jour", tGuestDeleted:"Invité supprimé",
+    tTopicAdded:"Catégorie ajoutée", tTopicUpdated:"Catégorie mise à jour", tTopicDeleted:"Catégorie supprimée",
+    tPasteBio:"Collez d’abord une bio", tPickCat:"Ajoutez un détail pour choisir une catégorie",
+    tValidEmail:"E-mail invalide", tUnlocked:"Invités déverrouillés", tWrongPass:"Mot de passe incorrect", tHidden:"Invités masqués",
+    tImported:"Sauvegarde importée", tBadFile:"Fichier illisible", tReset:"Catégories réinitialisées",
+    confDelGuest:"Supprimer « {name} » ? Action irréversible.",
+    confDelTopic:"Supprimer « {name} »{extra} ? Action irréversible.",
+    confDelTopicGuests:" et ses {n} invités",
+    confReset:"Réinitialiser les catégories de départ ? Vos données actuelles seront remplacées.",
+    confImport:"Remplacer toutes les données actuelles par cette sauvegarde ?",
+    orgPrompt:"Mot de passe organisatrice :",
+  }
+};
+function T(k,vars){
+  let s=(STR[lang]&&STR[lang][k]!=null)?STR[lang][k]:(STR.en[k]!=null?STR.en[k]:k);
+  if(vars) for(const p in vars) s=s.replace("{"+p+"}", vars[p]);
+  return s;
+}
+const CAT_LABEL = {
+  school:{en:"Regular / Traditional School", fr:"École classique / traditionnelle"},
+  trade:{en:"Trade School", fr:"École de métiers"},
+  home:{en:"Buying a Home", fr:"Acheter une maison"},
+  investment:{en:"Investment", fr:"Investissement"},
+  business:{en:"Starting a Business", fr:"Lancer une entreprise"},
+  taxes:{en:"Taxes", fr:"Impôts"},
+  finance:{en:"Personal Finance", fr:"Finances personnelles"},
+  healthcare:{en:"Healthcare Work", fr:"Travailler dans la santé"},
+  entrepreneurship:{en:"Entrepreneurship", fr:"Entrepreneuriat"},
+  achievers:{en:"Everyday Achievers", fr:"Parcours inspirants du quotidien"},
+  creators:{en:"Creators & Influencers", fr:"Créateurs & influenceurs"},
+  artists:{en:"Artists & Entertainers", fr:"Artistes & personnalités"},
+  wealthy:{en:"Entrepreneurs & Wealthy Individuals", fr:"Entrepreneurs & personnes fortunées"},
+  vip:{en:"VIPs & Respected Leaders", fr:"VIP & leaders respectés"},
+  ambassadors:{en:"Ambassadors & Diplomats", fr:"Ambassadeurs & diplomates"},
+  diaspora:{en:"Successful Diaspora", fr:"Diaspora qui gagne"},
+};
+function catName(t){ const m=t.cat&&CAT_LABEL[t.cat]; return m?(m[lang]||m.en):t.name; }
 /* Public nomination form (Google Form, etc.). When set, the big
    "Nominate a guest" button opens it in a new tab so anyone — with or
    without a Claude account — can submit. Empty = use the built-in form. */
@@ -644,9 +745,9 @@ function renderStat(){
   const nT = state.topics.length;
   const nG = state.topics.reduce((a,t)=>a+t.guests.length,0);
   document.getElementById("statLine").textContent =
-    `${nT} categor${nT!==1?"ies":"y"} · ${nG} nominee${nG!==1?"s":""}`;
+    `${nT} ${nT!==1?T("categories"):T("category")} · ${nG} ${nG!==1?T("nominees"):T("nominee")}`;
   const hc = document.getElementById("heroCount");
-  if(hc) hc.textContent = nG ? `${nG} nominee${nG!==1?"s":""} so far` : "";
+  if(hc) hc.textContent = nG ? (nG===1?T("oneNomineeSoFar"):T("nomineesSoFar",{n:nG})) : "";
 }
 
 function badge(status){
@@ -662,9 +763,9 @@ function renderTopics(){
   }
   const nG = state.topics.reduce((a,t)=>a+t.guests.length,0);
   const head = unlocked
-    ? `<div class="view-head"><h2>Interview Plan</h2><span class="sub">Categories in interview order — tap to see nominees</span></div>
-       <p class="plan-intro">Tap <b>Nominate a guest</b> and paste a bio — the app reads the <b>name</b> and files them under the right <b>category</b> automatically. Work the list <b>top to bottom</b>: that's the order to interview.</p>`
-    : `<div class="view-head"><h2>Nominations by category</h2><span class="sub">${nG} nominee${nG!==1?"s":""} so far · tap the button below to add one</span></div>`;
+    ? `<div class="view-head"><h2>${esc(T("interviewPlan"))}</h2><span class="sub">${esc(T("planSub"))}</span></div>
+       <p class="plan-intro">${T("planIntro")}</p>`
+    : `<div class="view-head"><h2>${esc(T("byCategory"))}</h2><span class="sub">${esc(T("byCategorySub",{n:nG}))}</span></div>`;
   el.innerHTML = `${head}
     <div class="topics">
       ${state.topics.map((t,i)=>topicCard(t,i)).join("")}
@@ -680,7 +781,7 @@ function topicCard(t,i){
       <span class="topic-rank">${i+1}</span>
       ${chev}
       <span class="topic-title">
-        <span class="name">${esc(t.name)}</span>
+        <span class="name">${esc(catName(t))}</span>
       </span>
       <span class="topic-meta">
         <span class="count">${t.guests.length}</span>
@@ -690,22 +791,22 @@ function topicCard(t,i){
       ${unlocked ? `
       <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
         <button class="btn sm ghost" data-act="edit-topic" data-topic="${t.id}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Edit topic
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>${esc(T("editTopic"))}
         </button>
         <button class="btn sm ghost" data-act="del-topic" data-topic="${t.id}" style="color:#a13b2f">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>Delete
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>${esc(T("del"))}
         </button>
       </div>
       ${t.guests.length
         ? `<div class="guest-list">${t.guests.map(g=>guestCard(t.id,g)).join("")}</div>`
-        : `<p style="color:var(--ink-3);font-size:13px;margin:16px 2px 0;font-style:italic">No nominees yet in this category.</p>`}
+        : `<p style="color:var(--ink-3);font-size:13px;margin:16px 2px 0;font-style:italic">${esc(T("noNominees"))}</p>`}
       <button class="btn add-guest dashed" data-act="add-guest" data-topic="${t.id}">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add guest
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>${esc(T("addGuest"))}
       </button>
       ` : `
       <div class="cat-locked">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-        ${t.guests.length} nominated — names are private to the organizer.
+        ${esc(T("lockedNote",{n:t.guests.length}))}
       </div>
       `}
     </div>`:""}
@@ -726,15 +827,15 @@ function guestCard(tid,g){
     <div class="guest-top">
       ${av}
       <div class="guest-id">
-        <div class="gname">${esc(g.name||"Unnamed guest")}</div>
+        <div class="gname">${esc(g.name||"—")}</div>
         ${social}
       </div>
     </div>
     ${g.bio?`<div class="guest-bio">${esc(g.bio)}</div>`:""}
-    ${g.nominatedBy?`<div class="nom-by"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>Nominated by <b>${esc(g.nominatedBy)}</b></div>`:""}
+    ${g.nominatedBy?`<div class="nom-by"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>${esc(T("nominatedBy"))} <b>${esc(g.nominatedBy)}</b></div>`:""}
     <div class="guest-actions">
-      <button class="mini" data-act="edit-guest" data-topic="${tid}" data-guest="${g.id}">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>Edit
+      <button class="mini" data-act="edit-guest" data-topic="${tid}" data-guest="${g.id}" aria-label="Edit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
       </button>
       <button class="mini danger" data-act="del-guest" data-topic="${tid}" data-guest="${g.id}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>
@@ -813,18 +914,18 @@ function openTopicModal(tid){
   const t = tid?findTopic(tid):null;
   const node = overlay.open(`
   <form class="modal" id="topicForm">
-    <div class="modal-head"><h3>${t?"Edit topic":"New topic"}</h3>
+    <div class="modal-head"><h3>${t?esc(T("editTopic")):esc(T("newTopic"))}</h3>
       <button type="button" class="btn ghost icon" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="modal-body">
-      <div class="field"><label>Topic name</label><input name="name" required maxlength="80" value="${esc(t?t.name:"")}" placeholder="e.g. Home Buying &amp; Investing"></div>
-      <div class="field"><label>Description</label><textarea name="description" maxlength="240" placeholder="One line on the angle for this series.">${esc(t?t.description:"")}</textarea></div>
-      <div class="field"><label>Status</label><select name="status">${opt(TOPIC_STATUSES,t?t.status:"Planning")}</select></div>
+      <div class="field"><label>${esc(T("topicName"))}</label><input name="name" required maxlength="80" value="${esc(t?catName(t):"")}"></div>
+      <div class="field"><label>${esc(T("description"))}</label><textarea name="description" maxlength="240">${esc(t?t.description:"")}</textarea></div>
+      <div class="field"><label>${esc(T("status"))}</label><select name="status">${opt(TOPIC_STATUSES,t?t.status:"Planning")}</select></div>
     </div>
     <div class="modal-foot">
-      ${t?`<button type="button" class="btn del-link" data-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>Delete</button>`:""}
-      <button type="button" class="btn ghost" data-close>Cancel</button>
-      <button type="submit" class="btn primary">${t?"Save":"Add topic"}</button>
+      ${t?`<button type="button" class="btn del-link" data-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>${esc(T("del"))}</button>`:""}
+      <button type="button" class="btn ghost" data-close>${esc(T("cancel"))}</button>
+      <button type="submit" class="btn primary">${t?esc(T("save")):esc(T("addTopic"))}</button>
     </div>
   </form>`);
 
@@ -835,8 +936,8 @@ function openTopicModal(tid){
     const f=new FormData(ev.target);
     const data={name:(f.get("name")||"").trim(),description:(f.get("description")||"").trim(),status:f.get("status")};
     if(!data.name) return;
-    if(t){ Object.assign(t,data); toast("Topic updated"); }
-    else { const nt={id:uid(),...data,guests:[]}; state.topics.push(nt); state.openId=nt.id; toast("Topic added"); }
+    if(t){ Object.assign(t,data); toast(T("tTopicUpdated")); }
+    else { const nt={id:uid(),...data,guests:[]}; state.topics.push(nt); state.openId=nt.id; toast(T("tTopicAdded")); }
     save(); overlay.close(); renderAll();
   });
 }
@@ -875,26 +976,30 @@ function openGuestModal(tid,gid){
   const g = gid?findGuest(tid,gid):null;
   const node = overlay.open(`
   <form class="modal" id="guestForm">
-    <div class="modal-head"><h3>${g?"Edit guest":"New guest"}</h3>
+    <div class="modal-head"><h3>${g?esc(T("editGuest")):esc(T("newGuest"))}</h3>
       <button type="button" class="btn ghost icon" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="modal-body">
-      <div class="field"><label>Tell me about your nominee</label>
-        <textarea name="bio" id="bioInput" maxlength="1600" placeholder="Who are they and why would they be a great guest? Start with their name — the app reads it and files them under the right category automatically.">${esc(g?g.bio:"")}</textarea>
+      <div class="field"><label>${esc(T("yourEmail"))}</label>
+        <input name="nominatorEmail" type="email" maxlength="120" value="${esc(g?g.nominatedBy:getEmail())}" placeholder="${esc(T("emailPh"))}">
+      </div>
+
+      <div class="field"><label>${esc(T("aboutNominee"))}</label>
+        <textarea name="bio" id="bioInput" maxlength="1600" placeholder="${esc(T("aboutPh"))}">${esc(g?g.bio:"")}</textarea>
         <div id="detectBox" class="detect"></div>
       </div>
 
-      <div class="field"><label>Their social media</label>
+      <div class="field"><label>${esc(T("social"))}</label>
         <div class="social-row">
           <select name="socialPlatform">${opt(SOCIALS,g?g.socialPlatform:"instagram")}</select>
-          <input name="socialHandle" maxlength="120" value="${esc(g?g.socialHandle:"")}" placeholder="@handle or link">
+          <input name="socialHandle" maxlength="120" value="${esc(g?g.socialHandle:"")}" placeholder="${esc(T("socialPh"))}">
         </div>
       </div>
     </div>
     <div class="modal-foot">
-      ${g?`<button type="button" class="btn del-link" data-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>Delete</button>`:""}
-      <button type="button" class="btn ghost" data-close>Cancel</button>
-      <button type="submit" class="btn primary">${g?"Save guest":"Add guest"}</button>
+      ${g?`<button type="button" class="btn del-link" data-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M6 7l1 13a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-13"/></svg>${esc(T("del"))}</button>`:""}
+      <button type="button" class="btn ghost" data-close>${esc(T("cancel"))}</button>
+      <button type="submit" class="btn primary">${g?esc(T("saveGuest")):esc(T("addGuest"))}</button>
     </div>
   </form>`);
 
@@ -908,10 +1013,10 @@ function openGuestModal(tid,gid){
     const best = classifyTopic(bio);
     const nmHtml = nm
       ? `<span class="detect-name">${esc(nm)}</span>`
-      : `<span class="detect-warn">Start the bio with the name</span>`;
+      : `<span class="detect-warn">${esc(T("startName"))}</span>`;
     const catHtml = best
-      ? `<span class="detect-cat">${esc(best.name)}</span>`
-      : `<span class="detect-warn">add a bit more detail to pick a category</span>`;
+      ? `<span class="detect-cat">${esc(catName(findTopic(best.id)||{name:best.name,cat:best.cat}))}</span>`
+      : `<span class="detect-warn">${esc(T("moreDetail"))}</span>`;
     detectBox.innerHTML = `<span class="detect-lead">✦</span> ${nmHtml} <span class="detect-sep">·</span> ${catHtml}`;
   }
   bioEl.addEventListener("input", runDetect);
@@ -924,14 +1029,14 @@ function openGuestModal(tid,gid){
     ev.preventDefault();
     const f=new FormData(ev.target);
     const bio=(f.get("bio")||"").trim();
-    if(!bio){ bioEl.focus(); toast("Paste a bio first",true); return; }
+    if(!bio){ bioEl.focus(); toast(T("tPasteBio"),true); return; }
     const best = classifyTopic(bio);
-    if(!best){ bioEl.focus(); toast("Add a bit more detail so it can pick a category",true); return; }
+    if(!best){ bioEl.focus(); toast(T("tPickCat"),true); return; }
     const targetTid = best.id;
     const data={
-      name: extractName(bio) || "Unnamed guest",
+      name: extractName(bio) || "—",
       bio,
-      nominatedBy: (g&&g.nominatedBy) || getEmail(),
+      nominatedBy: (f.get("nominatorEmail")||"").trim() || (g&&g.nominatedBy) || getEmail(),
       socialPlatform:f.get("socialPlatform")||"instagram",
       socialHandle:(f.get("socialHandle")||"").trim(),
     };
@@ -941,10 +1046,10 @@ function openGuestModal(tid,gid){
         const from=findTopic(tid); if(from) from.guests=from.guests.filter(x=>x.id!==g.id);
         findTopic(targetTid).guests.push(g);
       }
-      toast("Guest updated");
+      toast(T("tGuestUpdated"));
     } else {
       findTopic(targetTid).guests.push({id:uid(),...data});
-      toast("Guest added");
+      toast(T("tGuestAdded"));
     }
     state.openId = targetTid;
     save(); overlay.close(); renderAll();
@@ -954,17 +1059,18 @@ function openGuestModal(tid,gid){
 /* ---------------- Delete confirms ---------------- */
 function delGuest(tid,gid){
   const g=findGuest(tid,gid); if(!g) return;
-  if(!confirm(`Delete “${g.name||"this guest"}”? This can’t be undone.`)) return;
+  if(!confirm(T("confDelGuest",{name:g.name||T("nominee")}))) return;
   const t=findTopic(tid); t.guests=t.guests.filter(x=>x.id!==gid);
-  save(); renderAll(); toast("Guest deleted");
+  save(); renderAll(); toast(T("tGuestDeleted"));
 }
 function delTopic(tid){
   const t=findTopic(tid); if(!t) return;
   const n=t.guests.length;
-  if(!confirm(`Delete “${t.name}”${n?` and its ${n} guest${n!==1?"s":""}`:""}? This can’t be undone.`)) return;
+  const extra=n?T("confDelTopicGuests",{n:n}):"";
+  if(!confirm(T("confDelTopic",{name:catName(t),extra:extra}))) return;
   state.topics=state.topics.filter(x=>x.id!==tid);
   if(state.openId===tid) state.openId=null;
-  save(); renderAll(); toast("Topic deleted");
+  save(); renderAll(); toast(T("tTopicDeleted"));
 }
 
 /* ---------------- Import / Reset ---------------- */
@@ -977,19 +1083,19 @@ document.getElementById("importFile").addEventListener("change",e=>{
       const d=JSON.parse(r.result);
       const topics=Array.isArray(d)?d:d.topics;
       if(!Array.isArray(topics)) throw new Error("no topics");
-      if(!confirm("Replace all current data with this backup?")) return;
+      if(!confirm(T("confImport"))) return;
       state={topics:topics.map(t=>({id:t.id||uid(),cat:t.cat||"",name:t.name||"Untitled",description:t.description||"",status:t.status||"Planning",
         guests:Array.isArray(t.guests)?t.guests.map(g=>({id:g.id||uid(),name:g.name||"",bio:g.bio||"",nominatedBy:g.nominatedBy||"",
           socialPlatform:g.socialPlatform||"instagram",socialHandle:g.socialHandle||g.instagram||""})):[]})), openId:null};
-      save(); renderAll(); toast("Backup imported");
-    }catch(err){ toast("Couldn’t read that file",true); }
+      save(); renderAll(); toast(T("tImported"));
+    }catch(err){ toast(T("tBadFile"),true); }
     finally{ e.target.value=""; }
   };
   r.readAsText(file);
 });
 document.getElementById("resetBtn").onclick=()=>{
-  if(!confirm("Reset to the starter categories? Your current data will be replaced.")) return;
-  state=seed(); save(); renderAll(); toast("Reset to starter categories");
+  if(!confirm(T("confReset"))) return;
+  state=seed(); save(); renderAll(); toast(T("tReset"));
 };
 
 /* ---------------- Toast ---------------- */
@@ -1023,7 +1129,7 @@ if(getEmail()) showNominate();
 document.getElementById("gateForm").addEventListener("submit", ev=>{
   ev.preventDefault();
   const email=(document.getElementById("gateEmail").value||"").trim();
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast("Enter a valid email",true); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast(T("tValidEmail"),true); return; }
   try{ localStorage.setItem(EMAIL_KEY,email); }catch(e){}
   showNominate();
 });
@@ -1041,29 +1147,50 @@ function applyUnlock(){
 document.getElementById("orgBtn").onclick = ()=>{
   if(unlocked){
     try{ localStorage.removeItem(UNLOCK_KEY); }catch(e){}
-    applyUnlock(); window.scrollTo({top:0,behavior:"smooth"}); toast("Nominees hidden");
+    applyUnlock(); window.scrollTo({top:0,behavior:"smooth"}); toast(T("tHidden"));
     return;
   }
-  const a = prompt("Organizer password:");
+  const a = prompt(T("orgPrompt"));
   if(a===null) return;
   if(a.trim().toLowerCase()===ORG_PASS){
     try{ localStorage.setItem(UNLOCK_KEY,"1"); }catch(e){}
     showNominate();                 // reveal the app for the organizer
     applyUnlock();
     document.getElementById("tracker").scrollIntoView({behavior:"smooth",block:"start"});
-    toast("Nominees unlocked");
+    toast(T("tUnlocked"));
   } else {
-    toast("Wrong password",true);
+    toast(T("tWrongPass"),true);
   }
 };
 document.getElementById("lockBtn").onclick = ()=>{
   try{ localStorage.removeItem(UNLOCK_KEY); }catch(e){}
-  applyUnlock(); window.scrollTo({top:0,behavior:"smooth"}); toast("Nominees hidden");
+  applyUnlock(); window.scrollTo({top:0,behavior:"smooth"}); toast(T("tHidden"));
 };
-applyUnlock();
+
+/* ---------------- Language toggle ---------------- */
+function applyLang(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("is-active", b.dataset.lang===lang));
+  const set=(id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
+  set("gateTitle",T("gateTitle"));
+  set("continueBtn",T("continue"));
+  set("nomTitle",T("nominateTitle"));
+  set("heroBtnText",T("nominateBtn"));
+  set("savedLabel",T("savedIn"));
+  set("lockBtn",T("hideNominees"));
+  set("importBtn",T("importBackup"));
+  set("resetBtn",T("resetCats"));
+  const em=document.getElementById("gateEmail"); if(em) em.placeholder=T("emailPh");
+  const org=document.getElementById("orgBtn"); if(org){ org.title=T("organizer"); org.setAttribute("aria-label",T("organizer")); }
+  renderAll();
+}
+document.querySelectorAll(".lang-btn").forEach(b=>{
+  b.onclick = ()=>{ lang=b.dataset.lang; try{ localStorage.setItem(LANG_KEY,lang); }catch(e){} applyLang(); };
+});
 
 /* ---------------- Go ---------------- */
-renderAll();
+applyUnlock();
+applyLang();
 </script>
 </body>
 </html>
