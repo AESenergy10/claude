@@ -445,6 +445,7 @@ footer .spacer{flex:1}
     <div id="gate">
       <h2 class="hero-title" id="gateTitle">Access with your email</h2>
       <form id="gateForm" class="gate-form">
+        <input id="gateName" type="text" required autocomplete="name" placeholder="Your name">
         <input id="gateEmail" type="email" required autocomplete="email" placeholder="you@email.com">
         <button type="submit" class="btn-hero" id="continueBtn">Continue</button>
       </form>
@@ -487,7 +488,9 @@ const THEME_KEY = "diasporaGagnante.theme";
 const PASS_KEY  = "diasporaGagnante.pass";
 const UNLOCK_KEY= "diasporaGagnante.unlocked";
 const EMAIL_KEY = "diasporaGagnante.email";
+const NAME_KEY  = "diasporaGagnante.name";
 function getEmail(){ try{ return localStorage.getItem(EMAIL_KEY)||""; }catch(e){ return ""; } }
+function getName(){ try{ return localStorage.getItem(NAME_KEY)||""; }catch(e){ return ""; } }
 
 /* ---------------- Language (English / French) ---------------- */
 const LANG_KEY = "diasporaGagnante.lang";
@@ -495,7 +498,8 @@ let lang = "en";
 try{ const l=localStorage.getItem(LANG_KEY); if(l==="en"||l==="fr") lang=l; }catch(e){}
 const STR = {
   en:{
-    gateTitle:"Access with your email", emailPh:"you@email.com", continue:"Continue",
+    gateTitle:"Access with your name & email", emailPh:"you@email.com", continue:"Continue",
+    yourName:"Your name", namePh:"Your name",
     nominateTitle:"Nominate a guest", nominateBtn:"Nominate a guest",
     savedIn:"Saved in this browser", hideNominees:"Hide nominees",
     importBackup:"Import backup", resetCats:"Reset categories", organizer:"Organizer",
@@ -527,7 +531,8 @@ const STR = {
     orgPrompt:"Organizer password:",
   },
   fr:{
-    gateTitle:"Accédez avec votre e-mail", emailPh:"vous@email.com", continue:"Continuer",
+    gateTitle:"Accédez avec votre nom et e-mail", emailPh:"vous@email.com", continue:"Continuer",
+    yourName:"Votre nom", namePh:"Votre nom",
     nominateTitle:"Proposer un invité", nominateBtn:"Proposer un invité",
     savedIn:"Enregistré dans ce navigateur", hideNominees:"Masquer les invités",
     importBackup:"Importer une sauvegarde", resetCats:"Réinitialiser les catégories", organizer:"Organisatrice",
@@ -828,7 +833,7 @@ function guestCard(tid,g){
       </div>
     </div>
     ${g.bio?`<div class="guest-bio">${esc(g.bio)}</div>`:""}
-    ${g.nominatedBy?`<div class="nom-by"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>${esc(T("nominatedBy"))} <b>${esc(g.nominatedBy)}</b></div>`:""}
+    ${(g.nominatorName||g.nominatedBy)?`<div class="nom-by"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.2"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>${esc(T("nominatedBy"))} <b>${esc(g.nominatorName||g.nominatedBy)}</b>${(g.nominatorName&&g.nominatedBy)?` · ${esc(g.nominatedBy)}`:""}</div>`:""}
     <div class="guest-actions">
       <button class="mini" data-act="edit-guest" data-topic="${tid}" data-guest="${g.id}" aria-label="Edit">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
@@ -976,8 +981,13 @@ function openGuestModal(tid,gid){
       <button type="button" class="btn ghost icon" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="modal-body">
-      <div class="field"><label>${esc(T("yourEmail"))}</label>
-        <input name="nominatorEmail" type="email" maxlength="120" value="${esc(g?g.nominatedBy:getEmail())}" placeholder="${esc(T("emailPh"))}">
+      <div class="row2">
+        <div class="field"><label>${esc(T("yourName"))}</label>
+          <input name="nominatorName" maxlength="80" value="${esc(g?(g.nominatorName||""):getName())}" placeholder="${esc(T("namePh"))}">
+        </div>
+        <div class="field"><label>${esc(T("yourEmail"))}</label>
+          <input name="nominatorEmail" type="email" maxlength="120" value="${esc(g?g.nominatedBy:getEmail())}" placeholder="${esc(T("emailPh"))}">
+        </div>
       </div>
 
       <div class="field"><label>${esc(T("aboutNominee"))}</label>
@@ -1032,6 +1042,7 @@ function openGuestModal(tid,gid){
     const data={
       name: extractName(bio) || "—",
       bio,
+      nominatorName: (f.get("nominatorName")||"").trim() || (g&&g.nominatorName) || getName(),
       nominatedBy: (f.get("nominatorEmail")||"").trim() || (g&&g.nominatedBy) || getEmail(),
       socialPlatform:f.get("socialPlatform")||"instagram",
       socialHandle:(f.get("socialHandle")||"").trim(),
@@ -1081,7 +1092,7 @@ document.getElementById("importFile").addEventListener("change",e=>{
       if(!Array.isArray(topics)) throw new Error("no topics");
       if(!confirm(T("confImport"))) return;
       state={topics:topics.map(t=>({id:t.id||uid(),cat:t.cat||"",name:t.name||"Untitled",description:t.description||"",status:t.status||"Planning",
-        guests:Array.isArray(t.guests)?t.guests.map(g=>({id:g.id||uid(),name:g.name||"",bio:g.bio||"",nominatedBy:g.nominatedBy||"",
+        guests:Array.isArray(t.guests)?t.guests.map(g=>({id:g.id||uid(),name:g.name||"",bio:g.bio||"",nominatorName:g.nominatorName||"",nominatedBy:g.nominatedBy||"",
           socialPlatform:g.socialPlatform||"instagram",socialHandle:g.socialHandle||g.instagram||""})):[]})), openId:null};
       save(); renderAll(); toast(T("tImported"));
     }catch(err){ toast(T("tBadFile"),true); }
@@ -1123,9 +1134,11 @@ function showNominate(){
 if(getEmail()) showNominate();
 document.getElementById("gateForm").addEventListener("submit", ev=>{
   ev.preventDefault();
+  const name=(document.getElementById("gateName").value||"").trim();
   const email=(document.getElementById("gateEmail").value||"").trim();
+  if(!name){ document.getElementById("gateName").focus(); return; }
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast(T("tValidEmail"),true); return; }
-  try{ localStorage.setItem(EMAIL_KEY,email); }catch(e){}
+  try{ localStorage.setItem(NAME_KEY,name); localStorage.setItem(EMAIL_KEY,email); }catch(e){}
   showNominate();
 });
 
@@ -1175,6 +1188,7 @@ function applyLang(){
   set("lockBtn",T("hideNominees"));
   set("importBtn",T("importBackup"));
   set("resetBtn",T("resetCats"));
+  const nm=document.getElementById("gateName"); if(nm) nm.placeholder=T("namePh");
   const em=document.getElementById("gateEmail"); if(em) em.placeholder=T("emailPh");
   const org=document.getElementById("orgBtn"); if(org){ org.title=T("organizer"); org.setAttribute("aria-label",T("organizer")); }
   renderAll();
