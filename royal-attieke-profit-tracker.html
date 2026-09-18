@@ -141,16 +141,6 @@
 </head>
 <body>
 <div class="wrap">
-  <header class="app">
-    <div class="logo">🍚</div>
-    <div>
-      <h1>Royal Attiéké Container Profit Tracker</h1>
-      <p>Live landed-cost &amp; margin calculator — everything recalculates as you type.</p>
-    </div>
-    <div class="spacer"></div>
-    <button class="btn" id="themeBtn" title="Toggle light/dark">🌓 Theme</button>
-  </header>
-
   <!-- GLOBAL SETTINGS -->
   <div class="card">
     <h2>Global Settings</h2>
@@ -649,15 +639,6 @@
     t.classList.add("active");
     document.getElementById("panel-"+t.dataset.tab).classList.add("active");
   });
-
-  // theme
-  document.getElementById("themeBtn").onclick=function(){
-    var cur=document.documentElement.getAttribute("data-theme");
-    var next = cur==="dark"?"light": cur==="light"?"dark": (matchMedia("(prefers-color-scheme: dark)").matches?"light":"dark");
-    document.documentElement.setAttribute("data-theme",next);
-    try{ localStorage.setItem(STORE_KEY+".theme",next); }catch(e){}
-  };
-  try{ var th=localStorage.getItem(STORE_KEY+".theme"); if(th) document.documentElement.setAttribute("data-theme",th); }catch(e){}
 
   render();
 })();
