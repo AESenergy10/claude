@@ -88,10 +88,10 @@
 
   /* tables */
   .tblwrap{overflow-x:auto;border-radius:12px}
-  table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:520px}
-  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+  table{width:100%;border-collapse:collapse;font-size:.86rem;table-layout:fixed}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:middle;overflow-wrap:break-word;word-break:break-word}
   th{font-size:.72rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:700}
-  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;width:34%}
   tr:last-child td{border-bottom:none}
   tfoot td{font-weight:800;border-top:2px solid var(--line)}
   .rowdel{color:var(--neg);border:none;background:none;cursor:pointer;font-size:1.1rem;line-height:1;padding:2px 6px;border-radius:6px}
@@ -150,11 +150,6 @@
     <div class="spacer"></div>
     <button class="btn" id="themeBtn" title="Toggle light/dark">🌓 Theme</button>
   </header>
-
-  <div class="toolbar">
-    <button class="btn primary" id="btnCSV">⬇ Export CSV</button>
-    <button class="btn danger" id="btnReset">↺ Reset to defaults</button>
-  </div>
 
   <!-- GLOBAL SETTINGS -->
   <div class="card">
@@ -453,11 +448,14 @@
 
   /* CONTAINER BREAKDOWN (its own box, no text underneath) */
   function renderBreakdown(c){
+    var many = c.containers>1;
+    var totalCartons = c.cartonsPerContainer * c.containers;
+    var suffix = many ? " ("+num(c.containers,0)+" containers)" : "";
     var tiles = [
       {v:num(c.bouleKg,2)+" kg", l:"Per boule"},
-      {v:num(c.boulesPerContainer,0), l:"Boules in container"},
+      {v:num(c.totalBoules,0), l:(many?"Total boules":"Boules in container")+suffix},
       {v:num(c.boulesPerCarton,0), l:"Boules per carton"},
-      {v:num(c.cartonsPerContainer,0), l:"Cartons in container"}
+      {v:num(totalCartons,0), l:(many?"Total cartons":"Cartons in container")+suffix}
     ];
     document.getElementById("breakdown").innerHTML = tiles.map(function(t){
       return '<div class="bdtile"><div class="bd-val">'+t.v+'</div><div class="bd-label">'+t.l+'</div></div>';
@@ -660,87 +658,6 @@
     try{ localStorage.setItem(STORE_KEY+".theme",next); }catch(e){}
   };
   try{ var th=localStorage.getItem(STORE_KEY+".theme"); if(th) document.documentElement.setAttribute("data-theme",th); }catch(e){}
-
-  // reset
-  document.getElementById("btnReset").onclick=function(){
-    if(confirm("Reset all settings and cost lines to the default values?")){
-      state=defaults(); render(); save();
-    }
-  };
-
-  // CSV export
-  document.getElementById("btnCSV").onclick=function(){
-    var c=compute();
-    var rows=[];
-    rows.push(["Royal Attiéké Container Profit Tracker"]);
-    rows.push(["Generated",new Date().toLocaleString()]);
-    rows.push([]);
-    rows.push(["SETTINGS"]);
-    rows.push(["Container weight (kg)",state.settings.containerWeight]);
-    rows.push(["Number of containers",state.settings.numContainers]);
-    rows.push(["Boule size (kg)",state.settings.bouleKg]);
-    rows.push(["Boules per carton",state.settings.boulesPerCarton]);
-    rows.push(["Boules in container",c.boulesPerContainer]);
-    rows.push(["Cartons in container",c.cartonsPerContainer]);
-    rows.push(["Selling price / boule (USD)",state.settings.sellingPrice]);
-    rows.push(["Exchange rate (CFA per USD)",state.settings.exchangeRate]);
-    rows.push([]);
-    rows.push(["COST LINES"]);
-    rows.push(["Category","Description","Amount","Currency","Basis","USD per container"]);
-    state.costs.forEach(function(l,i){
-      rows.push([l.category,l.description,l.amount,l.currency,l.basis,c.lines[i].perContainer.toFixed(2)]);
-    });
-    rows.push([]);
-    rows.push(["RESULTS (per container)"]);
-    rows.push(["Total kg",c.containerKg]);
-    rows.push(["Boules",c.boulesPerContainer]);
-    rows.push(["Total landed cost",c.totalPerContainer.toFixed(2)]);
-    rows.push(["Revenue",c.revenuePerContainer.toFixed(2)]);
-    rows.push(["Gross profit",c.profitPerContainer.toFixed(2)]);
-    rows.push(["Gross margin %",c.margin.toFixed(2)]);
-    rows.push(["Markup %",c.markup.toFixed(2)]);
-    rows.push(["Break-even price / boule",c.breakEven.toFixed(4)]);
-    rows.push([]);
-    rows.push(["RESULTS (shipment × "+c.containers+")"]);
-    rows.push(["Total boules",c.totalBoules]);
-    rows.push(["Total landed cost",c.totalCost.toFixed(2)]);
-    rows.push(["Revenue",c.revenue.toFixed(2)]);
-    rows.push(["Gross profit",c.profit.toFixed(2)]);
-    rows.push(["Gross margin %",c.margin.toFixed(2)]);
-    var csv=rows.map(function(r){return r.map(csvCell).join(",");}).join("\n");
-    download("royal-attieke-tracker.csv","text/csv;charset=utf-8", "﻿"+csv);
-  };
-  function csvCell(v){ v=String(v==null?"":v); if(/[",\n]/.test(v)) return '"'+v.replace(/"/g,'""')+'"'; return v; }
-
-  // Resolve the artifact "downloads" capability once (null when running as a
-  // plain local file or when the viewer can't run it).
-  var _dl; // undefined = not tried yet
-  function getDownloads(cb){
-    if(_dl!==undefined){ cb(_dl); return; }
-    if(window.claude && typeof window.claude.use==="function"){
-      window.claude.use("downloads").then(function(ns){ _dl=ns||null; cb(_dl); }, function(){ _dl=null; cb(_dl); });
-    } else { _dl=null; cb(_dl); }
-  }
-  function blobDownload(name,type,data){
-    try{
-      var blob=new Blob([data],{type:type});
-      var url=URL.createObjectURL(blob);
-      var a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click();
-      setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); },100);
-    }catch(e){ alert("Download not supported in this browser."); }
-  }
-  function download(name,type,data){
-    getDownloads(function(dl){
-      if(dl){
-        dl.save({filename:name, data:data}).then(null, function(err){
-          if(err && err.code==="declined") return;   // viewer said no
-          blobDownload(name,type,data);               // harmless outside the viewer
-        });
-      } else {
-        blobDownload(name,type,data);
-      }
-    });
-  }
 
   render();
 })();
