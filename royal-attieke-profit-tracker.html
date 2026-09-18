@@ -830,13 +830,34 @@
     rd.readAsText(f);
   };
 
-  function download(name,type,data){
+  // Resolve the artifact "downloads" capability once (null when running as a
+  // plain local file or when the viewer can't run it).
+  var _dl; // undefined = not tried yet
+  function getDownloads(cb){
+    if(_dl!==undefined){ cb(_dl); return; }
+    if(window.claude && typeof window.claude.use==="function"){
+      window.claude.use("downloads").then(function(ns){ _dl=ns||null; cb(_dl); }, function(){ _dl=null; cb(_dl); });
+    } else { _dl=null; cb(_dl); }
+  }
+  function blobDownload(name,type,data){
     try{
       var blob=new Blob([data],{type:type});
       var url=URL.createObjectURL(blob);
       var a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click();
       setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); },100);
     }catch(e){ alert("Download not supported in this browser."); }
+  }
+  function download(name,type,data){
+    getDownloads(function(dl){
+      if(dl){
+        dl.save({filename:name, data:data}).then(null, function(err){
+          if(err && err.code==="declined") return;   // viewer said no
+          blobDownload(name,type,data);               // harmless outside the viewer
+        });
+      } else {
+        blobDownload(name,type,data);
+      }
+    });
   }
 
   render();
