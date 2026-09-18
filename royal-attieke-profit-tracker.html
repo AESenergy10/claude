@@ -54,6 +54,14 @@
   .card h2{margin:0 0 12px;font-size:1rem}
   .card h3{margin:16px 0 8px;font-size:.9rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
 
+  /* dedicated container-breakdown card */
+  .breakdown{background:linear-gradient(120deg,rgba(15,123,108,.10),rgba(18,165,148,.08));border-color:var(--brand-2)}
+  .breakdown h2{color:var(--brand)}
+  .bdgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .bdtile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+  .bdtile .bd-val{font-size:1.7rem;font-weight:800;color:var(--brand);font-variant-numeric:tabular-nums;line-height:1.1}
+  .bdtile .bd-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-top:6px}
+
   /* settings grid */
   .settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
   .field{display:flex;flex-direction:column;gap:4px}
@@ -64,6 +72,7 @@
   }
   .field input:focus,.field select:focus,td input:focus,td select:focus{outline:2px solid var(--brand-2);outline-offset:-1px}
   .field .derived{font-size:.72rem;color:var(--brand);font-weight:700}
+  .fxfield{max-width:240px;margin-bottom:12px}
 
   /* tabs */
   .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;-webkit-overflow-scrolling:touch}
@@ -121,13 +130,12 @@
   .chartgrid{display:grid;grid-template-columns:1fr;gap:16px}
   @media(min-width:640px){.chartgrid{grid-template-columns:1fr 1fr}}
   .chart-svg{width:100%;height:auto;display:block}
-  .banner{padding:10px 12px;border-radius:10px;font-size:.82rem;margin-bottom:12px;border:1px solid var(--line);background:var(--chip)}
-  .banner.warn{border-color:var(--accent)}
   .status{font-size:.72rem;color:var(--muted);text-align:center;padding:6px}
   .addrow{margin-top:10px}
   @media(max-width:520px){
     header.app h1{font-size:1rem}
     .kpi .k-val{font-size:1.25rem}
+    .bdtile .bd-val{font-size:1.4rem}
   }
 </style>
 </head>
@@ -158,31 +166,30 @@
       <div class="field">
         <label>Container weight (kg)</label>
         <input type="number" id="containerWeight" step="1" min="0">
-        <span class="derived" id="packsInContainerDerived"></span>
       </div>
       <div class="field">
         <label>Number of containers</label>
         <input type="number" id="numContainers" step="1" min="1">
       </div>
       <div class="field">
-        <label>Pack size (lb)</label>
-        <input type="number" id="packSizeLb" step="0.1" min="0.01">
-        <span class="derived" id="packKgDerived"></span>
+        <label>Boule size (kg)</label>
+        <input type="number" id="bouleKg" step="0.1" min="0.01">
       </div>
       <div class="field">
-        <label>Carton weight (kg)</label>
-        <input type="number" id="cartonWeight" step="1" min="0.01">
-        <span class="derived" id="cartonDerived"></span>
+        <label>Boules per carton</label>
+        <input type="number" id="boulesPerCarton" step="1" min="1">
       </div>
       <div class="field">
-        <label>Selling price / pack (USD)</label>
+        <label>Selling price / boule (USD)</label>
         <input type="number" id="sellingPrice" step="0.01" min="0">
       </div>
-      <div class="field">
-        <label>Exchange rate (CFA per $1)</label>
-        <input type="number" id="exchangeRate" step="1" min="1">
-      </div>
     </div>
+  </div>
+
+  <!-- CONTAINER BREAKDOWN (its own box) -->
+  <div class="card breakdown">
+    <h2>Container Breakdown</h2>
+    <div class="bdgrid" id="breakdown"></div>
   </div>
 
   <!-- TABS -->
@@ -190,7 +197,7 @@
     <button class="tab active" data-tab="summary">Summary</button>
     <button class="tab" data-tab="costs">Costs</button>
     <button class="tab" data-tab="percontainer">Per Container</button>
-    <button class="tab" data-tab="perpack">Per Pack (3 lb)</button>
+    <button class="tab" data-tab="perboule">Per Boule</button>
     <button class="tab" data-tab="perkg">Per Kg</button>
     <button class="tab" data-tab="sensitivity">Sensitivity</button>
   </div>
@@ -216,7 +223,11 @@
   <section class="panel" id="panel-costs">
     <div class="card">
       <h2>Cost Lines</h2>
-      <p class="hint">Enter each cost with its currency and basis. Everything is converted to USD using your exchange rate.</p>
+      <p class="hint">Enter each cost with its currency and basis. CFA amounts are converted to USD using the exchange rate below.</p>
+      <div class="field fxfield">
+        <label>Exchange rate (CFA per $1)</label>
+        <input type="number" id="exchangeRate" step="1" min="1">
+      </div>
       <div class="tblwrap">
         <table class="costtable">
           <thead>
@@ -268,15 +279,15 @@
     </div>
   </section>
 
-  <!-- PER PACK -->
-  <section class="panel" id="panel-perpack">
+  <!-- PER BOULE -->
+  <section class="panel" id="panel-perboule">
     <div class="card">
-      <h2>Per Pack (<span id="packLbLabel">3</span> lb)</h2>
+      <h2>Per Boule (<span id="bouleKgLabel">1.3</span> kg)</h2>
       <div class="tblwrap">
         <table>
-          <thead><tr><th>Category</th><th>Description</th><th class="num">USD / pack</th></tr></thead>
-          <tbody id="ppLines"></tbody>
-          <tfoot id="ppFoot"></tfoot>
+          <thead><tr><th>Category</th><th>Description</th><th class="num">USD / boule</th></tr></thead>
+          <tbody id="pbLines"></tbody>
+          <tfoot id="pbFoot"></tfoot>
         </table>
       </div>
     </div>
@@ -300,10 +311,10 @@
   <section class="panel" id="panel-sensitivity">
     <div class="card">
       <h2>Sensitivity — Selling price</h2>
-      <p class="hint">Profit &amp; margin for the whole shipment at different selling prices per pack (costs held constant).</p>
+      <p class="hint">Profit &amp; margin for the whole shipment at different selling prices per boule (costs held constant).</p>
       <div class="tblwrap">
         <table>
-          <thead><tr><th class="num">Price / pack</th><th class="num">Revenue</th><th class="num">Profit</th><th class="num">Margin %</th></tr></thead>
+          <thead><tr><th class="num">Price / boule</th><th class="num">Revenue</th><th class="num">Profit</th><th class="num">Margin %</th></tr></thead>
           <tbody id="sensPrice"></tbody>
         </table>
       </div>
@@ -326,9 +337,9 @@
 <script>
 "use strict";
 (function(){
-  var LB_TO_KG = 0.45359237;
-  var STORE_KEY = "royalAttiekeTracker.v1";
+  var STORE_KEY = "royalAttiekeTracker.v2";
   var CATEGORIES = ["Product","Logistics/Freight","Packaging","Duties/Customs","Inland Delivery","Bank/Fees","Marketing","Miscellaneous"];
+  var BASES = ["Per container","Per kg","Per boule"];
   var CAT_COLORS = {
     "Product":"#0f7b6c","Logistics/Freight":"#3b82f6","Packaging":"#e8b923",
     "Duties/Customs":"#d23b3b","Inland Delivery":"#8b5cf6","Bank/Fees":"#ec4899",
@@ -337,11 +348,11 @@
 
   function defaults(){
     return {
-      settings:{ containerWeight:16000, numContainers:1, packSizeLb:3, cartonWeight:20, sellingPrice:2.50, exchangeRate:575 },
+      settings:{ containerWeight:16000, numContainers:1, bouleKg:1.3, boulesPerCarton:20, sellingPrice:2.50, exchangeRate:575 },
       costs:[
         {category:"Product", description:"Attiéké purchase", amount:600, currency:"CFA", basis:"Per kg"},
         {category:"Logistics/Freight", description:"Container shipping", amount:6000, currency:"USD", basis:"Per container"},
-        {category:"Packaging", description:"Bags/labels/cartons", amount:0, currency:"USD", basis:"Per pack"},
+        {category:"Packaging", description:"Bags/labels/cartons", amount:0, currency:"USD", basis:"Per boule"},
         {category:"Duties/Customs", description:"HS 1903 duty", amount:0.008, currency:"USD", basis:"Per kg"},
         {category:"Miscellaneous", description:"Other costs", amount:0, currency:"USD", basis:"Per container"}
       ]
@@ -388,18 +399,16 @@
   function compute(over){
     var s = Object.assign({}, state.settings, over||{});
     var rate = s.exchangeRate>0 ? s.exchangeRate : 1;
-    var packKg = s.packSizeLb * LB_TO_KG;
+    var bouleKg = s.bouleKg>0 ? s.bouleKg : 0;
     var containerKg = s.containerWeight;
-    // Whole packs only ("rounded down"), but tolerant of the tiny rounding
-    // knife-edge: e.g. 16000 / 1.36077711 = 11757.987 is treated as 11758.
-    var ratio = packKg>0 ? containerKg / packKg : 0;
-    var packsPerContainer = (Math.ceil(ratio) - ratio) < 0.02 ? Math.ceil(ratio) : Math.floor(ratio);
+    // Whole boules only ("rounded down"), tolerant of a tiny rounding knife-edge.
+    var ratio = bouleKg>0 ? containerKg / bouleKg : 0;
+    var boulesPerContainer = (Math.ceil(ratio) - ratio) < 0.02 ? Math.ceil(ratio) : Math.floor(ratio);
     var containers = s.numContainers>0 ? s.numContainers : 1;
 
-    // Carton figures (informational): how the container splits into cartons
-    var cartonWeight = s.cartonWeight>0 ? s.cartonWeight : 0;
-    var cartonsPerContainer = cartonWeight>0 ? Math.floor(containerKg / cartonWeight) : 0;
-    var packsPerCarton = (cartonWeight>0 && packKg>0) ? Math.floor(cartonWeight / packKg) : 0;
+    // Cartons: a fixed number of boules per carton
+    var boulesPerCarton = s.boulesPerCarton>0 ? Math.floor(s.boulesPerCarton) : 0;
+    var cartonsPerContainer = boulesPerCarton>0 ? Math.floor(boulesPerContainer / boulesPerCarton) : 0;
 
     function amtUSD(line){ return line.currency==="CFA" ? (Number(line.amount)||0)/rate : (Number(line.amount)||0); }
     // total USD for this line for ONE container
@@ -407,7 +416,7 @@
       var u = amtUSD(line);
       if(line.basis==="Per container") return u;
       if(line.basis==="Per kg") return u * containerKg;
-      if(line.basis==="Per pack") return u * packsPerContainer;
+      if(line.basis==="Per boule") return u * boulesPerContainer;
       return u;
     }
 
@@ -416,24 +425,24 @@
       return {
         category:l.category, description:l.description,
         perContainer:pc,
-        perPack: packsPerContainer>0 ? pc/packsPerContainer : 0,
+        perBoule: boulesPerContainer>0 ? pc/boulesPerContainer : 0,
         perKg: containerKg>0 ? pc/containerKg : 0
       };
     });
 
     var totalPerContainer = lines.reduce(function(a,l){return a+l.perContainer;},0);
-    var revenuePerContainer = packsPerContainer * s.sellingPrice;
+    var revenuePerContainer = boulesPerContainer * s.sellingPrice;
     var profitPerContainer = revenuePerContainer - totalPerContainer;
 
     // shipment totals
     var totalCost = totalPerContainer * containers;
     var revenue = revenuePerContainer * containers;
     var profit = revenue - totalCost;
-    var totalPacks = packsPerContainer * containers;
+    var totalBoules = boulesPerContainer * containers;
 
     var margin = revenue>0 ? profit/revenue*100 : 0;
     var markup = totalCost>0 ? profit/totalCost*100 : 0;
-    var breakEven = packsPerContainer>0 ? totalPerContainer/packsPerContainer : 0;
+    var breakEven = boulesPerContainer>0 ? totalPerContainer/boulesPerContainer : 0;
 
     // category subtotals (per container)
     var catMap = {};
@@ -443,16 +452,16 @@
     }).sort(function(a,b){return b.perContainer-a.perContainer;});
 
     return {
-      s:s, rate:rate, packKg:packKg, containerKg:containerKg,
-      packsPerContainer:packsPerContainer, containers:containers,
-      cartonWeight:cartonWeight, cartonsPerContainer:cartonsPerContainer, packsPerCarton:packsPerCarton,
+      s:s, rate:rate, bouleKg:bouleKg, containerKg:containerKg,
+      boulesPerContainer:boulesPerContainer, containers:containers,
+      boulesPerCarton:boulesPerCarton, cartonsPerContainer:cartonsPerContainer,
       lines:lines, cats:cats,
       totalPerContainer:totalPerContainer, revenuePerContainer:revenuePerContainer, profitPerContainer:profitPerContainer,
-      totalPacks:totalPacks, totalCost:totalCost, revenue:revenue, profit:profit,
+      totalBoules:totalBoules, totalCost:totalCost, revenue:revenue, profit:profit,
       margin:margin, markup:markup, breakEven:breakEven,
-      totalCostPerPack: totalPacks>0? totalCost/totalPacks : 0,
+      totalCostPerBoule: totalBoules>0? totalCost/totalBoules : 0,
       totalCostPerKg: (containerKg*containers)>0 ? totalCost/(containerKg*containers) : 0,
-      sellPerKg: packKg>0 ? s.sellingPrice/packKg : 0
+      sellPerKg: bouleKg>0 ? s.sellingPrice/bouleKg : 0
     };
   }
 
@@ -460,35 +469,36 @@
   function render(){
     var c = compute();
 
-    // settings inputs
     setVal("containerWeight", state.settings.containerWeight);
     setVal("numContainers", state.settings.numContainers);
-    setVal("packSizeLb", state.settings.packSizeLb);
-    setVal("cartonWeight", state.settings.cartonWeight);
+    setVal("bouleKg", state.settings.bouleKg);
+    setVal("boulesPerCarton", state.settings.boulesPerCarton);
     setVal("sellingPrice", state.settings.sellingPrice);
     setVal("exchangeRate", state.settings.exchangeRate);
-    renderDerived(c);
-    document.getElementById("packLbLabel").textContent = num(state.settings.packSizeLb,2);
+    document.getElementById("bouleKgLabel").textContent = num(state.settings.bouleKg,2);
 
+    renderBreakdown(c);
     renderCosts(c);
     renderSummary(c);
     renderPerContainer(c);
-    renderPerPack(c);
+    renderPerBoule(c);
     renderPerKg(c);
     renderSensitivity(c);
   }
 
   function setVal(id,v){ var el=document.getElementById(id); if(el && document.activeElement!==el) el.value=v; }
 
-  function renderDerived(c){
-    document.getElementById("packKgDerived").textContent = "= "+num(c.packKg,4)+" kg / pack";
-    document.getElementById("packsInContainerDerived").textContent = "= "+num(c.packsPerContainer,0)+" packs in container";
-    var cartonEl = document.getElementById("cartonDerived");
-    if(c.cartonsPerContainer>0){
-      cartonEl.textContent = "= "+num(c.cartonsPerContainer,0)+" cartons · ~"+num(c.packsPerCarton,0)+" packs / carton";
-    } else {
-      cartonEl.textContent = "";
-    }
+  /* CONTAINER BREAKDOWN (its own box, no text underneath) */
+  function renderBreakdown(c){
+    var tiles = [
+      {v:num(c.bouleKg,2)+" kg", l:"Per boule"},
+      {v:num(c.boulesPerContainer,0), l:"Boules in container"},
+      {v:num(c.boulesPerCarton,0), l:"Boules per carton"},
+      {v:num(c.cartonsPerContainer,0), l:"Cartons in container"}
+    ];
+    document.getElementById("breakdown").innerHTML = tiles.map(function(t){
+      return '<div class="bdtile"><div class="bd-val">'+t.v+'</div><div class="bd-label">'+t.l+'</div></div>';
+    }).join("");
   }
 
   /* COSTS TAB */
@@ -501,7 +511,7 @@
       tr.appendChild(cellText(line.description, function(v){ state.costs[i].description=v; changed(true); }));
       tr.appendChild(cellNumber(line.amount, function(v){ state.costs[i].amount=v; changed(true); }));
       tr.appendChild(cellSelect(["CFA","USD"], line.currency, function(v){ state.costs[i].currency=v; changed(); }));
-      tr.appendChild(cellSelect(["Per container","Per kg","Per pack"], line.basis, function(v){ state.costs[i].basis=v; changed(); }));
+      tr.appendChild(cellSelect(BASES, line.basis, function(v){ state.costs[i].basis=v; changed(); }));
       var td = document.createElement("td"); td.className="num"; td.textContent = usd(c.lines[i].perContainer); tr.appendChild(td);
       var tdd = document.createElement("td");
       var del = document.createElement("button"); del.className="rowdel"; del.textContent="✕"; del.title="Delete line";
@@ -542,8 +552,8 @@
       {l:"Revenue", v:usd(c.revenue)},
       {l:"Gross profit", v:usd(c.profit), cls:profClass, tip:"Revenue minus total landed cost."},
       {l:"Gross margin", v:pct(c.margin), cls:profClass, tip:"Margin = profit ÷ revenue. Share of the selling price that is profit."},
-      {l:"Profit / pack", v:usd(c.profit/(c.totalPacks||1)), cls:profClass},
-      {l:"Break-even price / pack", v:usd(c.breakEven), tip:"Selling price per pack at which profit = 0."}
+      {l:"Profit / boule", v:usd(c.profit/(c.totalBoules||1)), cls:profClass},
+      {l:"Break-even price / boule", v:usd(c.breakEven), tip:"Selling price per boule at which profit = 0."}
     ];
     var html = kpis.map(function(k){
       return '<div class="kpi"><div class="k-label">'+k.l+(k.tip?tipHTML(k.tip):"")+'</div><div class="k-val '+(k.cls||"")+'">'+k.v+'</div></div>';
@@ -629,8 +639,8 @@
     var profClass=c.profitPerContainer>=0?"pos":"neg";
     document.getElementById("pcTop").innerHTML =
       kpiBox("Total kg", num(c.containerKg,0)+" kg") +
-      kpiBox("Packs / container", num(c.packsPerContainer,0)) +
-      kpiBox("Pack size", num(c.packKg,4)+" kg");
+      kpiBox("Boules / container", num(c.boulesPerContainer,0)) +
+      kpiBox("Cartons / container", num(c.cartonsPerContainer,0));
     document.getElementById("pcLines").innerHTML = c.lines.map(function(l){
       return "<tr><td>"+esc(l.category)+"</td><td>"+esc(l.description)+"</td><td class='num'>"+usd(l.perContainer)+"</td></tr>";
     }).join("");
@@ -640,28 +650,28 @@
     document.getElementById("pcTotal").textContent = usd(c.totalPerContainer);
     document.getElementById("pcProfit").innerHTML =
       prow("Total landed cost", usd(c.totalPerContainer)) +
-      prow("Revenue (packs × price)", usd(c.revenuePerContainer)) +
+      prow("Revenue (boules × price)", usd(c.revenuePerContainer)) +
       prow("Gross profit", usd(c.profitPerContainer), profClass) +
       prow("Gross margin"+tipHTML("Margin = profit ÷ revenue."), pct(c.margin), profClass) +
       prow("Markup"+tipHTML("Markup = profit ÷ cost. Profit as a share of what you paid — always larger than margin."), pct(c.markup), profClass) +
-      prow("Break-even price / pack", usd(c.breakEven));
+      prow("Break-even price / boule", usd(c.breakEven));
   }
   function prow(l,v,cls){ return "<tr><td>"+l+"</td><td class='num "+(cls||"")+"'>"+v+"</td></tr>"; }
   function kpiBox(l,v,cls){ return '<div class="kpi"><div class="k-label">'+l+'</div><div class="k-val '+(cls||"")+'">'+v+'</div></div>'; }
 
-  /* PER PACK TAB */
-  function renderPerPack(c){
-    document.getElementById("ppLines").innerHTML = c.lines.map(function(l){
-      return "<tr><td>"+esc(l.category)+"</td><td>"+esc(l.description)+"</td><td class='num'>"+usd(l.perPack)+"</td></tr>";
+  /* PER BOULE TAB */
+  function renderPerBoule(c){
+    document.getElementById("pbLines").innerHTML = c.lines.map(function(l){
+      return "<tr><td>"+esc(l.category)+"</td><td>"+esc(l.description)+"</td><td class='num'>"+usd(l.perBoule)+"</td></tr>";
     }).join("");
-    var profClass=(c.s.sellingPrice-c.totalCostPerPack)>=0?"pos":"neg";
-    var costPP=c.totalCostPerPack, profitPP=c.s.sellingPrice-costPP;
-    var marginPP = c.s.sellingPrice>0 ? profitPP/c.s.sellingPrice*100 : 0;
-    document.getElementById("ppFoot").innerHTML =
-      "<tr><td colspan='2'>Total cost / pack</td><td class='num'>"+usd(costPP)+"</td></tr>" +
-      "<tr><td colspan='2'>Selling price / pack</td><td class='num'>"+usd(c.s.sellingPrice)+"</td></tr>" +
-      "<tr><td colspan='2'>Profit / pack</td><td class='num "+profClass+"'>"+usd(profitPP)+"</td></tr>" +
-      "<tr><td colspan='2'>Margin %"+tipHTML("Margin = profit ÷ selling price.")+"</td><td class='num "+profClass+"'>"+pct(marginPP)+"</td></tr>";
+    var costPB=c.totalCostPerBoule, profitPB=c.s.sellingPrice-costPB;
+    var profClass=profitPB>=0?"pos":"neg";
+    var marginPB = c.s.sellingPrice>0 ? profitPB/c.s.sellingPrice*100 : 0;
+    document.getElementById("pbFoot").innerHTML =
+      "<tr><td colspan='2'>Total cost / boule</td><td class='num'>"+usd(costPB)+"</td></tr>" +
+      "<tr><td colspan='2'>Selling price / boule</td><td class='num'>"+usd(c.s.sellingPrice)+"</td></tr>" +
+      "<tr><td colspan='2'>Profit / boule</td><td class='num "+profClass+"'>"+usd(profitPB)+"</td></tr>" +
+      "<tr><td colspan='2'>Margin %"+tipHTML("Margin = profit ÷ selling price.")+"</td><td class='num "+profClass+"'>"+pct(marginPB)+"</td></tr>";
   }
 
   /* PER KG TAB */
@@ -702,30 +712,26 @@
   /* ---------- events ---------- */
   function changed(defer){
     if(defer){
-      // recompute derived cells + all tabs but keep focus in inputs
       var c=compute();
       document.getElementById("costTotalPC").textContent = usd(c.totalPerContainer);
-      // update the per-line USD cells without rebuilding inputs
       var rows=document.getElementById("costBody").children;
       for(var i=0;i<rows.length && i<c.lines.length;i++){
         rows[i].children[5].textContent = usd(c.lines[i].perContainer);
       }
-      renderSummary(c); renderPerContainer(c); renderPerPack(c); renderPerKg(c); renderSensitivity(c);
+      renderBreakdown(c); renderSummary(c); renderPerContainer(c); renderPerBoule(c); renderPerKg(c); renderSensitivity(c);
       save();
     } else {
       render(); save();
     }
   }
 
-  ["containerWeight","numContainers","packSizeLb","cartonWeight","sellingPrice","exchangeRate"].forEach(function(id){
+  ["containerWeight","numContainers","bouleKg","boulesPerCarton","sellingPrice","exchangeRate"].forEach(function(id){
     document.getElementById(id).addEventListener("input",function(){
       var v=parseFloat(this.value);
       state.settings[id]= isFinite(v)? v : 0;
-      // light update to keep focus
       var c=compute();
-      renderDerived(c);
-      document.getElementById("packLbLabel").textContent = num(state.settings.packSizeLb,2);
-      renderCosts(c); renderSummary(c); renderPerContainer(c); renderPerPack(c); renderPerKg(c); renderSensitivity(c);
+      document.getElementById("bouleKgLabel").textContent = num(state.settings.bouleKg,2);
+      renderBreakdown(c); renderCosts(c); renderSummary(c); renderPerContainer(c); renderPerBoule(c); renderPerKg(c); renderSensitivity(c);
       save();
     });
   });
@@ -770,13 +776,11 @@
     rows.push(["SETTINGS"]);
     rows.push(["Container weight (kg)",state.settings.containerWeight]);
     rows.push(["Number of containers",state.settings.numContainers]);
-    rows.push(["Pack size (lb)",state.settings.packSizeLb]);
-    rows.push(["Pack size (kg)",c.packKg.toFixed(6)]);
-    rows.push(["Carton weight (kg)",state.settings.cartonWeight]);
-    rows.push(["Cartons per container",c.cartonsPerContainer]);
-    rows.push(["Packs per carton",c.packsPerCarton]);
-    rows.push(["Packs in container",c.packsPerContainer]);
-    rows.push(["Selling price / pack (USD)",state.settings.sellingPrice]);
+    rows.push(["Boule size (kg)",state.settings.bouleKg]);
+    rows.push(["Boules per carton",state.settings.boulesPerCarton]);
+    rows.push(["Boules in container",c.boulesPerContainer]);
+    rows.push(["Cartons in container",c.cartonsPerContainer]);
+    rows.push(["Selling price / boule (USD)",state.settings.sellingPrice]);
     rows.push(["Exchange rate (CFA per USD)",state.settings.exchangeRate]);
     rows.push([]);
     rows.push(["COST LINES"]);
@@ -787,16 +791,16 @@
     rows.push([]);
     rows.push(["RESULTS (per container)"]);
     rows.push(["Total kg",c.containerKg]);
-    rows.push(["Packs",c.packsPerContainer]);
+    rows.push(["Boules",c.boulesPerContainer]);
     rows.push(["Total landed cost",c.totalPerContainer.toFixed(2)]);
     rows.push(["Revenue",c.revenuePerContainer.toFixed(2)]);
     rows.push(["Gross profit",c.profitPerContainer.toFixed(2)]);
     rows.push(["Gross margin %",c.margin.toFixed(2)]);
     rows.push(["Markup %",c.markup.toFixed(2)]);
-    rows.push(["Break-even price / pack",c.breakEven.toFixed(4)]);
+    rows.push(["Break-even price / boule",c.breakEven.toFixed(4)]);
     rows.push([]);
     rows.push(["RESULTS (shipment × "+c.containers+")"]);
-    rows.push(["Total packs",c.totalPacks]);
+    rows.push(["Total boules",c.totalBoules]);
     rows.push(["Total landed cost",c.totalCost.toFixed(2)]);
     rows.push(["Revenue",c.revenue.toFixed(2)]);
     rows.push(["Gross profit",c.profit.toFixed(2)]);
