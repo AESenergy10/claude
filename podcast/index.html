@@ -581,6 +581,7 @@ const CAT_LABEL = {
   entrepreneurship:{en:"Entrepreneurship", fr:"Entrepreneuriat"},
   achievers:{en:"Everyday Achievers", fr:"Parcours inspirants du quotidien"},
   creators:{en:"Creators & Influencers", fr:"Créateurs & influenceurs"},
+  immigcreators:{en:"Immigration Content Creators", fr:"Créateurs de contenu immigration"},
   artists:{en:"Artists & Entertainers", fr:"Artistes & personnalités"},
   wealthy:{en:"Entrepreneurs & Wealthy Individuals", fr:"Entrepreneurs & personnes fortunées"},
   vip:{en:"VIPs & Respected Leaders", fr:"VIP & leaders respectés"},
@@ -667,6 +668,9 @@ const CATEGORY_DEFS = [
   {cat:"creators", name:"Creators & Influencers",
     desc:"People with an engaged online audience who can also amplify the show.",
     words:["influencer","content creator","creator","youtuber","youtube","tiktok","tiktoker","instagram","followers","subscribers","social media","blogger","vlogger","podcaster","streamer","twitch","brand deal","viral","audience","online community"]},
+  {cat:"immigcreators", name:"Immigration Content Creators",
+    desc:"Creators who make online content and give advice to immigrants and newcomers.",
+    words:["immigration content","immigration advice","advice for immigrants","help immigrants","helping immigrants","newcomer tips","newcomers","new immigrants","visa tips","green card tips","immigration youtuber","immigration tiktok","immigration page","immigration blog","immigration coach","diaspora creator","immigrant creator","guide for newcomers","moving to the us","moving to america","settling in","conseils immigration","aide aux immigrants","contenu immigration"]},
   {cat:"artists", name:"Artists & Entertainers",
     desc:"Musicians, actors, comedians, dancers and other creatives.",
     words:["artist","musician","singer","rapper","songwriter","actor","actress","comedian","comedy","dancer","choreographer","painter","entertainer","performer","filmmaker","director","producer","dj","model","fashion designer","creative"]},
@@ -722,9 +726,21 @@ let unlocked = false;   // organizer code entered → nominee names visible
 function load(){
   try{
     const raw = localStorage.getItem(STORE_KEY);
-    if(raw){const d=JSON.parse(raw); if(d&&Array.isArray(d.topics)) return d;}
+    if(raw){const d=JSON.parse(raw); if(d&&Array.isArray(d.topics)){ ensureCategories(d); return d; }}
   }catch(e){}
   const s = seed(); save(s); return s;
+}
+// Insert any built-in category the saved data doesn't have yet (keeps existing nominees).
+function ensureCategories(s){
+  let changed=false;
+  CATEGORY_DEFS.forEach((d,i)=>{
+    if(!s.topics.some(t=>t.cat===d.cat)){
+      s.topics.splice(i,0,{id:uid(),cat:d.cat,name:d.name,description:d.desc,status:"Planning",guests:[]});
+      changed=true;
+    }
+  });
+  if(changed) save(s);
+  return s;
 }
 function save(s){
   s = s||state;
