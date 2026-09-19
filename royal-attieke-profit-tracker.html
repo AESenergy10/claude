@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Attiéké Container Profit Tracker</title>
+<style>
+  :root{
+    --bg:#f4f6f9; --card:#ffffff; --ink:#1b2430; --muted:#61708a;
+    --line:#e2e8f2; --brand:#0f7b6c; --brand-2:#12a594; --accent:#e8b923;
+    --pos:#1e874b; --neg:#d23b3b; --chip:#eef3f8; --shadow:0 1px 3px rgba(20,40,80,.08),0 8px 24px rgba(20,40,80,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f141b; --card:#171f29; --ink:#e8eef7; --muted:#98a6bd;
+      --line:#26313f; --brand:#26b3a1; --brand-2:#2fd0bb; --accent:#f0c94a;
+      --pos:#42c477; --neg:#ff6b6b; --chip:#1e2833; --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+      --bg:#0f141b; --card:#171f29; --ink:#e8eef7; --muted:#98a6bd;
+      --line:#26313f; --brand:#26b3a1; --brand-2:#2fd0bb; --accent:#f0c94a;
+      --pos:#42c477; --neg:#ff6b6b; --chip:#1e2833; --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:15px; line-height:1.45; -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:16px}
+  header.app{
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    padding:14px 16px;border-radius:16px;
+    background:linear-gradient(120deg,var(--brand),var(--brand-2));
+    color:#fff;box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  header.app .logo{font-size:26px;line-height:1}
+  header.app h1{font-size:1.15rem;margin:0;font-weight:700;letter-spacing:.2px}
+  header.app p{margin:2px 0 0;font-size:.78rem;opacity:.9}
+  header.app .spacer{flex:1}
+  .btn{
+    border:1px solid var(--line);background:var(--card);color:var(--ink);
+    padding:8px 12px;border-radius:10px;font-size:.82rem;cursor:pointer;
+    font-weight:600;transition:.15s;white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--brand)}
+  .btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .btn.danger{color:var(--neg);border-color:var(--neg)}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
+  .card h2{margin:0 0 12px;font-size:1rem}
+  .card h3{margin:16px 0 8px;font-size:.9rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+
+  /* dedicated container-breakdown card */
+  .breakdown{background:linear-gradient(120deg,rgba(15,123,108,.10),rgba(18,165,148,.08));border-color:var(--brand-2)}
+  .breakdown h2{color:var(--brand)}
+  .bdgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .bdtile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+  .bdtile .bd-val{font-size:1.7rem;font-weight:800;color:var(--brand);font-variant-numeric:tabular-nums;line-height:1.1}
+  .bdtile .bd-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-top:6px}
+
+  /* settings grid */
+  .settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .field{display:flex;flex-direction:column;gap:4px}
+  .field label{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;gap:5px}
+  .field input,.field select,td input,td select{
+    background:var(--bg);border:1px solid var(--line);color:var(--ink);
+    border-radius:9px;padding:8px 10px;font-size:.9rem;width:100%;
+  }
+  .field input:focus,.field select:focus,td input:focus,td select:focus{outline:2px solid var(--brand-2);outline-offset:-1px}
+  .field .derived{font-size:.72rem;color:var(--brand);font-weight:700}
+  .fxfield{max-width:240px;margin-bottom:12px}
+
+  /* tabs */
+  .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;-webkit-overflow-scrolling:touch}
+  .tab{
+    border:1px solid var(--line);background:var(--card);color:var(--muted);
+    padding:9px 14px;border-radius:999px;font-size:.85rem;font-weight:700;
+    cursor:pointer;white-space:nowrap;transition:.15s;
+  }
+  .tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .panel{display:none;animation:fade .2s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* tables */
+  .tblwrap{overflow-x:auto;border-radius:12px}
+  table{width:100%;border-collapse:collapse;font-size:.86rem;table-layout:fixed}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:middle;overflow-wrap:break-word;word-break:break-word}
+  th{font-size:.72rem;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:700}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;width:34%}
+  tr:last-child td{border-bottom:none}
+  tfoot td{font-weight:800;border-top:2px solid var(--line)}
+  .rowdel{color:var(--neg);border:none;background:none;cursor:pointer;font-size:1.1rem;line-height:1;padding:2px 6px;border-radius:6px}
+  .rowdel:hover{background:var(--chip)}
+  td input[type=number]{max-width:120px}
+  .costtable td select{min-width:130px}
+
+  /* KPI cards */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .kpi{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .kpi .k-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;display:flex;align-items:center;gap:5px}
+  .kpi .k-val{font-size:1.5rem;font-weight:800;margin-top:6px;font-variant-numeric:tabular-nums}
+  .pos{color:var(--pos)} .neg{color:var(--neg)}
+
+  /* tooltip */
+  .info{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:15px;height:15px;border-radius:50%;background:var(--muted);color:var(--card);
+    font-size:.62rem;font-weight:800;cursor:help;position:relative;flex:none;
+  }
+  .info:hover .tip,.info:focus .tip{opacity:1;visibility:visible;transform:translateY(0)}
+  .tip{
+    position:absolute;bottom:135%;left:50%;transform:translate(-50%,4px);
+    background:var(--ink);color:var(--bg);padding:8px 10px;border-radius:8px;
+    font-size:.72rem;font-weight:500;line-height:1.35;width:210px;text-align:left;
+    opacity:0;visibility:hidden;transition:.15s;z-index:20;text-transform:none;letter-spacing:0;
+    box-shadow:0 6px 18px rgba(0,0,0,.25);pointer-events:none;
+  }
+  .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--ink)}
+
+  .muted{color:var(--muted)}
+  .hint{font-size:.78rem;color:var(--muted);margin:2px 0 10px}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .legend .li{display:flex;align-items:center;gap:6px;font-size:.8rem}
+  .legend .sw{width:12px;height:12px;border-radius:3px;flex:none}
+  .chartgrid{display:grid;grid-template-columns:1fr;gap:16px}
+  @media(min-width:640px){.chartgrid{grid-template-columns:1fr 1fr}}
+  .chart-svg{width:100%;height:auto;display:block}
+  .status{font-size:.72rem;color:var(--muted);text-align:center;padding:6px}
+  .addrow{margin-top:10px}
+  @media(max-width:520px){
+    header.app h1{font-size:1rem}
+    .kpi .k-val{font-size:1.25rem}
+    .bdtile .bd-val{font-size:1.4rem}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- TABS -->
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="summary">Summary</button>
+  </div>
+
+  <!-- SUMMARY (with Global Settings combined in) -->
+  <section class="panel active" id="panel-summary">
+    <div class="card">
+      <h2>Global Settings</h2>
+      <div class="settings">
+        <div class="field">
+          <label>Container weight (kg)</label>
+          <input type="number" id="containerWeight" step="1" min="0">
+        </div>
+        <div class="field">
+          <label>Number of containers</label>
+          <input type="number" id="numContainers" step="1" min="1">
+        </div>
+        <div class="field">
+          <label>Boule size (kg)</label>
+          <input type="number" id="bouleKg" step="0.1" min="0.01">
+        </div>
+        <div class="field">
+          <label>Boules per carton</label>
+          <input type="number" id="boulesPerCarton" step="1" min="1">
+        </div>
+        <div class="field">
+          <label>Selling price / boule (USD)</label>
+          <input type="number" id="sellingPrice" step="0.01" min="0">
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Summary <span class="muted" id="sumScope"></span></h2>
+      <div class="kpis" id="kpis"></div>
+    </div>
+    <div class="card">
+      <h2>Cost by Category</h2>
+      <p class="hint">Share of total landed cost across all containers.</p>
+      <div class="chartgrid">
+        <div><svg class="chart-svg" id="donut" viewBox="0 0 200 200" role="img" aria-label="Cost by category donut chart"></svg></div>
+        <div><svg class="chart-svg" id="bars" viewBox="0 0 300 220" role="img" aria-label="Cost by category bar chart"></svg></div>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </section>
+
+  <!-- CONTAINER BREAKDOWN (its own box) -->
+  <div class="card breakdown">
+    <h2>Container Breakdown</h2>
+    <div class="bdgrid" id="breakdown"></div>
+  </div>
+
+  <div class="status" id="status"></div>
+</div>
+
+<script>
+"use strict";
+(function(){
+  var STORE_KEY = "royalAttiekeTracker.v2";
+  var CATEGORIES = ["Product","Logistics/Freight","Packaging","Duties/Customs","Inland Delivery","Bank/Fees","Marketing","Miscellaneous"];
+  var BASES = ["Per container","Per kg","Per boule"];
+  var CAT_COLORS = {
+    "Product":"#0f7b6c","Logistics/Freight":"#3b82f6","Packaging":"#e8b923",
+    "Duties/Customs":"#d23b3b","Inland Delivery":"#8b5cf6","Bank/Fees":"#ec4899",
+    "Marketing":"#14b8a6","Miscellaneous":"#94a3b8"
+  };
+
+  function defaults(){
+    return {
+      settings:{ containerWeight:16000, numContainers:1, bouleKg:1.3, boulesPerCarton:20, sellingPrice:2.50, exchangeRate:575 },
+      costs:[
+        {category:"Product", description:"Attiéké purchase", amount:600, currency:"CFA", basis:"Per kg"},
+        {category:"Logistics/Freight", description:"Container shipping", amount:6000, currency:"USD", basis:"Per container"},
+        {category:"Packaging", description:"Bags/labels/cartons", amount:0, currency:"USD", basis:"Per boule"},
+        {category:"Duties/Customs", description:"HS 1903 duty", amount:0.008, currency:"USD", basis:"Per kg"},
+        {category:"Miscellaneous", description:"Other costs", amount:0, currency:"USD", basis:"Per container"}
+      ]
+    };
+  }
+
+  var state = load() || defaults();
+
+  /* ---------- persistence ---------- */
+  function save(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); setStatus("Saved locally · "+new Date().toLocaleTimeString()); }
+    catch(e){ setStatus("Note: could not save to this browser (storage unavailable)."); }
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if(!raw) return null;
+      var obj = JSON.parse(raw);
+      if(obj && obj.settings && Array.isArray(obj.costs)){
+        obj.settings = Object.assign({}, defaults().settings, obj.settings); // backfill new keys
+        return obj;
+      }
+      return null;
+    }catch(e){ return null; }
+  }
+  function setStatus(msg){ var s=document.getElementById("status"); if(s) s.textContent=msg; }
+
+  /* ---------- formatting ---------- */
+  function usd(n){
+    if(!isFinite(n)) n=0;
+    return "$"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function cfa(n){
+    if(!isFinite(n)) n=0;
+    return Math.round(n).toLocaleString("en-US")+" CFA";
+  }
+  function pct(n){
+    if(!isFinite(n)) n=0;
+    return n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})+"%";
+  }
+  function num(n,d){ if(!isFinite(n))n=0; return n.toLocaleString("en-US",{minimumFractionDigits:d||0,maximumFractionDigits:d||0}); }
+
+  /* ---------- core computation ---------- */
+  function compute(over){
+    var s = Object.assign({}, state.settings, over||{});
+    var rate = s.exchangeRate>0 ? s.exchangeRate : 1;
+    var bouleKg = s.bouleKg>0 ? s.bouleKg : 0;
+    var containerKg = s.containerWeight;
+    // Whole boules only ("rounded down"), tolerant of a tiny rounding knife-edge.
+    var ratio = bouleKg>0 ? containerKg / bouleKg : 0;
+    var boulesPerContainer = (Math.ceil(ratio) - ratio) < 0.02 ? Math.ceil(ratio) : Math.floor(ratio);
+    var containers = s.numContainers>0 ? s.numContainers : 1;
+
+    // Cartons: a fixed number of boules per carton
+    var boulesPerCarton = s.boulesPerCarton>0 ? Math.floor(s.boulesPerCarton) : 0;
+    var cartonsPerContainer = boulesPerCarton>0 ? Math.floor(boulesPerContainer / boulesPerCarton) : 0;
+
+    function amtUSD(line){ return line.currency==="CFA" ? (Number(line.amount)||0)/rate : (Number(line.amount)||0); }
+    // total USD for this line for ONE container
+    function linePerContainer(line){
+      var u = amtUSD(line);
+      if(line.basis==="Per container") return u;
+      if(line.basis==="Per kg") return u * containerKg;
+      if(line.basis==="Per boule") return u * boulesPerContainer;
+      return u;
+    }
+
+    var lines = state.costs.map(function(l){
+      var pc = linePerContainer(l);
+      return {
+        category:l.category, description:l.description,
+        perContainer:pc,
+        perBoule: boulesPerContainer>0 ? pc/boulesPerContainer : 0,
+        perKg: containerKg>0 ? pc/containerKg : 0
+      };
+    });
+
+    var totalPerContainer = lines.reduce(function(a,l){return a+l.perContainer;},0);
+    var revenuePerContainer = boulesPerContainer * s.sellingPrice;
+    var profitPerContainer = revenuePerContainer - totalPerContainer;
+
+    // shipment totals
+    var totalCost = totalPerContainer * containers;
+    var revenue = revenuePerContainer * containers;
+    var profit = revenue - totalCost;
+    var totalBoules = boulesPerContainer * containers;
+
+    var margin = revenue>0 ? profit/revenue*100 : 0;
+    var markup = totalCost>0 ? profit/totalCost*100 : 0;
+    var breakEven = boulesPerContainer>0 ? totalPerContainer/boulesPerContainer : 0;
+
+    // category subtotals (per container)
+    var catMap = {};
+    lines.forEach(function(l){ catMap[l.category]=(catMap[l.category]||0)+l.perContainer; });
+    var cats = Object.keys(catMap).map(function(c){
+      return {category:c, perContainer:catMap[c], share: totalPerContainer>0 ? catMap[c]/totalPerContainer*100 : 0};
+    }).sort(function(a,b){return b.perContainer-a.perContainer;});
+
+    return {
+      s:s, rate:rate, bouleKg:bouleKg, containerKg:containerKg,
+      boulesPerContainer:boulesPerContainer, containers:containers,
+      boulesPerCarton:boulesPerCarton, cartonsPerContainer:cartonsPerContainer,
+      lines:lines, cats:cats,
+      totalPerContainer:totalPerContainer, revenuePerContainer:revenuePerContainer, profitPerContainer:profitPerContainer,
+      totalBoules:totalBoules, totalCost:totalCost, revenue:revenue, profit:profit,
+      margin:margin, markup:markup, breakEven:breakEven,
+      totalCostPerBoule: totalBoules>0? totalCost/totalBoules : 0,
+      totalCostPerKg: (containerKg*containers)>0 ? totalCost/(containerKg*containers) : 0,
+      sellPerKg: bouleKg>0 ? s.sellingPrice/bouleKg : 0
+    };
+  }
+
+  /* ---------- rendering ---------- */
+  function render(){
+    var c = compute();
+
+    setVal("containerWeight", state.settings.containerWeight);
+    setVal("numContainers", state.settings.numContainers);
+    setVal("bouleKg", state.settings.bouleKg);
+    setVal("boulesPerCarton", state.settings.boulesPerCarton);
+    setVal("sellingPrice", state.settings.sellingPrice);
+
+    renderBreakdown(c);
+    renderSummary(c);
+  }
+
+  function setVal(id,v){ var el=document.getElementById(id); if(el && document.activeElement!==el) el.value=v; }
+
+  /* CONTAINER BREAKDOWN (its own box, no text underneath) */
+  function renderBreakdown(c){
+    var many = c.containers>1;
+    var totalCartons = c.cartonsPerContainer * c.containers;
+    var suffix = many ? " ("+num(c.containers,0)+" containers)" : "";
+    var tiles = [
+      {v:num(c.bouleKg,2)+" kg", l:"Per boule"},
+      {v:num(c.totalBoules,0), l:(many?"Total boules":"Boules in container")+suffix},
+      {v:num(c.boulesPerCarton,0), l:"Boules per carton"},
+      {v:num(totalCartons,0), l:(many?"Total cartons":"Cartons in container")+suffix}
+    ];
+    document.getElementById("breakdown").innerHTML = tiles.map(function(t){
+      return '<div class="bdtile"><div class="bd-val">'+t.v+'</div><div class="bd-label">'+t.l+'</div></div>';
+    }).join("");
+  }
+
+  /* SUMMARY TAB */
+  function renderSummary(c){
+    var scope = c.containers>1 ? "· "+c.containers+" containers" : "· per shipment";
+    document.getElementById("sumScope").textContent = scope;
+    var profClass = c.profit>=0 ? "pos":"neg";
+    var kpis = [
+      {l:"Total landed cost", v:usd(c.totalCost)},
+      {l:"Revenue", v:usd(c.revenue)},
+      {l:"Gross profit", v:usd(c.profit), cls:profClass, tip:"Revenue minus total landed cost."},
+      {l:"Gross margin", v:pct(c.margin), cls:profClass, tip:"Margin = profit ÷ revenue. Share of the selling price that is profit."},
+      {l:"Profit / boule", v:usd(c.profit/(c.totalBoules||1)), cls:profClass},
+      {l:"Break-even price / boule", v:usd(c.breakEven), tip:"Selling price per boule at which profit = 0."}
+    ];
+    var html = kpis.map(function(k){
+      return '<div class="kpi"><div class="k-label">'+k.l+(k.tip?tipHTML(k.tip):"")+'</div><div class="k-val '+(k.cls||"")+'">'+k.v+'</div></div>';
+    }).join("");
+    document.getElementById("kpis").innerHTML = html;
+    renderCharts(c);
+  }
+
+  function tipHTML(text){
+    return ' <span class="info" tabindex="0">i<span class="tip">'+text+'</span></span>';
+  }
+
+  function renderCharts(c){
+    var cats = c.cats.filter(function(x){return x.perContainer>0;});
+    var total = cats.reduce(function(a,x){return a+x.perContainer;},0);
+    // DONUT
+    var donut = document.getElementById("donut");
+    donut.innerHTML="";
+    var cx=100,cy=100,r=70,sw=34, circ=2*Math.PI*r, offset=0;
+    if(total<=0){
+      donut.innerHTML='<circle cx="100" cy="100" r="70" fill="none" stroke="var(--line)" stroke-width="34"/><text x="100" y="105" text-anchor="middle" fill="var(--muted)" font-size="12">No cost data</text>';
+    } else {
+      cats.forEach(function(x){
+        var frac=x.perContainer/total;
+        var seg=document.createElementNS("http://www.w3.org/2000/svg","circle");
+        seg.setAttribute("cx",cx);seg.setAttribute("cy",cy);seg.setAttribute("r",r);
+        seg.setAttribute("fill","none");
+        seg.setAttribute("stroke",CAT_COLORS[x.category]||"#94a3b8");
+        seg.setAttribute("stroke-width",sw);
+        seg.setAttribute("stroke-dasharray",(frac*circ)+" "+circ);
+        seg.setAttribute("stroke-dashoffset",-offset*circ);
+        seg.setAttribute("transform","rotate(-90 "+cx+" "+cy+")");
+        var t=document.createElementNS("http://www.w3.org/2000/svg","title");
+        t.textContent=x.category+" — "+pct(frac*100);
+        seg.appendChild(t);
+        donut.appendChild(seg);
+        offset+=frac;
+      });
+      var tc=document.createElementNS("http://www.w3.org/2000/svg","text");
+      tc.setAttribute("x",100);tc.setAttribute("y",96);tc.setAttribute("text-anchor","middle");
+      tc.setAttribute("fill","var(--ink)");tc.setAttribute("font-size","13");tc.setAttribute("font-weight","800");
+      tc.textContent=usd(c.totalPerContainer);
+      donut.appendChild(tc);
+      var tl=document.createElementNS("http://www.w3.org/2000/svg","text");
+      tl.setAttribute("x",100);tl.setAttribute("y",112);tl.setAttribute("text-anchor","middle");
+      tl.setAttribute("fill","var(--muted)");tl.setAttribute("font-size","9");
+      tl.textContent="per container";
+      donut.appendChild(tl);
+    }
+    // BARS
+    var bars=document.getElementById("bars");
+    bars.innerHTML="";
+    var maxV = cats.reduce(function(a,x){return Math.max(a,x.perContainer);},0)||1;
+    var padL=8,padR=8,top=8,rowH=Math.min(30,(220-16)/(cats.length||1)),barMax=300-padL-padR-100;
+    if(cats.length===0){
+      bars.innerHTML='<text x="150" y="110" text-anchor="middle" fill="var(--muted)" font-size="12">No cost data</text>';
+    }
+    cats.forEach(function(x,i){
+      var y=top+i*rowH;
+      var w=(x.perContainer/maxV)*barMax;
+      var lab=document.createElementNS("http://www.w3.org/2000/svg","text");
+      lab.setAttribute("x",padL);lab.setAttribute("y",y+rowH/2+3);lab.setAttribute("fill","var(--ink)");lab.setAttribute("font-size","9");
+      lab.textContent = x.category.length>14 ? x.category.slice(0,13)+"…" : x.category;
+      bars.appendChild(lab);
+      var rect=document.createElementNS("http://www.w3.org/2000/svg","rect");
+      rect.setAttribute("x",100);rect.setAttribute("y",y+3);rect.setAttribute("width",Math.max(1,w));rect.setAttribute("height",rowH-8);
+      rect.setAttribute("rx",3);rect.setAttribute("fill",CAT_COLORS[x.category]||"#94a3b8");
+      var t=document.createElementNS("http://www.w3.org/2000/svg","title"); t.textContent=x.category+" — "+usd(x.perContainer); rect.appendChild(t);
+      bars.appendChild(rect);
+      var val=document.createElementNS("http://www.w3.org/2000/svg","text");
+      val.setAttribute("x",100+Math.max(1,w)+4);val.setAttribute("y",y+rowH/2+3);val.setAttribute("fill","var(--muted)");val.setAttribute("font-size","8.5");
+      val.textContent=usd(x.perContainer);
+      bars.appendChild(val);
+    });
+    // LEGEND
+    document.getElementById("legend").innerHTML = cats.map(function(x){
+      return '<div class="li"><span class="sw" style="background:'+(CAT_COLORS[x.category]||"#94a3b8")+'"></span>'+x.category+' <span class="muted">('+pct(x.share)+')</span></div>';
+    }).join("");
+  }
+
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m];}); }
+
+  /* ---------- events ---------- */
+  ["containerWeight","numContainers","bouleKg","boulesPerCarton","sellingPrice"].forEach(function(id){
+    document.getElementById(id).addEventListener("input",function(){
+      var v=parseFloat(this.value);
+      state.settings[id]= isFinite(v)? v : 0;
+      var c=compute();
+      renderBreakdown(c); renderSummary(c);
+      save();
+    });
+  });
+
+  // tabs
+  document.getElementById("tabs").addEventListener("click",function(e){
+    var t=e.target.closest(".tab"); if(!t) return;
+    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("active");});
+    document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("active");});
+    t.classList.add("active");
+    document.getElementById("panel-"+t.dataset.tab).classList.add("active");
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
