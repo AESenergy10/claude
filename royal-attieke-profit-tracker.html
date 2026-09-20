@@ -138,7 +138,7 @@
       <div class="eyebrow">Container Profit Tracker</div>
       <span class="live"><span class="dot"></span>Live</span>
     </div>
-    <div class="subtitle">Landed cost &amp; profit · per shipment</div>
+    <div class="subtitle" id="subtitle">Landed cost &amp; profit · per shipment</div>
     <div class="rule"></div>
   </header>
 
@@ -189,7 +189,7 @@
     <div class="kpi amber">
       <div class="k-lbl">Total cost</div>
       <div class="k-val num" id="kCost">$0</div>
-      <div class="k-sub">Landed, all-in</div>
+      <div class="k-sub" id="kCostSub">Landed, all-in</div>
     </div>
     <div class="kpi green">
       <div class="k-lbl">Profit / boule</div>
@@ -339,7 +339,10 @@
     FIELDS.forEach(function(id){ var el=document.getElementById(id); if(el && document.activeElement!==el) el.value=state[id]; });
 
     var c=compute();
-    var pc = c.netProfit>=0 ? "pos":"neg";
+
+    var nC = state.numContainers>0 ? state.numContainers : 0;
+    txt("subtitle", "Landed cost & profit · "+int(nC)+" container"+(nC===1?"":"s")+" · "+(state.containerTonnes||0)+" t each");
+    txt("kCostSub", nC>1 ? ("Across "+int(nC)+" containers") : "Landed, all-in");
 
     txt("kNetProfit", usd0(c.netProfit)); cls("kNetProfit", c.netProfit>=0?"pos":"neg");
     txt("kNetProfitSub", (c.netProfit>=0?"In profit":"At a loss")+" · "+pct(c.margin)+" margin");
@@ -369,9 +372,9 @@
 
   FIELDS.forEach(function(id){
     var el=document.getElementById(id); if(!el) return;
-    el.addEventListener("input", function(){
-      var v=parseFloat(this.value); state[id]= isFinite(v)? v : 0; render(); save();
-    });
+    function onEdit(){ var v=parseFloat(el.value); state[id]= isFinite(v)? v : 0; render(); save(); }
+    el.addEventListener("input", onEdit);
+    el.addEventListener("change", onEdit);
   });
   document.querySelectorAll("input").forEach(function(inp){
     inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); this.blur(); } });
