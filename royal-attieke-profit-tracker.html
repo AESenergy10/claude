@@ -242,13 +242,18 @@
     </div>
   </div>
 
-  <!-- BOULE COST (derived) -->
-  <div class="card boulecost" style="margin-bottom:14px">
-    <div class="bc-left">
-      <div class="bc-lbl" data-i18n="bouleCostNote">Boule cost</div>
-      <div class="bc-sub" id="bouleCostSub">—</div>
+  <!-- PER-BOULE ECONOMICS -->
+  <div class="kgrid" style="margin-bottom:14px">
+    <div class="kpi amber">
+      <div class="k-lbl" data-i18n="bouleCostNote">Boule cost</div>
+      <div class="k-val num" id="bouleCostVal">$0.00</div>
+      <div class="k-sub" id="bouleCostSub">—</div>
     </div>
-    <div class="bc-val num" id="bouleCostVal">$0.00</div>
+    <div class="kpi amber">
+      <div class="k-lbl" data-i18n="coLbl">Break-even price</div>
+      <div class="k-val num" id="coBreakEven">$0.00</div>
+      <div class="k-sub" data-i18n="coNote">Sell above this to make a profit.</div>
+    </div>
   </div>
 
   <!-- KPI GRID -->
@@ -273,16 +278,6 @@
       <div class="k-lbl" data-i18n="kProfitBoule">Profit / boule</div>
       <div class="k-val num" id="kProfitBoule">$0</div>
       <div class="k-sub" id="kMarginSub">—</div>
-    </div>
-  </div>
-
-  <!-- BREAK-EVEN CALLOUT -->
-  <div class="card callout" style="margin-bottom:14px">
-    <div class="ring"></div>
-    <div>
-      <div class="c-lbl" data-i18n="coLbl">Break-even price</div>
-      <div class="c-val num" id="coBreakEven">$0.00 / boule</div>
-      <div class="c-note" data-i18n="coNote">Sell above this to make a profit.</div>
     </div>
   </div>
 
@@ -489,7 +484,7 @@
     txt("kProfitBoule", usd(c.profitPerBoule)); cls("kProfitBoule", c.profitPerBoule>=0?"pos":"neg");
     txt("kMarginSub", pct(c.margin)+" "+l.margin);
 
-    txt("coBreakEven", usd(c.breakEven)+" "+l.perBoule);
+    txt("coBreakEven", usd(c.breakEven));
 
     txt("bouleCostVal", usd(c.bouleCostUSD));
     var bcs=document.getElementById("bouleCostSub");
