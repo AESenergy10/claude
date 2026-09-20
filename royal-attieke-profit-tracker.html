@@ -61,6 +61,10 @@
   .subtitle{color:var(--muted);font-size:.92rem;margin-top:4px}
   .live{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
   .live .dot{width:8px;height:8px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px color-mix(in srgb,var(--pos) 22%,transparent)}
+  .hd-right{display:flex;align-items:center;gap:10px}
+  .langtog{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+  .langtog button{border:none;background:transparent;color:var(--muted);font-weight:800;font-size:.72rem;letter-spacing:.5px;padding:5px 11px;cursor:pointer;font-family:"Archivo",sans-serif;transition:.12s}
+  .langtog button.on{background:var(--amber);color:#fff}
   .rule{height:3px;background:var(--ink);border-radius:2px;margin:14px 0 16px}
 
   .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px;transition:transform .18s ease, box-shadow .18s ease}
@@ -173,8 +177,14 @@
       <img class="brand-logo" src="assets/royal-attieke-logo.png" alt="Royal Attiéké — Le goût de Babi">
     </div>
     <div class="hd-row">
-      <div class="eyebrow">Container Profit Tracker</div>
-      <span class="live"><span class="dot"></span>Live</span>
+      <div class="eyebrow" data-i18n="eyebrow">Container Profit Tracker</div>
+      <div class="hd-right">
+        <span class="live"><span class="dot"></span><span data-i18n="live">Live</span></span>
+        <div class="langtog" id="langtog">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="fr">FR</button>
+        </div>
+      </div>
     </div>
     <div class="subtitle" id="subtitle">Landed cost &amp; profit · per shipment</div>
     <div class="rule"></div>
@@ -182,13 +192,13 @@
 
   <!-- INPUTS -->
   <div class="card" style="margin-bottom:14px">
-    <h2 class="sec">Enter your numbers</h2>
-    <p class="sec-sub">Type what your supplier gives you — everything below updates instantly.</p>
+    <h2 class="sec" data-i18n="enterTitle">Enter your numbers</h2>
+    <p class="sec-sub" data-i18n="enterSub">Type what your supplier gives you — everything below updates instantly.</p>
 
-    <div class="grouplbl">Shipment</div>
+    <div class="grouplbl" data-i18n="grpShipment">Shipment</div>
     <div class="grid2">
       <div class="field">
-        <label>Containers</label>
+        <label data-i18n="lblContainers">Containers</label>
         <div class="stepper">
           <button type="button" class="stp" data-step="numContainers:-1" aria-label="Fewer containers">−</button>
           <div class="in"><input type="number" id="numContainers" step="1" min="1" inputmode="numeric"></div>
@@ -196,27 +206,27 @@
         </div>
       </div>
       <div class="field">
-        <label>Tonnes / container</label>
+        <label data-i18n="lblTonnes">Tonnes / container</label>
         <div class="in"><input type="number" class="hassuf" id="containerTonnes" step="0.1" min="0" inputmode="decimal"><span class="suf">t</span></div>
       </div>
     </div>
 
-    <div class="grouplbl sp2">Pricing &amp; costs</div>
+    <div class="grouplbl sp2" data-i18n="grpPricing">Pricing &amp; costs</div>
     <div class="grid2">
       <div class="field">
-        <label>Boule cost</label>
+        <label data-i18n="lblBouleCost">Boule cost</label>
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="bouleCost" step="0.01" min="0" inputmode="decimal"></div>
       </div>
       <div class="field">
-        <label>Selling price / boule</label>
+        <label data-i18n="lblSell">Selling price / boule</label>
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="sellPrice" step="0.01" min="0" inputmode="decimal"></div>
       </div>
       <div class="field">
-        <label>Logistics / container</label>
+        <label data-i18n="lblLogistics">Logistics / container</label>
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="logistics" step="1" min="0" inputmode="decimal"></div>
       </div>
       <div class="field">
-        <label>Misc / container</label>
+        <label data-i18n="lblMisc">Misc / container</label>
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="misc" step="1" min="0" inputmode="decimal"></div>
       </div>
     </div>
@@ -225,23 +235,23 @@
   <!-- KPI GRID -->
   <div class="kgrid" style="margin-bottom:14px">
     <div class="kpi amber">
-      <div class="k-lbl">Total cost</div>
+      <div class="k-lbl" data-i18n="kTotalCost">Total cost</div>
       <div class="k-val num" id="kCost">$0</div>
       <div class="k-sub" id="kCostSub">Landed, all-in</div>
     </div>
     <div class="kpi dark">
       <span class="pill" id="kMarginPill">0%</span>
-      <div class="k-lbl">Net profit</div>
+      <div class="k-lbl" data-i18n="kNetProfit">Net profit</div>
       <div class="k-val num" id="kNetProfit">$0</div>
       <div class="k-sub" id="kNetProfitSub">—</div>
     </div>
     <div class="kpi indigo">
-      <div class="k-lbl">Revenue</div>
+      <div class="k-lbl" data-i18n="kRevenue">Revenue</div>
       <div class="k-val num" id="kRevenue">$0</div>
       <div class="k-sub" id="kRevenueSub">—</div>
     </div>
     <div class="kpi green">
-      <div class="k-lbl">Profit / boule</div>
+      <div class="k-lbl" data-i18n="kProfitBoule">Profit / boule</div>
       <div class="k-val num" id="kProfitBoule">$0</div>
       <div class="k-sub" id="kMarginSub">—</div>
     </div>
@@ -251,53 +261,53 @@
   <div class="card callout" style="margin-bottom:14px">
     <div class="ring"></div>
     <div>
-      <div class="c-lbl">Break-even price</div>
+      <div class="c-lbl" data-i18n="coLbl">Break-even price</div>
       <div class="c-val num" id="coBreakEven">$0.00 / boule</div>
-      <div class="c-note">Sell above this to make a profit.</div>
+      <div class="c-note" data-i18n="coNote">Sell above this to make a profit.</div>
     </div>
   </div>
 
   <!-- COST BREAKDOWN -->
   <div class="card" style="margin-bottom:14px">
-    <h2 class="sec">Cost breakdown</h2>
-    <p class="sec-sub">Where the landed cost goes.</p>
+    <h2 class="sec" data-i18n="cbTitle">Cost breakdown</h2>
+    <p class="sec-sub" data-i18n="cbSub">Where the landed cost goes.</p>
     <div class="bar">
       <span id="segProduct" style="background:var(--indigo)"></span>
       <span id="segLogistics" style="background:var(--amber)"></span>
       <span id="segMisc" style="background:var(--slate)"></span>
     </div>
-    <div class="legrow"><span class="sw" style="background:var(--indigo)"></span><span class="nm">Product (boules)</span><span class="amt num" id="cbProduct">$0</span><span class="pc num" id="pcProduct">0%</span></div>
-    <div class="legrow"><span class="sw" style="background:var(--amber)"></span><span class="nm">Logistics / freight</span><span class="amt num" id="cbLogistics">$0</span><span class="pc num" id="pcLogistics">0%</span></div>
-    <div class="legrow"><span class="sw" style="background:var(--slate)"></span><span class="nm">Miscellaneous</span><span class="amt num" id="cbMisc">$0</span><span class="pc num" id="pcMisc">0%</span></div>
-    <div class="legrow total"><span class="nm">Total cost</span><span class="amt num" id="cbTotal">$0</span><span class="pc">100%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--indigo)"></span><span class="nm" data-i18n="cbProductNm">Product (boules)</span><span class="amt num" id="cbProduct">$0</span><span class="pc num" id="pcProduct">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--amber)"></span><span class="nm" data-i18n="cbLogisticsNm">Logistics / freight</span><span class="amt num" id="cbLogistics">$0</span><span class="pc num" id="pcLogistics">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--slate)"></span><span class="nm" data-i18n="cbMiscNm">Miscellaneous</span><span class="amt num" id="cbMisc">$0</span><span class="pc num" id="pcMisc">0%</span></div>
+    <div class="legrow total"><span class="nm" data-i18n="cbTotalNm">Total cost</span><span class="amt num" id="cbTotal">$0</span><span class="pc">100%</span></div>
   </div>
 
   <!-- SHIPMENT -->
   <div class="card" style="margin-bottom:14px">
-    <h2 class="sec">Shipment</h2>
-    <p class="sec-sub">What's inside, from your tonnes and setup.</p>
-    <div class="trow"><span class="tn">Total boules</span><span class="tv num" id="qBoules">0</span></div>
-    <div class="trow"><span class="tn">Total cartons</span><span class="tv num" id="qCartons">0</span></div>
-    <div class="trow"><span class="tn">Total pallets</span><span class="tv num" id="qPallets">0</span></div>
-    <div class="trow"><span class="tn">Boules per carton</span><span class="tv num" id="qBpc">0</span></div>
+    <h2 class="sec" data-i18n="shTitle">Shipment</h2>
+    <p class="sec-sub" data-i18n="shSub">What's inside, from your tonnes and setup.</p>
+    <div class="trow"><span class="tn" data-i18n="shBoules">Total boules</span><span class="tv num" id="qBoules">0</span></div>
+    <div class="trow"><span class="tn" data-i18n="shCartons">Total cartons</span><span class="tv num" id="qCartons">0</span></div>
+    <div class="trow"><span class="tn" data-i18n="shPallets">Total pallets</span><span class="tv num" id="qPallets">0</span></div>
+    <div class="trow"><span class="tn" data-i18n="shBpc">Boules per carton</span><span class="tv num" id="qBpc">0</span></div>
   </div>
 
   <!-- SETUP -->
   <div class="card">
     <details class="setup">
-      <summary>Setup — change once</summary>
-      <p class="sec-sub">Physical assumptions used to work out boules, cartons &amp; pallets.</p>
+      <summary data-i18n="setupTitle">Setup — change once</summary>
+      <p class="sec-sub" data-i18n="setupSub">Physical assumptions used to work out boules, cartons &amp; pallets.</p>
       <div class="grid2">
         <div class="field">
-          <label>Boule size (kg)</label>
+          <label data-i18n="lblBouleKg">Boule size (kg)</label>
           <div class="in"><input type="number" id="bouleKg" step="0.1" min="0.01" inputmode="decimal"></div>
         </div>
         <div class="field">
-          <label>Boules per carton</label>
+          <label data-i18n="lblBpc">Boules per carton</label>
           <div class="in"><input type="number" id="boulesPerCarton" step="1" min="1" inputmode="numeric"></div>
         </div>
         <div class="field">
-          <label>Cartons per pallet</label>
+          <label data-i18n="lblCpp">Cartons per pallet</label>
           <div class="in"><input type="number" id="cartonsPerPallet" step="1" min="1" inputmode="numeric"></div>
         </div>
       </div>
@@ -328,11 +338,54 @@
   var FIELDS = ["numContainers","containerTonnes","bouleCost","sellPrice","logistics","misc",
                 "bouleKg","boulesPerCarton","cartonsPerPallet"];
 
+  var T = {
+    en:{ eyebrow:"Container Profit Tracker", live:"Live",
+      enterTitle:"Enter your numbers", enterSub:"Type what your supplier gives you — everything below updates instantly.",
+      grpShipment:"Shipment", grpPricing:"Pricing & costs",
+      lblContainers:"Containers", lblTonnes:"Tonnes / container", lblBouleCost:"Boule cost",
+      lblSell:"Selling price / boule", lblLogistics:"Logistics / container", lblMisc:"Misc / container",
+      kTotalCost:"Total cost", kNetProfit:"Net profit", kRevenue:"Revenue", kProfitBoule:"Profit / boule",
+      coLbl:"Break-even price", coNote:"Sell above this to make a profit.",
+      cbTitle:"Cost breakdown", cbSub:"Where the landed cost goes.",
+      cbProductNm:"Product (boules)", cbLogisticsNm:"Logistics / freight", cbMiscNm:"Miscellaneous", cbTotalNm:"Total cost",
+      shTitle:"Shipment", shSub:"What's inside, from your tonnes and setup.",
+      shBoules:"Total boules", shCartons:"Total cartons", shPallets:"Total pallets", shBpc:"Boules per carton",
+      setupTitle:"Setup — change once", setupSub:"Physical assumptions used to work out boules, cartons & pallets.",
+      lblBouleKg:"Boule size (kg)", lblBpc:"Boules per carton", lblCpp:"Cartons per pallet",
+      lead:"Landed cost & profit", container:"container", containers:"containers", each:"each",
+      landedAllIn:"Landed, all-in", across:"Across",
+      inProfit:"In profit", atLoss:"At a loss", margin:"margin", boulesSold:"boules sold",
+      perBoule:"/ boule", saved:"Saved", noSave:"Note: could not save in this browser." },
+    fr:{ eyebrow:"Suivi de rentabilité par conteneur", live:"En direct",
+      enterTitle:"Entrez vos chiffres", enterSub:"Saisissez ce que votre fournisseur vous donne — tout se met à jour instantanément.",
+      grpShipment:"Expédition", grpPricing:"Prix & coûts",
+      lblContainers:"Conteneurs", lblTonnes:"Tonnes / conteneur", lblBouleCost:"Coût de la boule",
+      lblSell:"Prix de vente / boule", lblLogistics:"Logistique / conteneur", lblMisc:"Divers / conteneur",
+      kTotalCost:"Coût total", kNetProfit:"Bénéfice net", kRevenue:"Revenu", kProfitBoule:"Bénéfice / boule",
+      coLbl:"Prix d'équilibre", coNote:"Vendez au-dessus pour être rentable.",
+      cbTitle:"Répartition des coûts", cbSub:"Où va le coût rendu.",
+      cbProductNm:"Produit (boules)", cbLogisticsNm:"Logistique / fret", cbMiscNm:"Divers", cbTotalNm:"Coût total",
+      shTitle:"Expédition", shSub:"Ce qu'il contient, selon vos tonnes et réglages.",
+      shBoules:"Total boules", shCartons:"Total cartons", shPallets:"Total palettes", shBpc:"Boules par carton",
+      setupTitle:"Réglages — à changer une fois", setupSub:"Hypothèses physiques pour calculer boules, cartons et palettes.",
+      lblBouleKg:"Taille de la boule (kg)", lblBpc:"Boules par carton", lblCpp:"Cartons par palette",
+      lead:"Coût rendu & bénéfice", container:"conteneur", containers:"conteneurs", each:"chacun",
+      landedAllIn:"Coût rendu, tout compris", across:"Sur",
+      inProfit:"Bénéficiaire", atLoss:"En perte", margin:"marge", boulesSold:"boules vendues",
+      perBoule:"/ boule", saved:"Enregistré", noSave:"Note : impossible d'enregistrer dans ce navigateur." }
+  };
+  var lang="en";
+  try{ var lv=localStorage.getItem(STORE_KEY+".lang");
+    if(lv==="fr"||lv==="en") lang=lv;
+    else if((navigator.language||"").toLowerCase().indexOf("fr")===0) lang="fr";
+  }catch(e){}
+  function L(){ return T[lang]; }
+
   var state = load() || defaults();
 
   function save(){
-    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); setStatus("Saved · "+new Date().toLocaleTimeString()); }
-    catch(e){ setStatus("Note: could not save in this browser."); }
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); setStatus(L().saved+" · "+new Date().toLocaleTimeString()); }
+    catch(e){ setStatus(L().noSave); }
   }
   function load(){
     try{ var raw=localStorage.getItem(STORE_KEY); if(!raw) return null;
@@ -394,21 +447,22 @@
 
     var c=compute();
 
+    var l=L();
     var nC = state.numContainers>0 ? state.numContainers : 0;
-    txt("subtitle", "Landed cost & profit · "+int(nC)+" container"+(nC===1?"":"s")+" · "+(state.containerTonnes||0)+" t each");
-    txt("kCostSub", nC>1 ? ("Across "+int(nC)+" containers") : "Landed, all-in");
+    txt("subtitle", l.lead+" · "+int(nC)+" "+(nC===1?l.container:l.containers)+" · "+(state.containerTonnes||0)+" t "+l.each);
+    txt("kCostSub", nC>1 ? (l.across+" "+int(nC)+" "+l.containers) : l.landedAllIn);
 
     txt("kNetProfit", usd0(c.netProfit)); cls("kNetProfit", c.netProfit>=0?"pos":"neg");
-    txt("kNetProfitSub", (c.netProfit>=0?"In profit":"At a loss")+" · "+pct(c.margin)+" margin");
+    txt("kNetProfitSub", (c.netProfit>=0?l.inProfit:l.atLoss)+" · "+pct(c.margin)+" "+l.margin);
     var pill=document.getElementById("kMarginPill");
     if(pill){ pill.textContent=pct(c.margin); pill.className="pill "+(c.netProfit>=0?"pos":"neg"); }
     txt("kRevenue", usd0(c.revenue));
-    txt("kRevenueSub", int(c.totalBoules)+" boules sold");
+    txt("kRevenueSub", int(c.totalBoules)+" "+l.boulesSold);
     txt("kCost", usd0(c.totalCost));
     txt("kProfitBoule", usd(c.profitPerBoule)); cls("kProfitBoule", c.profitPerBoule>=0?"pos":"neg");
-    txt("kMarginSub", pct(c.margin)+" margin");
+    txt("kMarginSub", pct(c.margin)+" "+l.margin);
 
-    txt("coBreakEven", usd(c.breakEven)+" / boule");
+    txt("coBreakEven", usd(c.breakEven)+" "+l.perBoule);
 
     var tot=c.totalCost||0;
     function w(x){ return (tot>0? x/tot*100:0); }
@@ -444,7 +498,24 @@
     });
   });
 
-  render();
+  function applyLang(){
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var s=L()[el.getAttribute("data-i18n")]; if(s!=null) el.textContent=s;
+    });
+    document.querySelectorAll("#langtog button").forEach(function(b){
+      b.classList.toggle("on", b.getAttribute("data-lang")===lang);
+    });
+    render();
+  }
+  document.getElementById("langtog").addEventListener("click", function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    lang = b.getAttribute("data-lang")==="fr" ? "fr" : "en";
+    try{ localStorage.setItem(STORE_KEY+".lang", lang); }catch(e2){}
+    applyLang();
+  });
+
+  applyLang();
 })();
 </script>
 </body>
