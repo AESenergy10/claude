@@ -223,9 +223,9 @@ const night=entries.filter(e=>e.shift==="Night");
 const day=entries.filter(e=>e.shift==="Day");
 const total=sum(entries);
 const kpis=[
-  {cls:"total",lbl:"Total pieces",val:total,sub:`${entries.length} shifts logged`},
   {cls:"night",lbl:"Night output",val:sum(night),sub:`${night.length} shift${night.length!==1?"s":""} · avg ${night.length?Math.round(sum(night)/night.length):0}`},
-  {cls:"day",lbl:"Day output",val:sum(day),sub:`${day.length} shift${day.length!==1?"s":""} · avg ${day.length?Math.round(sum(day)/day.length):0}`}
+  {cls:"day",lbl:"Day output",val:sum(day),sub:`${day.length} shift${day.length!==1?"s":""} · avg ${day.length?Math.round(sum(day)/day.length):0}`},
+  {cls:"total",lbl:"Total pieces",val:total,sub:`${entries.length} shifts logged`}
 ];
 document.getElementById("kpis").innerHTML=kpis.map(k=>`
   <div class="kpi ${k.cls}">
