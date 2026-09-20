@@ -4,100 +4,154 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Attiéké Container Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#f4f6f9; --card:#ffffff; --ink:#1b2430; --muted:#61708a;
-    --line:#e2e8f2; --brand:#0f7b6c; --brand-2:#12a594;
-    --pos:#1e874b; --neg:#d23b3b; --chip:#eef3f8;
-    --shadow:0 1px 3px rgba(20,40,80,.08),0 8px 24px rgba(20,40,80,.06);
+    --bg:#eef1f5; --card:#ffffff; --ink:#161a20; --muted:#6b7789;
+    --line:#e5e9f0; --hair:#eef2f7;
+    --amber:#e0872e; --indigo:#5b57d6; --slate:#94a3b8;
+    --pos:#1c8a4e; --neg:#d83a3a; --dark:#161a20;
+    --shadow:0 1px 2px rgba(20,30,55,.06),0 10px 30px rgba(20,30,55,.07);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#0f141b; --card:#171f29; --ink:#e8eef7; --muted:#98a6bd;
-      --line:#26313f; --brand:#26b3a1; --brand-2:#2fd0bb;
-      --pos:#42c477; --neg:#ff6b6b; --chip:#1e2833;
-      --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+      --bg:#0e1116; --card:#171c24; --ink:#eef2f8; --muted:#9aa6b8;
+      --line:#252d38; --hair:#1f2630;
+      --amber:#ed9a45; --indigo:#7b78e6; --slate:#8a97ab;
+      --pos:#43c47b; --neg:#ff6b6b; --dark:#20262f;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.4);
     }
   }
   :root[data-theme="dark"]{
-      --bg:#0f141b; --card:#171f29; --ink:#e8eef7; --muted:#98a6bd;
-      --line:#26313f; --brand:#26b3a1; --brand-2:#2fd0bb;
-      --pos:#42c477; --neg:#ff6b6b; --chip:#1e2833;
-      --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+      --bg:#0e1116; --card:#171c24; --ink:#eef2f8; --muted:#9aa6b8;
+      --line:#252d38; --hair:#1f2630;
+      --amber:#ed9a45; --indigo:#7b78e6; --slate:#8a97ab;
+      --pos:#43c47b; --neg:#ff6b6b; --dark:#20262f;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.4);
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
     background:var(--bg); color:var(--ink);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    font-size:16px; line-height:1.45; -webkit-text-size-adjust:100%;
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px; line-height:1.45; -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:620px;margin:0 auto;padding:16px}
-  h1.title{font-size:1.15rem;margin:2px 2px 14px;font-weight:800;letter-spacing:.2px}
-  h1.title span{color:var(--brand)}
+  .display{font-family:"Archivo","Inter",sans-serif;}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;}
+  .wrap{max-width:640px;margin:0 auto;padding:20px 16px 32px}
 
-  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:16px;margin-bottom:14px}
-  .card h2{margin:0 0 4px;font-size:1rem}
-  .card .sub{font-size:.78rem;color:var(--muted);margin:0 0 12px}
+  /* header */
+  header.hd{margin-bottom:8px}
+  .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber)}
+  .hd-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+  h1.big{font-family:"Archivo",sans-serif;font-weight:900;font-size:2.5rem;line-height:1;margin:2px 0 0;letter-spacing:-.5px}
+  .subtitle{color:var(--muted);font-size:.92rem;margin-top:6px}
+  .live{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+  .live .dot{width:8px;height:8px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px color-mix(in srgb,var(--pos) 22%,transparent)}
+  .rule{height:3px;background:var(--ink);border-radius:2px;margin:14px 0 16px}
 
-  /* input form */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .field{display:flex;flex-direction:column;gap:5px}
-  .field.full{grid-column:1 / -1}
-  .field label{font-size:.74rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
-  .field .in{position:relative;display:flex;align-items:center}
-  .field .in .pre{position:absolute;left:11px;color:var(--muted);font-weight:700;font-size:.95rem;pointer-events:none}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px}
+  .stack>*{margin-bottom:14px}
+  .stack>*:last-child{margin-bottom:0}
+  h2.sec{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.3px;margin:0 0 3px;text-transform:uppercase}
+  .sec-sub{font-size:.8rem;color:var(--muted);margin:0 0 14px}
+
+  /* inputs */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+  .in{position:relative;display:flex;align-items:center}
+  .in .pre{position:absolute;left:12px;color:var(--muted);font-weight:700;pointer-events:none}
   .field input{
     background:var(--bg);border:1px solid var(--line);color:var(--ink);
-    border-radius:10px;padding:11px 12px;font-size:1rem;width:100%;font-weight:600;
+    border-radius:12px;padding:12px 13px;font-size:1.05rem;width:100%;font-weight:700;
+    font-family:"Archivo","Inter",sans-serif;font-variant-numeric:tabular-nums;
   }
-  .field input.money{padding-left:26px}
-  .field input:focus{outline:2px solid var(--brand-2);outline-offset:-1px}
+  .field input.money{padding-left:27px}
+  .field input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px color-mix(in srgb,var(--indigo) 20%,transparent)}
 
-  /* hero */
-  .hero{text-align:center;padding:20px 16px}
-  .hero .lbl{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700}
-  .hero .val{font-size:2.6rem;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums;line-height:1.05}
-  .hero .note{font-size:.8rem;color:var(--muted);margin-top:6px}
+  /* callout */
+  .callout{display:flex;gap:13px;align-items:center;border-left:5px solid var(--amber)}
+  .callout .ring{width:34px;height:34px;border-radius:50%;border:3px solid var(--amber);flex:none;position:relative}
+  .callout .ring::after{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--amber)}
+  .callout .c-lbl{font-size:.72rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .callout .c-val{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.25rem;margin-top:1px}
+  .callout .c-note{font-size:.8rem;color:var(--muted);margin-top:1px}
+
+  /* KPI grid */
+  .kgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px 16px 15px;border-left:5px solid var(--slate);position:relative;overflow:hidden}
+  .kpi.indigo{border-left-color:var(--indigo)}
+  .kpi.amber{border-left-color:var(--amber)}
+  .kpi.green{border-left-color:var(--pos)}
+  .kpi.dark{background:var(--dark);border-color:transparent;border-left:none;color:#fff}
+  .kpi.dark .k-lbl,.kpi.dark .k-sub{color:rgba(255,255,255,.66)}
+  .kpi .k-lbl{font-size:.7rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .kpi .k-val{font-family:"Archivo",sans-serif;font-weight:900;font-size:1.9rem;line-height:1.05;margin-top:7px;letter-spacing:-.5px}
+  .kpi .k-sub{font-size:.75rem;color:var(--muted);margin-top:5px;font-weight:500}
   .pos{color:var(--pos)} .neg{color:var(--neg)}
 
-  /* result tiles */
-  .tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .tile{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 13px}
-  .tile .t-lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-weight:700}
-  .tile .t-val{font-size:1.35rem;font-weight:800;margin-top:3px;font-variant-numeric:tabular-nums}
-  .tile.wide{grid-column:1 / -1}
+  /* cost breakdown */
+  .bar{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--hair);margin:4px 0 14px}
+  .bar span{display:block;height:100%}
+  .legrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--hair)}
+  .legrow:first-of-type{border-top:none}
+  .legrow .sw{width:11px;height:11px;border-radius:3px;flex:none}
+  .legrow .nm{font-weight:600;font-size:.9rem}
+  .legrow .amt{margin-left:auto;font-weight:800;font-variant-numeric:tabular-nums;font-family:"Archivo",sans-serif}
+  .legrow .pc{font-size:.75rem;color:var(--muted);width:44px;text-align:right;font-variant-numeric:tabular-nums}
+  .legrow.total{border-top:2px solid var(--ink);margin-top:2px}
+  .legrow.total .nm{font-weight:800;text-transform:uppercase;font-size:.8rem;letter-spacing:.5px}
 
-  h3.sec{font-size:.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:800;margin:16px 2px 8px}
+  /* shipment table */
+  .trow{display:flex;align-items:center;padding:12px 0;border-top:1px solid var(--hair)}
+  .trow:first-of-type{border-top:none}
+  .trow .tn{color:var(--muted);font-weight:600;font-size:.92rem}
+  .trow .tv{margin-left:auto;font-family:"Archivo",sans-serif;font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums}
 
-  details.setup summary{cursor:pointer;font-weight:800;font-size:.95rem;list-style:none}
+  details.setup summary{cursor:pointer;font-family:"Archivo",sans-serif;font-weight:800;font-size:1rem;list-style:none;text-transform:uppercase;letter-spacing:.3px}
   details.setup summary::-webkit-details-marker{display:none}
-  details.setup summary::before{content:"▸ ";color:var(--muted)}
-  details.setup[open] summary::before{content:"▾ "}
-  details.setup .sub{margin:6px 0 12px}
-  .status{font-size:.72rem;color:var(--muted);text-align:center;padding:6px}
-  @media(max-width:420px){ .hero .val{font-size:2.1rem} .tile .t-val{font-size:1.15rem} }
+  details.setup summary::before{content:"▸";color:var(--muted);margin-right:8px}
+  details.setup[open] summary::before{content:"▾"}
+  details.setup .sec-sub{margin-top:8px}
+  .status{font-size:.72rem;color:var(--muted);text-align:center;padding:10px 6px 0}
+
+  @media(max-width:430px){
+    h1.big{font-size:2.1rem}
+    .kpi .k-val{font-size:1.6rem}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1 class="title">🍚 Attiéké Container <span>Tracker</span></h1>
+  <!-- HEADER -->
+  <header class="hd">
+    <div class="eyebrow">Container Tracker</div>
+    <div class="hd-row">
+      <h1 class="big">Attiéké</h1>
+      <span class="live"><span class="dot"></span>Live</span>
+    </div>
+    <div class="subtitle">Landed cost &amp; profit · per shipment</div>
+    <div class="rule"></div>
+  </header>
 
   <!-- INPUTS -->
-  <div class="card">
-    <h2>Enter your numbers</h2>
-    <p class="sub">Type the figures your supplier gives you — results update instantly.</p>
-    <div class="grid">
+  <div class="card" style="margin-bottom:14px">
+    <h2 class="sec">Enter your numbers</h2>
+    <p class="sec-sub">Type what your supplier gives you — everything below updates instantly.</p>
+    <div class="grid2">
       <div class="field">
-        <label>Number of containers</label>
+        <label>Containers</label>
         <div class="in"><input type="number" id="numContainers" step="1" min="1" inputmode="numeric"></div>
       </div>
       <div class="field">
-        <label>Tonnes per container</label>
+        <label>Tonnes / container</label>
         <div class="in"><input type="number" id="containerTonnes" step="0.1" min="0" inputmode="decimal"></div>
       </div>
       <div class="field">
-        <label>Boule cost (each)</label>
+        <label>Boule cost</label>
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="bouleCost" step="0.01" min="0" inputmode="decimal"></div>
       </div>
       <div class="field">
@@ -105,52 +159,81 @@
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="sellPrice" step="0.01" min="0" inputmode="decimal"></div>
       </div>
       <div class="field">
-        <label>Logistics / freight (per container)</label>
+        <label>Logistics / container</label>
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="logistics" step="1" min="0" inputmode="decimal"></div>
       </div>
       <div class="field">
-        <label>Miscellaneous (per container)</label>
+        <label>Misc / container</label>
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="misc" step="1" min="0" inputmode="decimal"></div>
       </div>
     </div>
   </div>
 
-  <!-- RESULT: NET PROFIT HERO -->
-  <div class="card hero">
-    <div class="lbl">Net profit</div>
-    <div class="val" id="netProfit">$0.00</div>
-    <div class="note" id="profitNote"></div>
-  </div>
-
-  <!-- RESULT: MONEY -->
-  <div class="card">
-    <h2>Money</h2>
-    <div class="tiles">
-      <div class="tile"><div class="t-lbl">Total cost</div><div class="t-val" id="totalCost">$0.00</div></div>
-      <div class="tile"><div class="t-lbl">Revenue</div><div class="t-val" id="revenue">$0.00</div></div>
-      <div class="tile"><div class="t-lbl">Gross margin</div><div class="t-val" id="margin">0%</div></div>
-      <div class="tile"><div class="t-lbl">Profit / boule</div><div class="t-val" id="profitPerBoule">$0.00</div></div>
-      <div class="tile wide"><div class="t-lbl">Break-even price / boule</div><div class="t-val" id="breakEven">$0.00</div></div>
+  <!-- KPI GRID -->
+  <div class="kgrid" style="margin-bottom:14px">
+    <div class="kpi dark">
+      <div class="k-lbl">Net profit</div>
+      <div class="k-val num" id="kNetProfit">$0</div>
+      <div class="k-sub" id="kNetProfitSub">—</div>
+    </div>
+    <div class="kpi indigo">
+      <div class="k-lbl">Revenue</div>
+      <div class="k-val num" id="kRevenue">$0</div>
+      <div class="k-sub" id="kRevenueSub">—</div>
+    </div>
+    <div class="kpi amber">
+      <div class="k-lbl">Total cost</div>
+      <div class="k-val num" id="kCost">$0</div>
+      <div class="k-sub">Landed, all-in</div>
+    </div>
+    <div class="kpi green">
+      <div class="k-lbl">Profit / boule</div>
+      <div class="k-val num" id="kProfitBoule">$0</div>
+      <div class="k-sub" id="kMarginSub">—</div>
     </div>
   </div>
 
-  <!-- RESULT: QUANTITIES -->
-  <div class="card">
-    <h2>Quantities</h2>
-    <div class="tiles">
-      <div class="tile"><div class="t-lbl">Total boules</div><div class="t-val" id="qBoules">0</div></div>
-      <div class="tile"><div class="t-lbl">Total cartons</div><div class="t-val" id="qCartons">0</div></div>
-      <div class="tile"><div class="t-lbl">Total pallets</div><div class="t-val" id="qPallets">0</div></div>
-      <div class="tile"><div class="t-lbl">Boules / carton</div><div class="t-val" id="qBpc">0</div></div>
+  <!-- BREAK-EVEN CALLOUT -->
+  <div class="card callout" style="margin-bottom:14px">
+    <div class="ring"></div>
+    <div>
+      <div class="c-lbl">Break-even price</div>
+      <div class="c-val num" id="coBreakEven">$0.00 / boule</div>
+      <div class="c-note">Sell above this to make a profit.</div>
     </div>
   </div>
 
-  <!-- SETUP (rarely changes) -->
+  <!-- COST BREAKDOWN -->
+  <div class="card" style="margin-bottom:14px">
+    <h2 class="sec">Cost breakdown</h2>
+    <p class="sec-sub">Where the landed cost goes.</p>
+    <div class="bar">
+      <span id="segProduct" style="background:var(--indigo)"></span>
+      <span id="segLogistics" style="background:var(--amber)"></span>
+      <span id="segMisc" style="background:var(--slate)"></span>
+    </div>
+    <div class="legrow"><span class="sw" style="background:var(--indigo)"></span><span class="nm">Product (boules)</span><span class="amt num" id="cbProduct">$0</span><span class="pc num" id="pcProduct">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--amber)"></span><span class="nm">Logistics / freight</span><span class="amt num" id="cbLogistics">$0</span><span class="pc num" id="pcLogistics">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--slate)"></span><span class="nm">Miscellaneous</span><span class="amt num" id="cbMisc">$0</span><span class="pc num" id="pcMisc">0%</span></div>
+    <div class="legrow total"><span class="nm">Total cost</span><span class="amt num" id="cbTotal">$0</span><span class="pc">100%</span></div>
+  </div>
+
+  <!-- SHIPMENT -->
+  <div class="card" style="margin-bottom:14px">
+    <h2 class="sec">Shipment</h2>
+    <p class="sec-sub">What's inside, from your tonnes and setup.</p>
+    <div class="trow"><span class="tn">Total boules</span><span class="tv num" id="qBoules">0</span></div>
+    <div class="trow"><span class="tn">Total cartons</span><span class="tv num" id="qCartons">0</span></div>
+    <div class="trow"><span class="tn">Total pallets</span><span class="tv num" id="qPallets">0</span></div>
+    <div class="trow"><span class="tn">Boules per carton</span><span class="tv num" id="qBpc">0</span></div>
+  </div>
+
+  <!-- SETUP -->
   <div class="card">
     <details class="setup">
       <summary>Setup — change once</summary>
-      <p class="sub">Physical assumptions used to work out boules, cartons and pallets.</p>
-      <div class="grid">
+      <p class="sec-sub">Physical assumptions used to work out boules, cartons &amp; pallets.</p>
+      <div class="grid2">
         <div class="field">
           <label>Boule size (kg)</label>
           <div class="in"><input type="number" id="bouleKg" step="0.1" min="0.01" inputmode="decimal"></div>
@@ -178,122 +261,113 @@
   function defaults(){
     return {
       numContainers: 1,
-      containerTonnes: 16,  // tonnes in one container
-      bouleCost: 1.36,      // what you pay per boule
-      sellPrice: 2.50,      // what you sell a boule for
-      logistics: 6000,      // per container
-      misc: 0,              // per container
+      containerTonnes: 16,
+      bouleCost: 1.36,
+      sellPrice: 2.50,
+      logistics: 6000,
+      misc: 0,
       bouleKg: 1.3,
       boulesPerCarton: 20,
       cartonsPerPallet: 30
     };
   }
-
   var FIELDS = ["numContainers","containerTonnes","bouleCost","sellPrice","logistics","misc",
                 "bouleKg","boulesPerCarton","cartonsPerPallet"];
-  var NUMERIC = FIELDS;
 
   var state = load() || defaults();
 
-  /* ---------- persistence ---------- */
   function save(){
     try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); setStatus("Saved · "+new Date().toLocaleTimeString()); }
     catch(e){ setStatus("Note: could not save in this browser."); }
   }
   function load(){
-    try{
-      var raw = localStorage.getItem(STORE_KEY); if(!raw) return null;
-      var o = JSON.parse(raw); if(!o || typeof o!=="object") return null;
+    try{ var raw=localStorage.getItem(STORE_KEY); if(!raw) return null;
+      var o=JSON.parse(raw); if(!o||typeof o!=="object") return null;
       return Object.assign(defaults(), o);
     }catch(e){ return null; }
   }
   function setStatus(m){ var s=document.getElementById("status"); if(s) s.textContent=m; }
 
-  /* ---------- formatting ---------- */
   function usd(n){ if(!isFinite(n)) n=0; return "$"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  function usd0(n){ if(!isFinite(n)) n=0; return "$"+n.toLocaleString("en-US",{maximumFractionDigits:0}); }
   function int(n){ if(!isFinite(n)) n=0; return Math.round(n).toLocaleString("en-US"); }
   function pct(n){ if(!isFinite(n)) n=0; return n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})+"%"; }
+  function pct0(n){ if(!isFinite(n)) n=0; return Math.round(n)+"%"; }
 
-  /* ---------- math ---------- */
   function compute(){
-    var s = state;
+    var s=state;
     var containers = s.numContainers>0 ? s.numContainers : 0;
     var bouleKg = s.bouleKg>0 ? s.bouleKg : 0;
     var bpc = s.boulesPerCarton>0 ? Math.floor(s.boulesPerCarton) : 0;
     var cpp = s.cartonsPerPallet>0 ? Math.floor(s.cartonsPerPallet) : 0;
+    var containerKg = (s.containerTonnes||0)*1000;
 
-    // whole boules per container (rounded down, tolerant of tiny rounding)
-    var containerKg = (s.containerTonnes||0) * 1000;
     var ratio = bouleKg>0 ? containerKg/bouleKg : 0;
-    var boulesPerContainer = ratio>0 ? ((Math.ceil(ratio)-ratio)<0.02 ? Math.ceil(ratio) : Math.floor(ratio)) : 0;
-    var cartonsPerContainer = bpc>0 ? Math.floor(boulesPerContainer/bpc) : 0;
-    var palletsPerContainer = cpp>0 ? Math.ceil(cartonsPerContainer/cpp) : 0;
+    var bpCont = ratio>0 ? ((Math.ceil(ratio)-ratio)<0.02 ? Math.ceil(ratio) : Math.floor(ratio)) : 0;
+    var cartonsCont = bpc>0 ? Math.floor(bpCont/bpc) : 0;
+    var palletsCont = cpp>0 ? Math.ceil(cartonsCont/cpp) : 0;
 
-    var totalBoules  = boulesPerContainer * containers;
-    var totalCartons = cartonsPerContainer * containers;
-    var totalPallets = palletsPerContainer * containers;
+    var totalBoules  = bpCont*containers;
+    var totalCartons = cartonsCont*containers;
+    var totalPallets = palletsCont*containers;
 
-    var productCost   = (s.bouleCost||0) * totalBoules;
-    var logisticsCost = (s.logistics||0) * containers;
-    var miscCost      = (s.misc||0) * containers;
-    var totalCost     = productCost + logisticsCost + miscCost;
+    var productCost   = (s.bouleCost||0)*totalBoules;
+    var logisticsCost = (s.logistics||0)*containers;
+    var miscCost      = (s.misc||0)*containers;
+    var totalCost     = productCost+logisticsCost+miscCost;
 
-    var revenue    = (s.sellPrice||0) * totalBoules;
-    var netProfit  = revenue - totalCost;
+    var revenue    = (s.sellPrice||0)*totalBoules;
+    var netProfit  = revenue-totalCost;
     var margin     = revenue>0 ? netProfit/revenue*100 : 0;
     var breakEven  = totalBoules>0 ? totalCost/totalBoules : 0;
     var profitPerBoule = totalBoules>0 ? netProfit/totalBoules : 0;
 
-    return {
-      boulesPerCarton:bpc, totalBoules:totalBoules, totalCartons:totalCartons, totalPallets:totalPallets,
-      totalCost:totalCost, revenue:revenue, netProfit:netProfit,
-      margin:margin, breakEven:breakEven, profitPerBoule:profitPerBoule
-    };
+    return {boulesPerCarton:bpc,totalBoules:totalBoules,totalCartons:totalCartons,totalPallets:totalPallets,
+      productCost:productCost,logisticsCost:logisticsCost,miscCost:miscCost,totalCost:totalCost,
+      revenue:revenue,netProfit:netProfit,margin:margin,breakEven:breakEven,profitPerBoule:profitPerBoule};
   }
 
-  /* ---------- render ---------- */
+  function txt(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+  function cls(id,c){ var e=document.getElementById(id); if(e){ e.classList.remove("pos","neg"); if(c) e.classList.add(c); } }
+
   function render(){
-    // fill inputs (skip the one being edited)
-    FIELDS.forEach(function(id){
-      var el=document.getElementById(id);
-      if(el && document.activeElement!==el) el.value = state[id];
-    });
+    FIELDS.forEach(function(id){ var el=document.getElementById(id); if(el && document.activeElement!==el) el.value=state[id]; });
 
-    var c = compute();
-    var profClass = c.netProfit>=0 ? "pos":"neg";
+    var c=compute();
+    var pc = c.netProfit>=0 ? "pos":"neg";
 
-    var np=document.getElementById("netProfit");
-    np.textContent = usd(c.netProfit);
-    np.className = "val "+profClass;
+    txt("kNetProfit", usd0(c.netProfit)); cls("kNetProfit", c.netProfit>=0?"pos":"neg");
+    txt("kNetProfitSub", (c.netProfit>=0?"In profit":"At a loss")+" · "+pct(c.margin)+" margin");
+    txt("kRevenue", usd0(c.revenue));
+    txt("kRevenueSub", int(c.totalBoules)+" boules sold");
+    txt("kCost", usd0(c.totalCost));
+    txt("kProfitBoule", usd(c.profitPerBoule)); cls("kProfitBoule", c.profitPerBoule>=0?"pos":"neg");
+    txt("kMarginSub", pct(c.margin)+" margin");
 
-    var note=document.getElementById("profitNote");
-    note.textContent = (c.netProfit>=0 ? "In profit" : "Loss") + " · " + pct(c.margin) + " margin";
+    txt("coBreakEven", usd(c.breakEven)+" / boule");
 
-    setText("totalCost", usd(c.totalCost));
-    setText("revenue", usd(c.revenue));
-    setCls("margin", usd(0), profClass, pct(c.margin));
-    setCls("profitPerBoule", "", profClass, usd(c.profitPerBoule));
-    setText("breakEven", usd(c.breakEven));
+    var tot=c.totalCost||0;
+    function w(x){ return (tot>0? x/tot*100:0); }
+    document.getElementById("segProduct").style.width   = w(c.productCost)+"%";
+    document.getElementById("segLogistics").style.width = w(c.logisticsCost)+"%";
+    document.getElementById("segMisc").style.width      = w(c.miscCost)+"%";
+    txt("cbProduct", usd0(c.productCost));   txt("pcProduct", pct0(w(c.productCost)));
+    txt("cbLogistics", usd0(c.logisticsCost)); txt("pcLogistics", pct0(w(c.logisticsCost)));
+    txt("cbMisc", usd0(c.miscCost));         txt("pcMisc", pct0(w(c.miscCost)));
+    txt("cbTotal", usd0(c.totalCost));
 
-    setText("qBoules", int(c.totalBoules));
-    setText("qCartons", int(c.totalCartons));
-    setText("qPallets", int(c.totalPallets));
-    setText("qBpc", int(c.boulesPerCarton));
+    txt("qBoules", int(c.totalBoules));
+    txt("qCartons", int(c.totalCartons));
+    txt("qPallets", int(c.totalPallets));
+    txt("qBpc", int(c.boulesPerCarton));
   }
-  function setText(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
-  function setCls(id,_x,cls,v){ var e=document.getElementById(id); if(e){ e.textContent=v; e.className="t-val "+cls; } }
 
-  /* ---------- events ---------- */
-  NUMERIC.forEach(function(id){
-    var el=document.getElementById(id);
-    if(!el) return;
+  FIELDS.forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
     el.addEventListener("input", function(){
-      var v=parseFloat(this.value);
-      state[id] = isFinite(v) ? v : 0;
-      render(); save();
+      var v=parseFloat(this.value); state[id]= isFinite(v)? v : 0; render(); save();
     });
   });
-  // pressing Enter just blurs the field (results already live-update)
   document.querySelectorAll("input").forEach(function(inp){
     inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); this.blur(); } });
   });
