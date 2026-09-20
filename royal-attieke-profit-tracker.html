@@ -80,18 +80,34 @@
   .sec-sub{font-size:.8rem;color:var(--muted);margin:0 0 14px}
 
   /* inputs */
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .field{display:flex;flex-direction:column;gap:6px}
+  .grouplbl{font-size:.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:2px 0 11px;display:flex;align-items:center;gap:10px}
+  .grouplbl.sp2{margin-top:18px}
+  .grouplbl::after{content:"";flex:1;height:1px;background:var(--line)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .field{display:flex;flex-direction:column;gap:7px}
   .field label{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
   .in{position:relative;display:flex;align-items:center}
-  .in .pre{position:absolute;left:12px;color:var(--muted);font-weight:700;pointer-events:none}
+  .in .pre{position:absolute;left:13px;color:var(--muted);font-weight:800;pointer-events:none}
+  .in .suf{position:absolute;right:13px;color:var(--muted);font-weight:700;font-size:.9rem;pointer-events:none}
   .field input{
-    background:var(--bg);border:1px solid var(--line);color:var(--ink);
-    border-radius:12px;padding:12px 13px;font-size:1.05rem;width:100%;font-weight:700;
+    background:var(--bg);border:1.5px solid var(--line);color:var(--ink);
+    border-radius:13px;padding:13px 14px;font-size:1.06rem;width:100%;font-weight:700;
     font-family:"Archivo","Inter",sans-serif;font-variant-numeric:tabular-nums;
+    transition:border-color .15s ease, box-shadow .15s ease;
   }
-  .field input.money{padding-left:27px}
-  .field input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px color-mix(in srgb,var(--indigo) 20%,transparent)}
+  .field input.money{padding-left:28px}
+  .field input.hassuf{padding-right:34px}
+  @media(hover:hover){ .field input:hover{border-color:color-mix(in srgb,var(--indigo) 34%,var(--line))} }
+  .field input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px color-mix(in srgb,var(--indigo) 18%,transparent)}
+  /* stepper */
+  .stepper{display:flex;align-items:stretch;gap:8px}
+  .stepper .in{flex:1}
+  .stepper input{text-align:center}
+  .stp{width:46px;flex:none;border:1.5px solid var(--line);background:var(--bg);border-radius:13px;
+    font-family:"Archivo",sans-serif;font-size:1.5rem;font-weight:700;color:var(--ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;line-height:1;user-select:none;transition:.12s}
+  .stp:active{transform:scale(.93)}
+  @media(hover:hover){ .stp:hover{border-color:var(--indigo);color:var(--indigo)} }
 
   /* callout */
   .callout{display:flex;gap:13px;align-items:center;border-left:5px solid var(--amber)}
@@ -168,15 +184,25 @@
   <div class="card" style="margin-bottom:14px">
     <h2 class="sec">Enter your numbers</h2>
     <p class="sec-sub">Type what your supplier gives you — everything below updates instantly.</p>
+
+    <div class="grouplbl">Shipment</div>
     <div class="grid2">
       <div class="field">
         <label>Containers</label>
-        <div class="in"><input type="number" id="numContainers" step="1" min="1" inputmode="numeric"></div>
+        <div class="stepper">
+          <button type="button" class="stp" data-step="numContainers:-1" aria-label="Fewer containers">−</button>
+          <div class="in"><input type="number" id="numContainers" step="1" min="1" inputmode="numeric"></div>
+          <button type="button" class="stp" data-step="numContainers:1" aria-label="More containers">+</button>
+        </div>
       </div>
       <div class="field">
         <label>Tonnes / container</label>
-        <div class="in"><input type="number" id="containerTonnes" step="0.1" min="0" inputmode="decimal"></div>
+        <div class="in"><input type="number" class="hassuf" id="containerTonnes" step="0.1" min="0" inputmode="decimal"><span class="suf">t</span></div>
       </div>
+    </div>
+
+    <div class="grouplbl sp2">Pricing &amp; costs</div>
+    <div class="grid2">
       <div class="field">
         <label>Boule cost</label>
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="bouleCost" step="0.01" min="0" inputmode="decimal"></div>
@@ -408,6 +434,14 @@
   });
   document.querySelectorAll("input").forEach(function(inp){
     inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); this.blur(); } });
+  });
+  document.querySelectorAll(".stp").forEach(function(b){
+    b.addEventListener("click", function(){
+      var p=this.getAttribute("data-step").split(":"), id=p[0], d=parseFloat(p[1]);
+      var nv=(parseFloat(state[id])||0)+d;
+      if(id==="numContainers" && nv<1) nv=1; if(nv<0) nv=0;
+      state[id]=nv; render(); save();
+    });
   });
 
   render();
