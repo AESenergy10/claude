@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Attiéké Container Tracker</title>
+<title>Royal Attiéké Tracker</title>
+<link rel="icon" type="image/png" href="assets/royal-attieke-icon.png">
+<link rel="apple-touch-icon" href="assets/royal-attieke-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -44,10 +46,11 @@
 
   /* header */
   header.hd{margin-bottom:8px}
+  .brandbar{background:#fcecdd;border-radius:16px;padding:14px 16px;display:flex;justify-content:center;box-shadow:var(--shadow);margin-bottom:12px}
+  .brand-logo{height:104px;width:auto;max-width:100%;display:block}
   .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber)}
-  .hd-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
-  h1.big{font-family:"Archivo",sans-serif;font-weight:900;font-size:2.5rem;line-height:1;margin:2px 0 0;letter-spacing:-.5px}
-  .subtitle{color:var(--muted);font-size:.92rem;margin-top:6px}
+  .hd-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .subtitle{color:var(--muted);font-size:.92rem;margin-top:4px}
   .live{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
   .live .dot{width:8px;height:8px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px color-mix(in srgb,var(--pos) 22%,transparent)}
   .rule{height:3px;background:var(--ink);border-radius:2px;margin:14px 0 16px}
@@ -128,9 +131,11 @@
 <div class="wrap">
   <!-- HEADER -->
   <header class="hd">
-    <div class="eyebrow">Container Tracker</div>
+    <div class="brandbar">
+      <img class="brand-logo" src="assets/royal-attieke-logo.png" alt="Royal Attiéké — Le goût de Babi">
+    </div>
     <div class="hd-row">
-      <h1 class="big">Attiéké</h1>
+      <div class="eyebrow">Container Profit Tracker</div>
       <span class="live"><span class="dot"></span>Live</span>
     </div>
     <div class="subtitle">Landed cost &amp; profit · per shipment</div>
