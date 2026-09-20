@@ -80,7 +80,7 @@
   .banner .val{font-weight:600}
 
   /* ── KPI tiles ── */
-  .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px}
+  .kpis{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:24px}
   .kpi{background:var(--surface); border:1px solid var(--line); border-radius:12px;
     padding:16px 16px 14px; box-shadow:var(--shadow); position:relative; overflow:hidden}
   .kpi .k-lbl{font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.09em;
@@ -222,13 +222,10 @@ const sum=a=>a.reduce((s,x)=>s+x.pieces,0);
 const night=entries.filter(e=>e.shift==="Night");
 const day=entries.filter(e=>e.shift==="Day");
 const total=sum(entries);
-const best=entries.reduce((m,e)=>e.pieces>m.pieces?e:m,entries[0]||{pieces:0});
-
 const kpis=[
   {cls:"total",lbl:"Total pieces",val:total,sub:`${entries.length} shifts logged`},
   {cls:"night",lbl:"Night output",val:sum(night),sub:`${night.length} shift${night.length!==1?"s":""} · avg ${night.length?Math.round(sum(night)/night.length):0}`},
-  {cls:"day",lbl:"Day output",val:sum(day),sub:`${day.length} shift${day.length!==1?"s":""} · avg ${day.length?Math.round(sum(day)/day.length):0}`},
-  {cls:"",lbl:"Best shift",val:best.pieces,sub:best.date?`${wd(best.date)} ${fmt(best.date)} · ${best.shift}`:"—"}
+  {cls:"day",lbl:"Day output",val:sum(day),sub:`${day.length} shift${day.length!==1?"s":""} · avg ${day.length?Math.round(sum(day)/day.length):0}`}
 ];
 document.getElementById("kpis").innerHTML=kpis.map(k=>`
   <div class="kpi ${k.cls}">
