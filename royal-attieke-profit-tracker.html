@@ -102,8 +102,11 @@
   .field input.money{padding-left:28px}
   .field input.hassuf{padding-right:34px}
   .field input.sufcfa{padding-right:48px}
-  .costnote{font-size:.82rem;color:var(--muted);margin-top:13px;font-weight:600;line-height:1.4}
-  .costnote b{color:var(--ink);font-family:"Archivo",sans-serif;font-weight:800}
+  .boulecost{display:flex;align-items:center;gap:14px;border-left:5px solid var(--amber)}
+  .boulecost .bc-left{flex:1;min-width:0}
+  .bc-lbl{font-size:.7rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .bc-sub{font-size:.8rem;color:var(--muted);margin-top:4px;font-weight:600}
+  .bc-val{font-family:"Archivo",sans-serif;font-weight:900;font-size:2rem;letter-spacing:-.5px;line-height:1;flex:none}
   @media(hover:hover){ .field input:hover{border-color:color-mix(in srgb,var(--indigo) 34%,var(--line))} }
   .field input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px color-mix(in srgb,var(--indigo) 18%,transparent)}
   /* stepper */
@@ -237,7 +240,15 @@
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="misc" step="1" min="0" inputmode="decimal"></div>
       </div>
     </div>
-    <div class="costnote" id="bouleCostNote"></div>
+  </div>
+
+  <!-- BOULE COST (derived) -->
+  <div class="card boulecost" style="margin-bottom:14px">
+    <div class="bc-left">
+      <div class="bc-lbl" data-i18n="bouleCostNote">Boule cost</div>
+      <div class="bc-sub" id="bouleCostSub">—</div>
+    </div>
+    <div class="bc-val num" id="bouleCostVal">$0.00</div>
   </div>
 
   <!-- KPI GRID -->
@@ -480,8 +491,9 @@
 
     txt("coBreakEven", usd(c.breakEven)+" "+l.perBoule);
 
-    var note=document.getElementById("bouleCostNote");
-    if(note) note.innerHTML = l.bouleCostNote+" ≈ <b>"+usd(c.bouleCostUSD)+"</b> · "+int(c.cfaPerBoule)+" CFA / boule ("+state.bouleLb+" lb)";
+    txt("bouleCostVal", usd(c.bouleCostUSD));
+    var bcs=document.getElementById("bouleCostSub");
+    if(bcs) bcs.textContent = int(c.cfaPerBoule)+" CFA / boule · "+state.bouleLb+" lb";
 
     var tot=c.totalCost||0;
     function w(x){ return (tot>0? x/tot*100:0); }
