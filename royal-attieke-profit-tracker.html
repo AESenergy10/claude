@@ -101,6 +101,9 @@
   }
   .field input.money{padding-left:28px}
   .field input.hassuf{padding-right:34px}
+  .field input.sufcfa{padding-right:48px}
+  .costnote{font-size:.82rem;color:var(--muted);margin-top:13px;font-weight:600;line-height:1.4}
+  .costnote b{color:var(--ink);font-family:"Archivo",sans-serif;font-weight:800}
   @media(hover:hover){ .field input:hover{border-color:color-mix(in srgb,var(--indigo) 34%,var(--line))} }
   .field input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px color-mix(in srgb,var(--indigo) 18%,transparent)}
   /* stepper */
@@ -214,8 +217,12 @@
     <div class="grouplbl sp2" data-i18n="grpPricing">Pricing &amp; costs</div>
     <div class="grid2">
       <div class="field">
-        <label data-i18n="lblBouleCost">Boule cost</label>
-        <div class="in"><span class="pre">$</span><input type="number" class="money" id="bouleCost" step="0.01" min="0" inputmode="decimal"></div>
+        <label data-i18n="lblCfaKg">Attiéké price (CFA / kg)</label>
+        <div class="in"><input type="number" class="hassuf sufcfa" id="cfaPerKg" step="5" min="0" inputmode="decimal"><span class="suf">CFA</span></div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblRate">Exchange rate (CFA per $1)</label>
+        <div class="in"><input type="number" id="rate" step="1" min="1" inputmode="decimal"></div>
       </div>
       <div class="field">
         <label data-i18n="lblSell">Selling price / boule</label>
@@ -230,6 +237,7 @@
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="misc" step="1" min="0" inputmode="decimal"></div>
       </div>
     </div>
+    <div class="costnote" id="bouleCostNote"></div>
   </div>
 
   <!-- KPI GRID -->
@@ -326,7 +334,8 @@
     return {
       numContainers: 1,
       containerTonnes: 16,
-      bouleCost: 1.36,
+      cfaPerKg: 650,
+      rate: 575,
       sellPrice: 2.50,
       logistics: 6000,
       misc: 0,
@@ -336,14 +345,15 @@
     };
   }
   var LB_TO_KG = 0.45359237;
-  var FIELDS = ["numContainers","containerTonnes","bouleCost","sellPrice","logistics","misc",
+  var FIELDS = ["numContainers","containerTonnes","cfaPerKg","rate","sellPrice","logistics","misc",
                 "bouleLb","boulesPerCarton","cartonsPerPallet"];
 
   var T = {
     en:{ eyebrow:"Container Profit Tracker", live:"Live",
       enterTitle:"Enter your numbers", enterSub:"Type what your supplier gives you — everything below updates instantly.",
       grpShipment:"Shipment", grpPricing:"Pricing & costs",
-      lblContainers:"Containers", lblTonnes:"Tonnes / container", lblBouleCost:"Boule cost",
+      lblContainers:"Containers", lblTonnes:"Tonnes / container",
+      lblCfaKg:"Attiéké price (CFA / kg)", lblRate:"Exchange rate (CFA per $1)", bouleCostNote:"Boule cost",
       lblSell:"Selling price / boule", lblLogistics:"Logistics / container", lblMisc:"Misc / container",
       kTotalCost:"Total cost", kNetProfit:"Net profit", kRevenue:"Revenue", kProfitBoule:"Profit / boule",
       coLbl:"Break-even price", coNote:"Sell above this to make a profit.",
@@ -360,7 +370,8 @@
     fr:{ eyebrow:"Suivi de rentabilité par conteneur", live:"En direct",
       enterTitle:"Entrez vos chiffres", enterSub:"Saisissez ce que votre fournisseur vous donne — tout se met à jour instantanément.",
       grpShipment:"Expédition", grpPricing:"Prix & coûts",
-      lblContainers:"Conteneurs", lblTonnes:"Tonnes / conteneur", lblBouleCost:"Coût de la boule",
+      lblContainers:"Conteneurs", lblTonnes:"Tonnes / conteneur",
+      lblCfaKg:"Prix attiéké (CFA / kg)", lblRate:"Taux de change (CFA pour 1 $)", bouleCostNote:"Coût de la boule",
       lblSell:"Prix de vente / boule", lblLogistics:"Logistique / conteneur", lblMisc:"Divers / conteneur",
       kTotalCost:"Coût total", kNetProfit:"Bénéfice net", kRevenue:"Revenu", kProfitBoule:"Bénéfice / boule",
       coLbl:"Prix d'équilibre", coNote:"Vendez au-dessus pour être rentable.",
@@ -419,7 +430,10 @@
     var totalCartons = cartonsCont*containers;
     var totalPallets = palletsCont*containers;
 
-    var productCost   = (s.bouleCost||0)*totalBoules;
+    var rate = s.rate>0 ? s.rate : 1;
+    var cfaPerBoule = (s.cfaPerKg||0) * bouleKg;   // CFA to buy one boule (3 lb)
+    var bouleCostUSD = cfaPerBoule / rate;          // its USD cost
+    var productCost   = bouleCostUSD*totalBoules;
     var logisticsCost = (s.logistics||0)*containers;
     var miscCost      = (s.misc||0)*containers;
     var totalCost     = productCost+logisticsCost+miscCost;
@@ -431,6 +445,7 @@
     var profitPerBoule = totalBoules>0 ? netProfit/totalBoules : 0;
 
     return {boulesPerCarton:bpc,totalBoules:totalBoules,totalCartons:totalCartons,totalPallets:totalPallets,
+      bouleCostUSD:bouleCostUSD,cfaPerBoule:cfaPerBoule,
       productCost:productCost,logisticsCost:logisticsCost,miscCost:miscCost,totalCost:totalCost,
       revenue:revenue,netProfit:netProfit,margin:margin,breakEven:breakEven,profitPerBoule:profitPerBoule};
   }
@@ -464,6 +479,9 @@
     txt("kMarginSub", pct(c.margin)+" "+l.margin);
 
     txt("coBreakEven", usd(c.breakEven)+" "+l.perBoule);
+
+    var note=document.getElementById("bouleCostNote");
+    if(note) note.innerHTML = l.bouleCostNote+" ≈ <b>"+usd(c.bouleCostUSD)+"</b> · "+int(c.cfaPerBoule)+" CFA / boule ("+state.bouleLb+" lb)";
 
     var tot=c.totalCost||0;
     function w(x){ return (tot>0? x/tot*100:0); }
