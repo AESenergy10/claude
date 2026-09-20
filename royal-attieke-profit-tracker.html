@@ -36,18 +36,26 @@
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
-    background:var(--bg); color:var(--ink);
+    background:
+      radial-gradient(900px 460px at 50% -160px, color-mix(in srgb,var(--amber) 16%, transparent), transparent 72%),
+      radial-gradient(700px 380px at 100% 8%, color-mix(in srgb,var(--indigo) 10%, transparent), transparent 70%),
+      var(--bg);
+    background-attachment:fixed; color:var(--ink);
     font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     font-size:16px; line-height:1.45; -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
   }
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes bump{0%{transform:translateY(3px);opacity:.45}100%{transform:none;opacity:1}}
+  .bump{animation:bump .3s ease-out}
   .display{font-family:"Archivo","Inter",sans-serif;}
   .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;}
   .wrap{max-width:640px;margin:0 auto;padding:20px 16px 32px}
 
   /* header */
   header.hd{margin-bottom:8px}
-  .brandbar{background:#fcecdd;border-radius:16px;padding:14px 16px;display:flex;justify-content:center;box-shadow:var(--shadow);margin-bottom:12px}
-  .brand-logo{height:104px;width:auto;max-width:100%;display:block}
+  .brandbar{background:linear-gradient(160deg,#fdf0e2,#fbe6d2);border:1px solid color-mix(in srgb,var(--amber) 30%,transparent);border-radius:18px;padding:16px;display:flex;justify-content:center;box-shadow:var(--shadow);margin-bottom:12px}
+  .brand-logo{height:106px;width:auto;max-width:100%;display:block;filter:drop-shadow(0 2px 4px rgba(90,50,20,.14))}
   .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber)}
   .hd-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
   .subtitle{color:var(--muted);font-size:.92rem;margin-top:4px}
@@ -55,10 +63,20 @@
   .live .dot{width:8px;height:8px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px color-mix(in srgb,var(--pos) 22%,transparent)}
   .rule{height:3px;background:var(--ink);border-radius:2px;margin:14px 0 16px}
 
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px;transition:transform .18s ease, box-shadow .18s ease}
+  @media(hover:hover){ .card:hover,.kpi:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(20,30,55,.08),0 16px 40px rgba(20,30,55,.12)} }
+  .wrap>*{animation:rise .5s ease both}
+  .wrap>*:nth-child(2){animation-delay:.04s}
+  .wrap>*:nth-child(3){animation-delay:.08s}
+  .wrap>*:nth-child(4){animation-delay:.12s}
+  .wrap>*:nth-child(5){animation-delay:.16s}
+  .wrap>*:nth-child(6){animation-delay:.20s}
+  .wrap>*:nth-child(7){animation-delay:.24s}
+  .wrap>*:nth-child(n+8){animation-delay:.28s}
   .stack>*{margin-bottom:14px}
   .stack>*:last-child{margin-bottom:0}
-  h2.sec{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.3px;margin:0 0 3px;text-transform:uppercase}
+  h2.sec{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.3px;margin:0 0 3px;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+  h2.sec::before{content:"";width:7px;height:17px;border-radius:3px;background:var(--amber);flex:none}
   .sec-sub{font-size:.8rem;color:var(--muted);margin:0 0 14px}
 
   /* inputs */
@@ -85,20 +103,24 @@
 
   /* KPI grid */
   .kgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px 16px 15px;border-left:5px solid var(--slate);position:relative;overflow:hidden}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px 16px 15px;border-left:5px solid var(--slate);position:relative;overflow:hidden;transition:transform .18s ease, box-shadow .18s ease}
   .kpi.indigo{border-left-color:var(--indigo)}
   .kpi.amber{border-left-color:var(--amber)}
   .kpi.green{border-left-color:var(--pos)}
-  .kpi.dark{background:var(--dark);border-color:transparent;border-left:none;color:#fff}
-  .kpi.dark .k-lbl,.kpi.dark .k-sub{color:rgba(255,255,255,.66)}
+  .kpi.dark{background:linear-gradient(155deg,#242c38 0%,#141a22 60%,#0f141b 100%);border-color:transparent;border-left:none;color:#fff}
+  .kpi.dark::after{content:"";position:absolute;top:-40px;right:-40px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--pos) 32%,transparent),transparent 70%)}
+  .kpi.dark .k-lbl,.kpi.dark .k-sub{color:rgba(255,255,255,.68)}
   .kpi .k-lbl{font-size:.7rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
   .kpi .k-val{font-family:"Archivo",sans-serif;font-weight:900;font-size:1.9rem;line-height:1.05;margin-top:7px;letter-spacing:-.5px}
   .kpi .k-sub{font-size:.75rem;color:var(--muted);margin-top:5px;font-weight:500}
+  .pill{position:absolute;top:14px;right:14px;font-family:"Archivo",sans-serif;font-weight:800;font-size:.72rem;padding:3px 9px;border-radius:999px;letter-spacing:.3px;z-index:1}
+  .pill.pos{background:color-mix(in srgb,var(--pos) 26%,transparent);color:#fff}
+  .pill.neg{background:color-mix(in srgb,var(--neg) 32%,transparent);color:#fff}
   .pos{color:var(--pos)} .neg{color:var(--neg)}
 
   /* cost breakdown */
-  .bar{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--hair);margin:4px 0 14px}
-  .bar span{display:block;height:100%}
+  .bar{display:flex;gap:3px;height:18px;margin:4px 0 16px}
+  .bar span{display:block;height:100%;border-radius:6px;transition:width .35s cubic-bezier(.4,0,.2,1);min-width:0}
   .legrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--hair)}
   .legrow:first-of-type{border-top:none}
   .legrow .sw{width:11px;height:11px;border-radius:3px;flex:none}
@@ -177,6 +199,7 @@
   <!-- KPI GRID -->
   <div class="kgrid" style="margin-bottom:14px">
     <div class="kpi dark">
+      <span class="pill" id="kMarginPill">0%</span>
       <div class="k-lbl">Net profit</div>
       <div class="k-val num" id="kNetProfit">$0</div>
       <div class="k-sub" id="kNetProfitSub">—</div>
@@ -332,7 +355,12 @@
       revenue:revenue,netProfit:netProfit,margin:margin,breakEven:breakEven,profitPerBoule:profitPerBoule};
   }
 
-  function txt(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+  function txt(id,v){
+    var e=document.getElementById(id); if(!e) return;
+    if(e.classList.contains("num") && e.textContent!==v){
+      e.textContent=v; e.classList.remove("bump"); void e.offsetWidth; e.classList.add("bump");
+    } else { e.textContent=v; }
+  }
   function cls(id,c){ var e=document.getElementById(id); if(e){ e.classList.remove("pos","neg"); if(c) e.classList.add(c); } }
 
   function render(){
@@ -346,6 +374,8 @@
 
     txt("kNetProfit", usd0(c.netProfit)); cls("kNetProfit", c.netProfit>=0?"pos":"neg");
     txt("kNetProfitSub", (c.netProfit>=0?"In profit":"At a loss")+" · "+pct(c.margin)+" margin");
+    var pill=document.getElementById("kMarginPill");
+    if(pill){ pill.textContent=pct(c.margin); pill.className="pill "+(c.netProfit>=0?"pos":"neg"); }
     txt("kRevenue", usd0(c.revenue));
     txt("kRevenueSub", int(c.totalBoules)+" boules sold");
     txt("kCost", usd0(c.totalCost));
