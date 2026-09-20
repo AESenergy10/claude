@@ -89,12 +89,12 @@
     <p class="sub">Type the figures your supplier gives you — results update instantly.</p>
     <div class="grid">
       <div class="field">
-        <label>Date</label>
-        <div class="in"><input type="date" id="date"></div>
-      </div>
-      <div class="field">
         <label>Number of containers</label>
         <div class="in"><input type="number" id="numContainers" step="1" min="1" inputmode="numeric"></div>
+      </div>
+      <div class="field">
+        <label>Tonnes per container</label>
+        <div class="in"><input type="number" id="containerTonnes" step="0.1" min="0" inputmode="decimal"></div>
       </div>
       <div class="field">
         <label>Boule cost (each)</label>
@@ -152,10 +152,6 @@
       <p class="sub">Physical assumptions used to work out boules, cartons and pallets.</p>
       <div class="grid">
         <div class="field">
-          <label>Container weight (kg)</label>
-          <div class="in"><input type="number" id="containerWeight" step="1" min="1" inputmode="decimal"></div>
-        </div>
-        <div class="field">
           <label>Boule size (kg)</label>
           <div class="in"><input type="number" id="bouleKg" step="0.1" min="0.01" inputmode="decimal"></div>
         </div>
@@ -177,29 +173,25 @@
 <script>
 "use strict";
 (function(){
-  var STORE_KEY = "attiekeTracker.v3";
+  var STORE_KEY = "attiekeTracker.v4";
 
   function defaults(){
-    var d = new Date();
-    var iso = d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
     return {
-      date: iso,
       numContainers: 1,
+      containerTonnes: 16,  // tonnes in one container
       bouleCost: 1.36,      // what you pay per boule
       sellPrice: 2.50,      // what you sell a boule for
       logistics: 6000,      // per container
       misc: 0,              // per container
-      containerWeight: 16000,
       bouleKg: 1.3,
       boulesPerCarton: 20,
       cartonsPerPallet: 30
     };
   }
-  function pad(n){ return (n<10?"0":"")+n; }
 
-  var FIELDS = ["date","numContainers","bouleCost","sellPrice","logistics","misc",
-                "containerWeight","bouleKg","boulesPerCarton","cartonsPerPallet"];
-  var NUMERIC = FIELDS.filter(function(f){ return f!=="date"; });
+  var FIELDS = ["numContainers","containerTonnes","bouleCost","sellPrice","logistics","misc",
+                "bouleKg","boulesPerCarton","cartonsPerPallet"];
+  var NUMERIC = FIELDS;
 
   var state = load() || defaults();
 
@@ -231,7 +223,8 @@
     var cpp = s.cartonsPerPallet>0 ? Math.floor(s.cartonsPerPallet) : 0;
 
     // whole boules per container (rounded down, tolerant of tiny rounding)
-    var ratio = bouleKg>0 ? s.containerWeight/bouleKg : 0;
+    var containerKg = (s.containerTonnes||0) * 1000;
+    var ratio = bouleKg>0 ? containerKg/bouleKg : 0;
     var boulesPerContainer = ratio>0 ? ((Math.ceil(ratio)-ratio)<0.02 ? Math.ceil(ratio) : Math.floor(ratio)) : 0;
     var cartonsPerContainer = bpc>0 ? Math.floor(boulesPerContainer/bpc) : 0;
     var palletsPerContainer = cpp>0 ? Math.ceil(cartonsPerContainer/cpp) : 0;
@@ -274,8 +267,7 @@
     np.className = "val "+profClass;
 
     var note=document.getElementById("profitNote");
-    var dateTxt = state.date ? "As of "+state.date+" · " : "";
-    note.textContent = dateTxt + (c.netProfit>=0 ? "In profit" : "Loss") + " · " + pct(c.margin) + " margin";
+    note.textContent = (c.netProfit>=0 ? "In profit" : "Loss") + " · " + pct(c.margin) + " margin";
 
     setText("totalCost", usd(c.totalCost));
     setText("revenue", usd(c.revenue));
@@ -301,9 +293,6 @@
       render(); save();
     });
   });
-  var dateEl=document.getElementById("date");
-  if(dateEl) dateEl.addEventListener("input", function(){ state.date=this.value; render(); save(); });
-
   // pressing Enter just blurs the field (results already live-update)
   document.querySelectorAll("input").forEach(function(inp){
     inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); this.blur(); } });
