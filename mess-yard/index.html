@@ -1,0 +1,296 @@
+<title>Mess Yard Production</title>
+<meta name="description" content="Shift-by-shift aluminum production tracker for the Mess Yard.">
+<style>
+  :root{
+    --bg:#eef0f3; --surface:#ffffff; --surface-2:#f7f8fa;
+    --ink:#171a1f; --muted:#5b6470; --line:#d9dde3;
+    --accent:#e0602a; --night:#4a58cf; --day:#dd8f2b; --good:#2f8f5b;
+    --shadow:0 1px 2px rgba(20,25,35,.06),0 6px 20px rgba(20,25,35,.05);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#14171c; --surface:#1b1f26; --surface-2:#20252d;
+      --ink:#eef1f5; --muted:#98a2af; --line:#2c323b;
+      --accent:#ff7a45; --night:#7f8dff; --day:#f0b048; --good:#4bbd82;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#14171c; --surface:#1b1f26; --surface-2:#20252d;
+    --ink:#eef1f5; --muted:#98a2af; --line:#2c323b;
+    --accent:#ff7a45; --night:#7f8dff; --day:#f0b048; --good:#4bbd82;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    line-height:1.5; margin:0;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding-block:28px 56px; padding-inline:16px}
+  a{color:inherit}
+  h1,h2,h3{margin:0}
+  .eyebrow{
+    font-family:"Oswald",Impact,sans-serif; text-transform:uppercase;
+    letter-spacing:.14em; font-weight:600; font-size:.72rem; color:var(--accent);
+  }
+  .tnum{font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1}
+
+  /* Header */
+  header.top{
+    display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between;
+    gap:14px; border-bottom:2px solid var(--ink); padding-bottom:16px; margin-bottom:22px;
+  }
+  header.top h1{
+    font-family:"Oswald",Impact,sans-serif; font-weight:600;
+    font-size:clamp(1.9rem,5vw,2.7rem); line-height:1; text-wrap:balance;
+  }
+  header.top .sub{color:var(--muted); font-size:.92rem; margin-top:6px}
+  .updated{
+    font-family:"IBM Plex Mono",ui-monospace,monospace; font-size:.76rem;
+    color:var(--muted); text-align:right; white-space:nowrap;
+  }
+  .updated b{color:var(--ink); font-weight:600}
+
+  /* Next-shift banner */
+  .banner{
+    display:flex; align-items:center; gap:12px; margin-bottom:22px;
+    background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--accent);
+    border-radius:8px; padding:12px 16px; box-shadow:var(--shadow);
+  }
+  .banner .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex:none;
+    box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+  .banner .lbl{font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.1em;
+    font-size:.72rem;color:var(--muted)}
+  .banner .val{font-weight:600}
+
+  /* KPI tiles */
+  .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:26px}
+  .kpi{background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:16px 16px 14px; box-shadow:var(--shadow); position:relative; overflow:hidden}
+  .kpi .k-lbl{font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.09em;
+    font-size:.7rem; color:var(--muted)}
+  .kpi .k-val{font-family:"IBM Plex Mono",monospace; font-weight:600; line-height:1;
+    font-size:clamp(1.7rem,4.5vw,2.3rem); margin-top:8px}
+  .kpi .k-sub{font-size:.74rem; color:var(--muted); margin-top:6px}
+  .kpi.total{background:var(--ink); color:var(--bg)}
+  .kpi.total .k-lbl,.kpi.total .k-sub{color:color-mix(in srgb,var(--bg) 72%,var(--muted))}
+  .kpi .stripe{position:absolute; left:0; top:0; bottom:0; width:3px}
+  .kpi.night .stripe{background:var(--night)} .kpi.day .stripe{background:var(--day)}
+
+  /* Panels */
+  .panel{background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    box-shadow:var(--shadow); padding:18px 18px 20px; margin-bottom:20px}
+  .panel h2{font-family:"Oswald",sans-serif; font-weight:600; font-size:1.1rem;
+    text-transform:uppercase; letter-spacing:.05em; display:flex; align-items:center;
+    justify-content:space-between; gap:10px}
+  .legend{display:flex; gap:16px; font-size:.78rem; color:var(--muted); font-weight:400;
+    text-transform:none; letter-spacing:0; font-family:"IBM Plex Sans",sans-serif}
+  .legend span{display:inline-flex; align-items:center; gap:6px}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .swatch-night{background:var(--night)} .swatch-day{background:var(--day)}
+  .chart-scroll{overflow-x:auto; margin-top:12px}
+  svg{display:block; max-width:100%}
+
+  /* Log table */
+  .table-scroll{overflow-x:auto; margin-top:4px}
+  table{border-collapse:collapse; width:100%; font-size:.9rem}
+  thead th{font-family:"Oswald",sans-serif; text-transform:uppercase; letter-spacing:.06em;
+    font-size:.72rem; color:var(--muted); text-align:left; font-weight:600;
+    border-bottom:1px solid var(--line); padding:8px 12px; white-space:nowrap}
+  tbody td{padding:10px 12px; border-bottom:1px solid var(--line); white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  td.num{font-family:"IBM Plex Mono",monospace; text-align:right; font-variant-numeric:tabular-nums;
+    font-weight:600}
+  td.note{white-space:normal; color:var(--muted); font-size:.84rem}
+  .pill{display:inline-flex; align-items:center; gap:6px; font-size:.76rem; font-weight:600;
+    padding:3px 9px; border-radius:999px; font-family:"Oswald",sans-serif; letter-spacing:.04em;
+    text-transform:uppercase}
+  .pill i{width:7px;height:7px;border-radius:50%}
+  .pill.night{background:color-mix(in srgb,var(--night) 15%,transparent); color:var(--night)}
+  .pill.night i{background:var(--night)}
+  .pill.day{background:color-mix(in srgb,var(--day) 18%,transparent); color:var(--day)}
+  .pill.day i{background:var(--day)}
+  tfoot td{padding:10px 12px; font-family:"Oswald",sans-serif; text-transform:uppercase;
+    letter-spacing:.05em; font-size:.78rem; border-top:2px solid var(--ink)}
+  tfoot td.num{font-family:"IBM Plex Mono",monospace; letter-spacing:0}
+
+  .foot-note{color:var(--muted); font-size:.8rem; margin-top:22px; line-height:1.6}
+  .foot-note code{background:var(--surface-2); border:1px solid var(--line); border-radius:5px;
+    padding:1px 6px; font-size:.82em}
+
+  @media (max-width:680px){ .kpis{grid-template-columns:repeat(2,1fr)} }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Production Tracker</div>
+      <h1>Mess Yard</h1>
+      <div class="sub" id="lineSub">Aluminum Machine · shift-by-shift output</div>
+    </div>
+    <div class="updated">Last updated<br><b id="updated">—</b></div>
+  </header>
+
+  <div class="banner" id="banner" hidden>
+    <span class="dot"></span>
+    <div>
+      <div class="lbl">Next up</div>
+      <div class="val" id="nextVal"></div>
+    </div>
+  </div>
+
+  <section class="kpis" id="kpis"></section>
+
+  <section class="panel">
+    <h2>Output by shift
+      <span class="legend">
+        <span><i class="swatch-night"></i>Night</span>
+        <span><i class="swatch-day"></i>Day</span>
+      </span>
+    </h2>
+    <div class="chart-scroll"><svg id="chart" role="img" aria-label="Pieces produced per shift"></svg></div>
+  </section>
+
+  <section class="panel">
+    <h2>Shift log</h2>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Day</th><th>Shift</th><th style="text-align:right">Pieces</th><th>Notes</th></tr>
+        </thead>
+        <tbody id="logBody"></tbody>
+        <tfoot id="logFoot"></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <p class="foot-note">
+    Each entry is one shift. Feed new numbers to your assistant (e.g. <code>"Friday night 341, Saturday day 225"</code>)
+    and they'll be added to the <code>DATA.entries</code> list below and the page redeployed.
+  </p>
+</div>
+
+<script>
+/* ────────────────────────────────────────────────────────────────
+   MESS YARD PRODUCTION — DATA
+   To log a shift, add an entry: { date:"YYYY-MM-DD", shift:"Night"|"Day", pieces: N, note:"" }
+   ──────────────────────────────────────────────────────────────── */
+const DATA = {
+  line: "Aluminum Machine",
+  updated: "2026-09-20",
+  next: "Next shifts Monday, Sep 21",
+  entries: [
+    { date:"2026-09-18", shift:"Night", pieces:341, note:"" },
+    { date:"2026-09-19", shift:"Day",   pieces:225, note:"" }
+  ]
+};
+
+/* ── helpers ── */
+const WD = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MO = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const d = s => { const [y,m,dd]=s.split("-").map(Number); return new Date(y,m-1,dd); };
+const fmt = s => { const t=d(s); return `${MO[t.getMonth()]} ${t.getDate()}`; };
+const wd  = s => WD[d(s).getDay()];
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+const entries = [...DATA.entries].sort((a,b)=> a.date.localeCompare(b.date) || (a.shift<b.shift?-1:1));
+
+/* ── header / banner ── */
+document.getElementById("lineSub").textContent = `${DATA.line} · shift-by-shift output`;
+document.getElementById("updated").textContent = fmt(DATA.updated);
+if(DATA.next){ document.getElementById("nextVal").textContent = DATA.next;
+  document.getElementById("banner").hidden = false; }
+
+/* ── KPIs ── */
+const sum = a => a.reduce((s,x)=>s+x.pieces,0);
+const night = entries.filter(e=>e.shift==="Night");
+const day   = entries.filter(e=>e.shift==="Day");
+const total = sum(entries);
+const best  = entries.reduce((m,e)=> e.pieces>m.pieces?e:m, entries[0]||{pieces:0});
+const avg   = entries.length ? Math.round(total/entries.length) : 0;
+
+const kpis = [
+  { cls:"total", lbl:"Total pieces", val:total, sub:`${entries.length} shifts logged` },
+  { cls:"night", lbl:"Night output", val:sum(night), sub:`${night.length} shift${night.length!==1?"s":""} · avg ${night.length?Math.round(sum(night)/night.length):0}` },
+  { cls:"day",   lbl:"Day output",   val:sum(day),   sub:`${day.length} shift${day.length!==1?"s":""} · avg ${day.length?Math.round(sum(day)/day.length):0}` },
+  { cls:"",      lbl:"Best shift",   val:best.pieces, sub: best.date?`${wd(best.date)} ${fmt(best.date)} · ${best.shift}`:"—" }
+];
+document.getElementById("kpis").innerHTML = kpis.map(k=>`
+  <div class="kpi ${k.cls}">
+    ${k.cls==="night"||k.cls==="day"?'<span class="stripe"></span>':''}
+    <div class="k-lbl">${k.lbl}</div>
+    <div class="k-val tnum">${k.val.toLocaleString()}</div>
+    <div class="k-sub">${k.sub}</div>
+  </div>`).join("");
+
+/* ── table ── */
+document.getElementById("logBody").innerHTML = [...entries].reverse().map(e=>`
+  <tr>
+    <td>${fmt(e.date)}</td>
+    <td>${wd(e.date)}</td>
+    <td><span class="pill ${e.shift.toLowerCase()}"><i></i>${e.shift}</span></td>
+    <td class="num tnum">${e.pieces.toLocaleString()}</td>
+    <td class="note">${e.note||"—"}</td>
+  </tr>`).join("") || `<tr><td colspan="5" style="color:var(--muted);padding:16px">No shifts logged yet.</td></tr>`;
+document.getElementById("logFoot").innerHTML = entries.length
+  ? `<tr><td colspan="3">Total</td><td class="num">${total.toLocaleString()}</td><td></td></tr>` : "";
+
+/* ── grouped bar chart (by date, Night vs Day) ── */
+function drawChart(){
+  const svg = document.getElementById("chart");
+  const dates = [...new Set(entries.map(e=>e.date))].sort();
+  if(!dates.length){ svg.innerHTML=""; return; }
+
+  const cN=css("--night"), cD=css("--day"), cInk=css("--ink"), cMut=css("--muted"), cLine=css("--line");
+  const padL=42, padR=14, padT=14, padB=46;
+  const groupW=96, barW=30, barGap=8, gGap=26;
+  const plotH=210;
+  const W = padL + padR + dates.length*groupW + (dates.length-1)*gGap;
+  const H = padT + plotH + padB;
+
+  const maxV = Math.max(...entries.map(e=>e.pieces),10);
+  const niceTop = Math.ceil(maxV/100)*100;
+  const y = v => padT + plotH - (v/niceTop)*plotH;
+
+  let g = "";
+  // gridlines + y labels
+  const steps = 4;
+  for(let i=0;i<=steps;i++){
+    const v = niceTop/steps*i, yy=y(v);
+    g += `<line x1="${padL}" y1="${yy}" x2="${W-padR}" y2="${yy}" stroke="${cLine}" stroke-width="1"/>`;
+    g += `<text x="${padL-8}" y="${yy+4}" text-anchor="end" font-size="11" fill="${cMut}" font-family="IBM Plex Mono,monospace">${v}</text>`;
+  }
+  // bars
+  dates.forEach((dt,i)=>{
+    const gx = padL + i*(groupW+gGap);
+    const n = entries.find(e=>e.date===dt && e.shift==="Night");
+    const da= entries.find(e=>e.date===dt && e.shift==="Day");
+    const items=[["Night",n,cN],["Day",da,cD]];
+    const totalW = barW*2+barGap;
+    let bx = gx + (groupW-totalW)/2;
+    items.forEach(([lab,e,c])=>{
+      if(e){
+        const yy=y(e.pieces), h=padT+plotH-yy;
+        g += `<rect x="${bx}" y="${yy}" width="${barW}" height="${h}" rx="3" fill="${c}"/>`;
+        g += `<text x="${bx+barW/2}" y="${yy-6}" text-anchor="middle" font-size="12" font-weight="600" fill="${cInk}" font-family="IBM Plex Mono,monospace">${e.pieces}</text>`;
+      }
+      bx += barW+barGap;
+    });
+    g += `<text x="${gx+groupW/2}" y="${padT+plotH+20}" text-anchor="middle" font-size="12" font-weight="600" fill="${cInk}" font-family="Oswald,sans-serif">${fmt(dt)}</text>`;
+    g += `<text x="${gx+groupW/2}" y="${padT+plotH+36}" text-anchor="middle" font-size="10.5" fill="${cMut}" font-family="IBM Plex Sans,sans-serif">${wd(dt)}</text>`;
+  });
+  // baseline
+  g += `<line x1="${padL}" y1="${padT+plotH}" x2="${W-padR}" y2="${padT+plotH}" stroke="${cInk}" stroke-width="1.5"/>`;
+
+  svg.setAttribute("viewBox",`0 0 ${W} ${H}`);
+  svg.setAttribute("width",W); svg.setAttribute("height",H);
+  svg.innerHTML = g;
+}
+drawChart();
+// redraw on theme flip so chart colors track the tokens
+try{ matchMedia("(prefers-color-scheme:dark)").addEventListener("change",drawChart); }catch(e){}
+</script>
