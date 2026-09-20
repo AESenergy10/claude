@@ -299,8 +299,8 @@
       <p class="sec-sub" data-i18n="setupSub">Physical assumptions used to work out boules, cartons &amp; pallets.</p>
       <div class="grid2">
         <div class="field">
-          <label data-i18n="lblBouleKg">Boule size (kg)</label>
-          <div class="in"><input type="number" id="bouleKg" step="0.1" min="0.01" inputmode="decimal"></div>
+          <label data-i18n="lblBouleKg">Boule size (lb)</label>
+          <div class="in"><input type="number" class="hassuf" id="bouleLb" step="0.1" min="0.01" inputmode="decimal"><span class="suf">lb</span></div>
         </div>
         <div class="field">
           <label data-i18n="lblBpc">Boules per carton</label>
@@ -330,13 +330,14 @@
       sellPrice: 2.50,
       logistics: 6000,
       misc: 0,
-      bouleKg: 1.3,
+      bouleLb: 3,
       boulesPerCarton: 20,
       cartonsPerPallet: 30
     };
   }
+  var LB_TO_KG = 0.45359237;
   var FIELDS = ["numContainers","containerTonnes","bouleCost","sellPrice","logistics","misc",
-                "bouleKg","boulesPerCarton","cartonsPerPallet"];
+                "bouleLb","boulesPerCarton","cartonsPerPallet"];
 
   var T = {
     en:{ eyebrow:"Container Profit Tracker", live:"Live",
@@ -351,7 +352,7 @@
       shTitle:"Shipment", shSub:"What's inside, from your tonnes and setup.",
       shBoules:"Total boules", shCartons:"Total cartons", shPallets:"Total pallets", shBpc:"Boules per carton",
       setupTitle:"Setup — change once", setupSub:"Physical assumptions used to work out boules, cartons & pallets.",
-      lblBouleKg:"Boule size (kg)", lblBpc:"Boules per carton", lblCpp:"Cartons per pallet",
+      lblBouleKg:"Boule size (lb)", lblBpc:"Boules per carton", lblCpp:"Cartons per pallet",
       lead:"Landed cost & profit", container:"container", containers:"containers", each:"each",
       landedAllIn:"Landed, all-in", across:"Across",
       inProfit:"In profit", atLoss:"At a loss", margin:"margin", boulesSold:"boules sold",
@@ -368,7 +369,7 @@
       shTitle:"Expédition", shSub:"Ce qu'il contient, selon vos tonnes et réglages.",
       shBoules:"Total boules", shCartons:"Total cartons", shPallets:"Total palettes", shBpc:"Boules par carton",
       setupTitle:"Réglages — à changer une fois", setupSub:"Hypothèses physiques pour calculer boules, cartons et palettes.",
-      lblBouleKg:"Taille de la boule (kg)", lblBpc:"Boules par carton", lblCpp:"Cartons par palette",
+      lblBouleKg:"Taille de la boule (lb)", lblBpc:"Boules par carton", lblCpp:"Cartons par palette",
       lead:"Coût rendu & bénéfice", container:"conteneur", containers:"conteneurs", each:"chacun",
       landedAllIn:"Coût rendu, tout compris", across:"Sur",
       inProfit:"Bénéficiaire", atLoss:"En perte", margin:"marge", boulesSold:"boules vendues",
@@ -404,7 +405,7 @@
   function compute(){
     var s=state;
     var containers = s.numContainers>0 ? s.numContainers : 0;
-    var bouleKg = s.bouleKg>0 ? s.bouleKg : 0;
+    var bouleKg = (s.bouleLb>0 ? s.bouleLb : 0) * LB_TO_KG;
     var bpc = s.boulesPerCarton>0 ? Math.floor(s.boulesPerCarton) : 0;
     var cpp = s.cartonsPerPallet>0 ? Math.floor(s.cartonsPerPallet) : 0;
     var containerKg = (s.containerTonnes||0)*1000;
