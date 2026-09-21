@@ -91,24 +91,28 @@
   .sec-sub{font-size:.8rem;color:var(--muted);margin:0 0 14px}
 
   /* inputs */
-  .grouplbl{font-size:.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:2px 0 11px;display:flex;align-items:center;gap:10px}
-  .grouplbl.sp2{margin-top:18px}
-  .grouplbl::after{content:"";flex:1;height:1px;background:var(--line)}
+  .grouplbl{font-size:.72rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--ink);margin:2px 0 13px;display:flex;align-items:center;gap:9px}
+  .grouplbl.sp2{margin-top:22px}
+  .grouplbl .gi{width:25px;height:25px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;flex:none;background:color-mix(in srgb,var(--indigo) 15%,transparent)}
+  .grouplbl.g-price .gi{background:color-mix(in srgb,var(--amber) 20%,transparent)}
+  .grouplbl.g-time .gi{background:color-mix(in srgb,var(--pos) 16%,transparent)}
+  .grouplbl::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
   .field{display:flex;flex-direction:column;gap:7px}
   .field label{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
   .in{position:relative;display:flex;align-items:center}
-  .in .pre{position:absolute;left:13px;color:var(--muted);font-weight:800;pointer-events:none}
-  .in .suf{position:absolute;right:13px;color:var(--muted);font-weight:700;font-size:.9rem;pointer-events:none}
+  .in .pre{position:absolute;left:14px;color:var(--muted);font-weight:800;pointer-events:none;font-size:1.02rem}
+  .in .suf{position:absolute;right:9px;color:var(--muted);font-weight:800;font-size:.7rem;letter-spacing:.3px;pointer-events:none;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:3px 7px;border-radius:7px}
   .field input{
     background:var(--bg);border:1.5px solid var(--line);color:var(--ink);
-    border-radius:13px;padding:13px 14px;font-size:1.06rem;width:100%;font-weight:700;
+    border-radius:14px;padding:13px 14px;font-size:1.06rem;width:100%;font-weight:700;
     font-family:"Archivo","Inter",sans-serif;font-variant-numeric:tabular-nums;
-    transition:border-color .15s ease, box-shadow .15s ease;
+    transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    box-shadow:0 1px 2px rgba(20,30,55,.03);
   }
   .field input.money{padding-left:28px}
-  .field input.hassuf{padding-right:34px}
-  .field input.sufcfa{padding-right:48px}
+  .field input.hassuf{padding-right:42px}
+  .field input.sufcfa{padding-right:56px}
   .cc-hero{display:flex;align-items:baseline;gap:9px;margin:6px 0 2px}
   .cc-num{font-family:"Archivo",sans-serif;font-weight:900;font-size:2.5rem;line-height:1;letter-spacing:-.5px}
   .cc-unit{font-weight:800;color:var(--muted);text-transform:uppercase;font-size:.82rem;letter-spacing:.6px}
@@ -119,15 +123,16 @@
   .bc-sub{font-size:.8rem;color:var(--muted);margin-top:4px;font-weight:600}
   .bc-val{font-family:"Archivo",sans-serif;font-weight:900;font-size:2rem;letter-spacing:-.5px;line-height:1;flex:none}
   @media(hover:hover){ .field input:hover{border-color:color-mix(in srgb,var(--indigo) 34%,var(--line))} }
-  .field input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3px color-mix(in srgb,var(--indigo) 18%,transparent)}
+  .field input:focus{outline:none;border-color:var(--indigo);background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--indigo) 16%,transparent),0 2px 10px rgba(20,30,55,.06)}
   /* stepper */
   .stepper{display:flex;align-items:stretch;gap:8px}
   .stepper .in{flex:1}
   .stepper input{text-align:center}
-  .stp{width:46px;flex:none;border:1.5px solid var(--line);background:var(--bg);border-radius:13px;
+  .stp{width:48px;flex:none;border:1.5px solid var(--line);background:var(--bg);border-radius:14px;
     font-family:"Archivo",sans-serif;font-size:1.5rem;font-weight:700;color:var(--ink);cursor:pointer;
-    display:flex;align-items:center;justify-content:center;line-height:1;user-select:none;transition:.12s}
-  .stp:active{transform:scale(.93)}
+    display:flex;align-items:center;justify-content:center;line-height:1;user-select:none;transition:.12s;
+    box-shadow:0 1px 2px rgba(20,30,55,.03)}
+  .stp:active{transform:scale(.92);background:color-mix(in srgb,var(--indigo) 12%,transparent);border-color:var(--indigo)}
   @media(hover:hover){ .stp:hover{border-color:var(--indigo);color:var(--indigo)} }
 
   /* callout */
@@ -212,7 +217,7 @@
     <h2 class="sec" data-i18n="enterTitle">Enter your numbers</h2>
     <p class="sec-sub" data-i18n="enterSub">Type what your supplier gives you — everything below updates instantly.</p>
 
-    <div class="grouplbl" data-i18n="grpShipment">Shipment</div>
+    <div class="grouplbl g-ship"><span class="gi">📦</span><span data-i18n="grpShipment">Shipment</span></div>
     <div class="grid2">
       <div class="field">
         <label data-i18n="lblContainers">Containers</label>
@@ -228,7 +233,7 @@
       </div>
     </div>
 
-    <div class="grouplbl sp2" data-i18n="grpPricing">Pricing &amp; costs</div>
+    <div class="grouplbl sp2 g-price"><span class="gi">💵</span><span data-i18n="grpPricing">Pricing &amp; costs</span></div>
     <div class="grid2">
       <div class="field">
         <label data-i18n="lblCfaKg">Attiéké price (CFA / kg)</label>
@@ -252,7 +257,7 @@
       </div>
     </div>
 
-    <div class="grouplbl sp2" data-i18n="grpTimeline">Timeline (days)</div>
+    <div class="grouplbl sp2 g-time"><span class="gi">⏳</span><span data-i18n="grpTimeline">Timeline (days)</span></div>
     <div class="grid2">
       <div class="field">
         <label data-i18n="lblProd">Production</label>
