@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Royal Attiéké Tracker</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f7b6c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Royal Attiéké">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/royal-attieke-icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="assets/royal-attieke-icon-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/royal-attieke-icon-180.png">
+<link rel="apple-touch-icon" href="assets/royal-attieke-icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef1f5; --card:#ffffff; --ink:#161a20; --muted:#6b7789;
+    --line:#e5e9f0; --hair:#eef2f7;
+    --amber:#e0872e; --indigo:#5b57d6; --slate:#94a3b8;
+    --pos:#1c8a4e; --neg:#d83a3a; --dark:#161a20;
+    --shadow:0 1px 2px rgba(20,30,55,.06),0 10px 30px rgba(20,30,55,.07);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1116; --card:#171c24; --ink:#eef2f8; --muted:#9aa6b8;
+      --line:#252d38; --hair:#1f2630;
+      --amber:#ed9a45; --indigo:#7b78e6; --slate:#8a97ab;
+      --pos:#43c47b; --neg:#ff6b6b; --dark:#20262f;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+      --bg:#0e1116; --card:#171c24; --ink:#eef2f8; --muted:#9aa6b8;
+      --line:#252d38; --hair:#1f2630;
+      --amber:#ed9a45; --indigo:#7b78e6; --slate:#8a97ab;
+      --pos:#43c47b; --neg:#ff6b6b; --dark:#20262f;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(900px 460px at 50% -160px, color-mix(in srgb,var(--amber) 16%, transparent), transparent 72%),
+      radial-gradient(700px 380px at 100% 8%, color-mix(in srgb,var(--indigo) 10%, transparent), transparent 70%),
+      var(--bg);
+    background-attachment:fixed; color:var(--ink);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px; line-height:1.45; -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes bump{0%{transform:translateY(3px);opacity:.45}100%{transform:none;opacity:1}}
+  .bump{animation:bump .3s ease-out}
+  .display{font-family:"Archivo","Inter",sans-serif;}
+  .num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1;}
+  .wrap{max-width:640px;margin:0 auto;padding:20px 16px 32px}
+
+  /* header */
+  header.hd{margin-bottom:8px}
+  .brandbar{background:linear-gradient(160deg,#fdf0e2,#fbe6d2);border:1px solid color-mix(in srgb,var(--amber) 30%,transparent);border-radius:18px;padding:16px;display:flex;justify-content:center;box-shadow:var(--shadow);margin-bottom:12px}
+  .brand-logo{height:106px;width:auto;max-width:100%;display:block;filter:drop-shadow(0 2px 4px rgba(90,50,20,.14))}
+  .eyebrow{font-size:.72rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber)}
+  .hd-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .subtitle{color:var(--muted);font-size:.92rem;margin-top:4px}
+  .live{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+  .live .dot{width:8px;height:8px;border-radius:50%;background:var(--pos);box-shadow:0 0 0 3px color-mix(in srgb,var(--pos) 22%,transparent)}
+  .hd-right{display:flex;align-items:center;gap:10px}
+  .langtog{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+  .langtog button{border:none;background:transparent;color:var(--muted);font-weight:800;font-size:.72rem;letter-spacing:.5px;padding:5px 11px;cursor:pointer;font-family:"Archivo",sans-serif;transition:.12s}
+  .langtog button.on{background:var(--amber);color:#fff}
+  .rule{height:3px;background:var(--ink);border-radius:2px;margin:14px 0 16px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px;transition:transform .18s ease, box-shadow .18s ease}
+  @media(hover:hover){ .card:hover,.kpi:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(20,30,55,.08),0 16px 40px rgba(20,30,55,.12)} }
+  .wrap>*{animation:rise .5s ease both}
+  .wrap>*:nth-child(2){animation-delay:.04s}
+  .wrap>*:nth-child(3){animation-delay:.08s}
+  .wrap>*:nth-child(4){animation-delay:.12s}
+  .wrap>*:nth-child(5){animation-delay:.16s}
+  .wrap>*:nth-child(6){animation-delay:.20s}
+  .wrap>*:nth-child(7){animation-delay:.24s}
+  .wrap>*:nth-child(n+8){animation-delay:.28s}
+  .stack>*{margin-bottom:14px}
+  .stack>*:last-child{margin-bottom:0}
+  h2.sec{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:.3px;margin:0 0 3px;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+  h2.sec::before{content:"";width:7px;height:17px;border-radius:3px;background:var(--amber);flex:none}
+  .sec-sub{font-size:.8rem;color:var(--muted);margin:0 0 14px}
+
+  /* inputs */
+  .grouplbl{font-size:.72rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--ink);margin:2px 0 13px;display:flex;align-items:center;gap:9px}
+  .grouplbl.sp2{margin-top:22px}
+  .grouplbl .gi{width:25px;height:25px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;flex:none;background:color-mix(in srgb,var(--indigo) 15%,transparent)}
+  .grouplbl.g-price .gi{background:color-mix(in srgb,var(--amber) 20%,transparent)}
+  .grouplbl.g-time .gi{background:color-mix(in srgb,var(--pos) 16%,transparent)}
+  .grouplbl::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field label{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+  .in{position:relative;display:flex;align-items:center}
+  .in .pre{position:absolute;left:14px;color:var(--muted);font-weight:800;pointer-events:none;font-size:1.02rem}
+  .in .suf{position:absolute;right:9px;color:var(--muted);font-weight:800;font-size:.7rem;letter-spacing:.3px;pointer-events:none;background:color-mix(in srgb,var(--ink) 7%,transparent);padding:3px 7px;border-radius:7px}
+  .field input{
+    background:var(--bg);border:1.5px solid var(--line);color:var(--ink);
+    border-radius:14px;padding:13px 14px;font-size:1.06rem;width:100%;font-weight:700;
+    font-family:"Archivo","Inter",sans-serif;font-variant-numeric:tabular-nums;
+    transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+    box-shadow:0 1px 2px rgba(20,30,55,.03);
+  }
+  .field input.money{padding-left:28px}
+  .field input.hassuf{padding-right:42px}
+  .field input.sufcfa{padding-right:56px}
+  .cc-hero{display:flex;align-items:baseline;gap:9px;margin:6px 0 2px}
+  .cc-num{font-family:"Archivo",sans-serif;font-weight:900;font-size:2.5rem;line-height:1;letter-spacing:-.5px}
+  .cc-unit{font-weight:800;color:var(--muted);text-transform:uppercase;font-size:.82rem;letter-spacing:.6px}
+  .cc-note{font-size:.85rem;color:var(--muted);font-weight:600;margin:0 0 14px}
+  .boulecost{display:flex;align-items:center;gap:14px;border-left:5px solid var(--amber)}
+  .boulecost .bc-left{flex:1;min-width:0}
+  .bc-lbl{font-size:.7rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .bc-sub{font-size:.8rem;color:var(--muted);margin-top:4px;font-weight:600}
+  .bc-val{font-family:"Archivo",sans-serif;font-weight:900;font-size:2rem;letter-spacing:-.5px;line-height:1;flex:none}
+  @media(hover:hover){ .field input:hover{border-color:color-mix(in srgb,var(--indigo) 34%,var(--line))} }
+  .field input:focus{outline:none;border-color:var(--indigo);background:var(--card);box-shadow:0 0 0 3px color-mix(in srgb,var(--indigo) 16%,transparent),0 2px 10px rgba(20,30,55,.06)}
+  /* stepper */
+  .stepper{display:flex;align-items:stretch;gap:8px}
+  .stepper .in{flex:1}
+  .stepper input{text-align:center}
+  .stp{width:48px;flex:none;border:1.5px solid var(--line);background:var(--bg);border-radius:14px;
+    font-family:"Archivo",sans-serif;font-size:1.5rem;font-weight:700;color:var(--ink);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;line-height:1;user-select:none;transition:.12s;
+    box-shadow:0 1px 2px rgba(20,30,55,.03)}
+  .stp:active{transform:scale(.92);background:color-mix(in srgb,var(--indigo) 12%,transparent);border-color:var(--indigo)}
+  @media(hover:hover){ .stp:hover{border-color:var(--indigo);color:var(--indigo)} }
+
+  /* callout */
+  .callout{display:flex;gap:13px;align-items:center;border-left:5px solid var(--amber)}
+  .callout .ring{width:34px;height:34px;border-radius:50%;border:3px solid var(--amber);flex:none;position:relative}
+  .callout .ring::after{content:"";position:absolute;inset:8px;border-radius:50%;background:var(--amber)}
+  .callout .c-lbl{font-size:.72rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .callout .c-val{font-family:"Archivo",sans-serif;font-weight:800;font-size:1.25rem;margin-top:1px}
+  .callout .c-note{font-size:.8rem;color:var(--muted);margin-top:1px}
+
+  /* KPI grid */
+  .kgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:16px 16px 15px;border-left:5px solid var(--slate);position:relative;overflow:hidden;transition:transform .18s ease, box-shadow .18s ease}
+  .kpi.indigo{border-left-color:var(--indigo)}
+  .kpi.amber{border-left-color:var(--amber)}
+  .kpi.green{border-left-color:var(--pos)}
+  .kpi.dark{background:linear-gradient(155deg,#242c38 0%,#141a22 60%,#0f141b 100%);border-color:transparent;border-left:none;color:#fff}
+  .kpi.dark::after{content:"";position:absolute;top:-40px;right:-40px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--pos) 32%,transparent),transparent 70%)}
+  .kpi.dark .k-lbl,.kpi.dark .k-sub{color:rgba(255,255,255,.68)}
+  .kpi .k-lbl{font-size:.7rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
+  .kpi .k-val{font-family:"Archivo",sans-serif;font-weight:900;font-size:1.9rem;line-height:1.05;margin-top:7px;letter-spacing:-.5px}
+  .kpi .k-sub{font-size:.75rem;color:var(--muted);margin-top:5px;font-weight:500}
+  .pill{position:absolute;top:14px;right:14px;font-family:"Archivo",sans-serif;font-weight:800;font-size:.72rem;padding:3px 9px;border-radius:999px;letter-spacing:.3px;z-index:1}
+  .pill.pos{background:color-mix(in srgb,var(--pos) 26%,transparent);color:#fff}
+  .pill.neg{background:color-mix(in srgb,var(--neg) 32%,transparent);color:#fff}
+  .pos{color:var(--pos)} .neg{color:var(--neg)}
+
+  /* cost breakdown */
+  .bar{display:flex;gap:3px;height:18px;margin:4px 0 16px}
+  .bar span{display:block;height:100%;border-radius:6px;transition:width .35s cubic-bezier(.4,0,.2,1);min-width:0}
+  .legrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--hair)}
+  .legrow:first-of-type{border-top:none}
+  .legrow .sw{width:11px;height:11px;border-radius:3px;flex:none}
+  .legrow .nm{font-weight:600;font-size:.9rem}
+  .legrow .amt{margin-left:auto;font-weight:800;font-variant-numeric:tabular-nums;font-family:"Archivo",sans-serif}
+  .legrow .pc{font-size:.75rem;color:var(--muted);width:44px;text-align:right;font-variant-numeric:tabular-nums}
+  .legrow.total{border-top:2px solid var(--ink);margin-top:2px}
+  .legrow.total .nm{font-weight:800;text-transform:uppercase;font-size:.8rem;letter-spacing:.5px}
+
+  /* shipment table */
+  .trow{display:flex;align-items:center;padding:12px 0;border-top:1px solid var(--hair)}
+  .trow:first-of-type{border-top:none}
+  .trow .tn{color:var(--muted);font-weight:600;font-size:.92rem}
+  .trow .tv{margin-left:auto;font-family:"Archivo",sans-serif;font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums}
+
+  details.setup summary{cursor:pointer;font-family:"Archivo",sans-serif;font-weight:800;font-size:1rem;list-style:none;text-transform:uppercase;letter-spacing:.3px}
+  details.setup summary::-webkit-details-marker{display:none}
+  details.setup summary::before{content:"▸";color:var(--muted);margin-right:8px}
+  details.setup[open] summary::before{content:"▾"}
+  details.setup .sec-sub{margin-top:8px}
+  .status{font-size:.72rem;color:var(--muted);text-align:center;padding:10px 6px 0}
+
+  @media(max-width:430px){
+    h1.big{font-size:2.1rem}
+    .kpi .k-val{font-size:1.6rem}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- HEADER -->
+  <header class="hd">
+    <div class="brandbar">
+      <img class="brand-logo" src="assets/royal-attieke-logo.png" alt="Royal Attiéké — Le goût de Babi">
+    </div>
+    <div class="hd-row">
+      <div class="eyebrow" data-i18n="eyebrow">Container Profit Tracker</div>
+      <div class="hd-right">
+        <span class="live"><span class="dot"></span><span data-i18n="live">Live</span></span>
+        <div class="langtog" id="langtog">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="fr">FR</button>
+        </div>
+      </div>
+    </div>
+    <div class="subtitle" id="subtitle">Landed cost &amp; profit · per shipment</div>
+    <div class="rule"></div>
+  </header>
+
+  <!-- INPUTS -->
+  <div class="card" style="margin-bottom:14px">
+    <h2 class="sec" data-i18n="enterTitle">Enter your numbers</h2>
+    <p class="sec-sub" data-i18n="enterSub">Type what your supplier gives you — everything below updates instantly.</p>
+
+    <div class="grouplbl g-ship"><span class="gi">📦</span><span data-i18n="grpShipment">Shipment</span></div>
+    <div class="grid2">
+      <div class="field">
+        <label data-i18n="lblContainers">Containers</label>
+        <div class="stepper">
+          <button type="button" class="stp" data-step="numContainers:-1" aria-label="Fewer containers">−</button>
+          <div class="in"><input type="number" id="numContainers" step="1" min="1" inputmode="numeric"></div>
+          <button type="button" class="stp" data-step="numContainers:1" aria-label="More containers">+</button>
+        </div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblTonnes">Tonnes / container</label>
+        <div class="in"><input type="number" class="hassuf" id="containerTonnes" step="0.1" min="0" inputmode="decimal"><span class="suf">t</span></div>
+      </div>
+    </div>
+
+    <div class="grouplbl sp2 g-price"><span class="gi">💵</span><span data-i18n="grpPricing">Pricing &amp; costs</span></div>
+    <div class="grid2">
+      <div class="field">
+        <label data-i18n="lblCfaKg">Attiéké price (CFA / kg)</label>
+        <div class="in"><input type="number" class="hassuf sufcfa" id="cfaPerKg" step="5" min="0" inputmode="decimal"><span class="suf">CFA</span></div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblRate">Exchange rate (CFA per $1)</label>
+        <div class="in"><input type="number" id="rate" step="1" min="1" inputmode="decimal"></div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblSell">Selling price / boule</label>
+        <div class="in"><span class="pre">$</span><input type="number" class="money" id="sellPrice" step="0.01" min="0" inputmode="decimal"></div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblLogistics">Logistics / container</label>
+        <div class="in"><span class="pre">$</span><input type="number" class="money" id="logistics" step="1" min="0" inputmode="decimal"></div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblMisc">Misc / container</label>
+        <div class="in"><span class="pre">$</span><input type="number" class="money" id="misc" step="1" min="0" inputmode="decimal"></div>
+      </div>
+    </div>
+
+    <div class="grouplbl sp2 g-time"><span class="gi">⏳</span><span data-i18n="grpTimeline">Timeline (days)</span></div>
+    <div class="grid2">
+      <div class="field">
+        <label data-i18n="lblProd">Production</label>
+        <div class="in"><input type="number" class="hassuf" id="prodDays" step="1" min="0" inputmode="numeric"><span class="suf">d</span></div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblShip">Shipping to here</label>
+        <div class="in"><input type="number" class="hassuf" id="shipDays" step="1" min="0" inputmode="numeric"><span class="suf">d</span></div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblSell2">Selling</label>
+        <div class="in"><input type="number" class="hassuf" id="sellDays" step="1" min="0" inputmode="numeric"><span class="suf">d</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PER-BOULE ECONOMICS -->
+  <div class="kgrid" style="margin-bottom:14px">
+    <div class="kpi amber">
+      <div class="k-lbl" data-i18n="bouleCostNote">Boule cost</div>
+      <div class="k-val num" id="bouleCostVal">$0.00</div>
+      <div class="k-sub" id="bouleCostSub">—</div>
+    </div>
+    <div class="kpi amber">
+      <div class="k-lbl" data-i18n="coLbl">Break-even price</div>
+      <div class="k-val num" id="coBreakEven">$0.00</div>
+      <div class="k-sub" data-i18n="coNote">Sell above this to make a profit.</div>
+    </div>
+  </div>
+
+  <!-- KPI GRID -->
+  <div class="kgrid" style="margin-bottom:14px">
+    <div class="kpi amber">
+      <div class="k-lbl" data-i18n="kTotalCost">Total cost</div>
+      <div class="k-val num" id="kCost">$0</div>
+      <div class="k-sub" id="kCostSub">Landed, all-in</div>
+    </div>
+    <div class="kpi dark">
+      <span class="pill" id="kMarginPill">0%</span>
+      <div class="k-lbl" data-i18n="kNetProfit">Net profit</div>
+      <div class="k-val num" id="kNetProfit">$0</div>
+      <div class="k-sub" id="kNetProfitSub">—</div>
+    </div>
+    <div class="kpi indigo">
+      <div class="k-lbl" data-i18n="kRevenue">Revenue</div>
+      <div class="k-val num" id="kRevenue">$0</div>
+      <div class="k-sub" id="kRevenueSub">—</div>
+    </div>
+    <div class="kpi green">
+      <div class="k-lbl" data-i18n="kProfitBoule">Profit / boule</div>
+      <div class="k-val num" id="kProfitBoule">$0</div>
+      <div class="k-sub" id="kMarginSub">—</div>
+    </div>
+  </div>
+
+  <!-- COST BREAKDOWN -->
+  <div class="card" style="margin-bottom:14px">
+    <h2 class="sec" data-i18n="cbTitle">Cost breakdown</h2>
+    <p class="sec-sub" data-i18n="cbSub">Where the landed cost goes.</p>
+    <div class="bar">
+      <span id="segProduct" style="background:var(--indigo)"></span>
+      <span id="segLogistics" style="background:var(--amber)"></span>
+      <span id="segMisc" style="background:var(--slate)"></span>
+    </div>
+    <div class="legrow"><span class="sw" style="background:var(--indigo)"></span><span class="nm" data-i18n="cbProductNm">Product (boules)</span><span class="amt num" id="cbProduct">$0</span><span class="pc num" id="pcProduct">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--amber)"></span><span class="nm" data-i18n="cbLogisticsNm">Logistics / freight</span><span class="amt num" id="cbLogistics">$0</span><span class="pc num" id="pcLogistics">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--slate)"></span><span class="nm" data-i18n="cbMiscNm">Miscellaneous</span><span class="amt num" id="cbMisc">$0</span><span class="pc num" id="pcMisc">0%</span></div>
+    <div class="legrow total"><span class="nm" data-i18n="cbTotalNm">Total cost</span><span class="amt num" id="cbTotal">$0</span><span class="pc">100%</span></div>
+  </div>
+
+  <!-- SHIPMENT -->
+  <div class="card" style="margin-bottom:14px">
+    <h2 class="sec" data-i18n="shTitle">Shipment</h2>
+    <p class="sec-sub" data-i18n="shSub">What's inside, from your tonnes and setup.</p>
+    <div class="trow"><span class="tn" data-i18n="shBoules">Total boules</span><span class="tv num" id="qBoules">0</span></div>
+    <div class="trow"><span class="tn" data-i18n="shCartons">Total cartons</span><span class="tv num" id="qCartons">0</span></div>
+    <div class="trow"><span class="tn" data-i18n="shPallets">Total pallets</span><span class="tv num" id="qPallets">0</span></div>
+    <div class="trow"><span class="tn" data-i18n="shBpc">Boules per carton</span><span class="tv num" id="qBpc">0</span></div>
+  </div>
+
+  <!-- CASH CYCLE -->
+  <div class="card" style="margin-bottom:14px">
+    <h2 class="sec" data-i18n="ccTitle">Cash cycle</h2>
+    <p class="sec-sub" data-i18n="ccSub">How long from paying to getting your money back.</p>
+    <div class="cc-hero"><span class="cc-num num" id="ccDays">0</span><span class="cc-unit" id="ccDaysUnit">days</span></div>
+    <div class="cc-note" id="ccMeta">—</div>
+    <div class="bar">
+      <span id="segProd" style="background:var(--indigo)"></span>
+      <span id="segShip" style="background:var(--amber)"></span>
+      <span id="segSell" style="background:var(--pos)"></span>
+    </div>
+    <div class="legrow"><span class="sw" style="background:var(--indigo)"></span><span class="nm" data-i18n="lblProd">Production</span><span class="amt num" id="tlProd">0</span><span class="pc num" id="pcProd">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--amber)"></span><span class="nm" data-i18n="lblShip">Shipping to here</span><span class="amt num" id="tlShip">0</span><span class="pc num" id="pcShip">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--pos)"></span><span class="nm" data-i18n="lblSell2">Selling</span><span class="amt num" id="tlSell">0</span><span class="pc num" id="pcSell">0%</span></div>
+  </div>
+
+  <!-- SETUP -->
+  <div class="card">
+    <details class="setup">
+      <summary data-i18n="setupTitle">Setup — change once</summary>
+      <p class="sec-sub" data-i18n="setupSub">Physical assumptions used to work out boules, cartons &amp; pallets.</p>
+      <div class="grid2">
+        <div class="field">
+          <label data-i18n="lblBouleKg">Boule size (lb)</label>
+          <div class="in"><input type="number" class="hassuf" id="bouleLb" step="0.1" min="0.01" inputmode="decimal"><span class="suf">lb</span></div>
+        </div>
+        <div class="field">
+          <label data-i18n="lblBpc">Boules per carton</label>
+          <div class="in"><input type="number" id="boulesPerCarton" step="1" min="1" inputmode="numeric"></div>
+        </div>
+        <div class="field">
+          <label data-i18n="lblCpp">Cartons per pallet</label>
+          <div class="in"><input type="number" id="cartonsPerPallet" step="1" min="1" inputmode="numeric"></div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <div class="status" id="status"></div>
+</div>
+
+<script>
+"use strict";
+(function(){
+  var STORE_KEY = "attiekeTracker.v4";
+
+  function defaults(){
+    return {
+      numContainers: 1,
+      containerTonnes: 16,
+      cfaPerKg: 650,
+      rate: 575,
+      sellPrice: 2.50,
+      logistics: 6000,
+      misc: 0,
+      bouleLb: 3,
+      boulesPerCarton: 20,
+      cartonsPerPallet: 30,
+      prodDays: 21,
+      shipDays: 40,
+      sellDays: 30
+    };
+  }
+  var LB_TO_KG = 0.45359237;
+  var FIELDS = ["numContainers","containerTonnes","cfaPerKg","rate","sellPrice","logistics","misc",
+                "bouleLb","boulesPerCarton","cartonsPerPallet","prodDays","shipDays","sellDays"];
+
+  var T = {
+    en:{ eyebrow:"Container Profit Tracker", live:"Live",
+      enterTitle:"Enter your numbers", enterSub:"Type what your supplier gives you — everything below updates instantly.",
+      grpShipment:"Shipment", grpPricing:"Pricing & costs",
+      lblContainers:"Containers", lblTonnes:"Tonnes / container",
+      lblCfaKg:"Attiéké price (CFA / kg)", lblRate:"Exchange rate (CFA per $1)", bouleCostNote:"Boule cost",
+      lblSell:"Selling price / boule", lblLogistics:"Logistics / container", lblMisc:"Misc / container",
+      kTotalCost:"Total cost", kNetProfit:"Net profit", kRevenue:"Revenue", kProfitBoule:"Profit / boule",
+      coLbl:"Break-even price", coNote:"Sell above this to make a profit.",
+      cbTitle:"Cost breakdown", cbSub:"Where the landed cost goes.",
+      cbProductNm:"Product (boules)", cbLogisticsNm:"Logistics / freight", cbMiscNm:"Miscellaneous", cbTotalNm:"Total cost",
+      shTitle:"Shipment", shSub:"What's inside, from your tonnes and setup.",
+      shBoules:"Total boules", shCartons:"Total cartons", shPallets:"Total pallets", shBpc:"Boules per carton",
+      setupTitle:"Setup — change once", setupSub:"Physical assumptions used to work out boules, cartons & pallets.",
+      lblBouleKg:"Boule size (lb)", lblBpc:"Boules per carton", lblCpp:"Cartons per pallet",
+      grpTimeline:"Timeline (days)", lblProd:"Production", lblShip:"Shipping to here", lblSell2:"Selling",
+      ccTitle:"Cash cycle", ccSub:"How long from paying to getting your money back.",
+      days:"days", months:"months", cyclesYr:"cycles / year", dShort:"d",
+      lead:"Landed cost & profit", container:"container", containers:"containers", each:"each",
+      landedAllIn:"Landed, all-in", across:"Across",
+      inProfit:"In profit", atLoss:"At a loss", margin:"margin", boulesSold:"boules sold",
+      perBoule:"/ boule", saved:"Saved", noSave:"Note: could not save in this browser." },
+    fr:{ eyebrow:"Suivi de rentabilité par conteneur", live:"En direct",
+      enterTitle:"Entrez vos chiffres", enterSub:"Saisissez ce que votre fournisseur vous donne — tout se met à jour instantanément.",
+      grpShipment:"Expédition", grpPricing:"Prix & coûts",
+      lblContainers:"Conteneurs", lblTonnes:"Tonnes / conteneur",
+      lblCfaKg:"Prix attiéké (CFA / kg)", lblRate:"Taux de change (CFA pour 1 $)", bouleCostNote:"Coût de la boule",
+      lblSell:"Prix de vente / boule", lblLogistics:"Logistique / conteneur", lblMisc:"Divers / conteneur",
+      kTotalCost:"Coût total", kNetProfit:"Bénéfice net", kRevenue:"Revenu", kProfitBoule:"Bénéfice / boule",
+      coLbl:"Prix d'équilibre", coNote:"Vendez au-dessus pour être rentable.",
+      cbTitle:"Répartition des coûts", cbSub:"Où va le coût rendu.",
+      cbProductNm:"Produit (boules)", cbLogisticsNm:"Logistique / fret", cbMiscNm:"Divers", cbTotalNm:"Coût total",
+      shTitle:"Expédition", shSub:"Ce qu'il contient, selon vos tonnes et réglages.",
+      shBoules:"Total boules", shCartons:"Total cartons", shPallets:"Total palettes", shBpc:"Boules par carton",
+      setupTitle:"Réglages — à changer une fois", setupSub:"Hypothèses physiques pour calculer boules, cartons et palettes.",
+      lblBouleKg:"Taille de la boule (lb)", lblBpc:"Boules par carton", lblCpp:"Cartons par palette",
+      grpTimeline:"Délais (jours)", lblProd:"Production", lblShip:"Transport ici", lblSell2:"Vente",
+      ccTitle:"Cycle de trésorerie", ccSub:"Temps entre le paiement et la récupération de l'argent.",
+      days:"jours", months:"mois", cyclesYr:"cycles / an", dShort:"j",
+      lead:"Coût rendu & bénéfice", container:"conteneur", containers:"conteneurs", each:"chacun",
+      landedAllIn:"Coût rendu, tout compris", across:"Sur",
+      inProfit:"Bénéficiaire", atLoss:"En perte", margin:"marge", boulesSold:"boules vendues",
+      perBoule:"/ boule", saved:"Enregistré", noSave:"Note : impossible d'enregistrer dans ce navigateur." }
+  };
+  var lang="en";
+  try{ var lv=localStorage.getItem(STORE_KEY+".lang");
+    if(lv==="fr"||lv==="en") lang=lv;
+    else if((navigator.language||"").toLowerCase().indexOf("fr")===0) lang="fr";
+  }catch(e){}
+  function L(){ return T[lang]; }
+
+  var state = load() || defaults();
+
+  function save(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); setStatus(L().saved+" · "+new Date().toLocaleTimeString()); }
+    catch(e){ setStatus(L().noSave); }
+  }
+  function load(){
+    try{ var raw=localStorage.getItem(STORE_KEY); if(!raw) return null;
+      var o=JSON.parse(raw); if(!o||typeof o!=="object") return null;
+      return Object.assign(defaults(), o);
+    }catch(e){ return null; }
+  }
+  function setStatus(m){ var s=document.getElementById("status"); if(s) s.textContent=m; }
+
+  function usd(n){ if(!isFinite(n)) n=0; return "$"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  function usd0(n){ if(!isFinite(n)) n=0; return "$"+n.toLocaleString("en-US",{maximumFractionDigits:0}); }
+  function int(n){ if(!isFinite(n)) n=0; return Math.round(n).toLocaleString("en-US"); }
+  function pct(n){ if(!isFinite(n)) n=0; return n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})+"%"; }
+  function pct0(n){ if(!isFinite(n)) n=0; return Math.round(n)+"%"; }
+  function dec1(n){ if(!isFinite(n)) n=0; return n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1}); }
+
+  function compute(){
+    var s=state;
+    var containers = s.numContainers>0 ? s.numContainers : 0;
+    var bouleKg = (s.bouleLb>0 ? s.bouleLb : 0) * LB_TO_KG;
+    var bpc = s.boulesPerCarton>0 ? Math.floor(s.boulesPerCarton) : 0;
+    var cpp = s.cartonsPerPallet>0 ? Math.floor(s.cartonsPerPallet) : 0;
+    var containerKg = (s.containerTonnes||0)*1000;
+
+    var ratio = bouleKg>0 ? containerKg/bouleKg : 0;
+    var bpCont = ratio>0 ? ((Math.ceil(ratio)-ratio)<0.02 ? Math.ceil(ratio) : Math.floor(ratio)) : 0;
+    var cartonsCont = bpc>0 ? Math.floor(bpCont/bpc) : 0;
+    var palletsCont = cpp>0 ? Math.ceil(cartonsCont/cpp) : 0;
+
+    var totalBoules  = bpCont*containers;
+    var totalCartons = cartonsCont*containers;
+    var totalPallets = palletsCont*containers;
+
+    var rate = s.rate>0 ? s.rate : 1;
+    var cfaPerBoule = (s.cfaPerKg||0) * bouleKg;   // CFA to buy one boule (3 lb)
+    var bouleCostUSD = cfaPerBoule / rate;          // its USD cost
+    var productCost   = bouleCostUSD*totalBoules;
+    var logisticsCost = (s.logistics||0)*containers;
+    var miscCost      = (s.misc||0)*containers;
+    var totalCost     = productCost+logisticsCost+miscCost;
+
+    var revenue    = (s.sellPrice||0)*totalBoules;
+    var netProfit  = revenue-totalCost;
+    var margin     = revenue>0 ? netProfit/revenue*100 : 0;
+    var breakEven  = totalBoules>0 ? totalCost/totalBoules : 0;
+    var profitPerBoule = totalBoules>0 ? netProfit/totalBoules : 0;
+
+    var prodDays=s.prodDays||0, shipDays=s.shipDays||0, sellDays=s.sellDays||0;
+    var totalDays=prodDays+shipDays+sellDays;
+    var months=totalDays/30.44;
+    var cyclesPerYear= totalDays>0 ? 365/totalDays : 0;
+    var annualProfit=netProfit*cyclesPerYear;
+
+    return {boulesPerCarton:bpc,totalBoules:totalBoules,totalCartons:totalCartons,totalPallets:totalPallets,
+      bouleCostUSD:bouleCostUSD,cfaPerBoule:cfaPerBoule,
+      productCost:productCost,logisticsCost:logisticsCost,miscCost:miscCost,totalCost:totalCost,
+      revenue:revenue,netProfit:netProfit,margin:margin,breakEven:breakEven,profitPerBoule:profitPerBoule,
+      prodDays:prodDays,shipDays:shipDays,sellDays:sellDays,totalDays:totalDays,months:months,cyclesPerYear:cyclesPerYear,annualProfit:annualProfit};
+  }
+
+  function txt(id,v){
+    var e=document.getElementById(id); if(!e) return;
+    if(e.classList.contains("num") && e.textContent!==v){
+      e.textContent=v; e.classList.remove("bump"); void e.offsetWidth; e.classList.add("bump");
+    } else { e.textContent=v; }
+  }
+  function cls(id,c){ var e=document.getElementById(id); if(e){ e.classList.remove("pos","neg"); if(c) e.classList.add(c); } }
+
+  function render(){
+    FIELDS.forEach(function(id){ var el=document.getElementById(id); if(el && document.activeElement!==el) el.value=state[id]; });
+
+    var c=compute();
+
+    var l=L();
+    var nC = state.numContainers>0 ? state.numContainers : 0;
+    txt("subtitle", l.lead+" · "+int(nC)+" "+(nC===1?l.container:l.containers)+" · "+(state.containerTonnes||0)+" t "+l.each);
+    txt("kCostSub", nC>1 ? (l.across+" "+int(nC)+" "+l.containers) : l.landedAllIn);
+
+    txt("kNetProfit", usd0(c.netProfit)); cls("kNetProfit", c.netProfit>=0?"pos":"neg");
+    txt("kNetProfitSub", (c.netProfit>=0?l.inProfit:l.atLoss)+" · "+pct(c.margin)+" "+l.margin);
+    var pill=document.getElementById("kMarginPill");
+    if(pill){ pill.textContent=pct(c.margin); pill.className="pill "+(c.netProfit>=0?"pos":"neg"); }
+    txt("kRevenue", usd0(c.revenue));
+    txt("kRevenueSub", int(c.totalBoules)+" "+l.boulesSold);
+    txt("kCost", usd0(c.totalCost));
+    txt("kProfitBoule", usd(c.profitPerBoule)); cls("kProfitBoule", c.profitPerBoule>=0?"pos":"neg");
+    txt("kMarginSub", pct(c.margin)+" "+l.margin);
+
+    txt("coBreakEven", usd(c.breakEven));
+
+    txt("bouleCostVal", usd(c.bouleCostUSD));
+    var bcs=document.getElementById("bouleCostSub");
+    if(bcs) bcs.textContent = int(c.cfaPerBoule)+" CFA / boule · "+state.bouleLb+" lb";
+
+    var tot=c.totalCost||0;
+    function w(x){ return (tot>0? x/tot*100:0); }
+    document.getElementById("segProduct").style.width   = w(c.productCost)+"%";
+    document.getElementById("segLogistics").style.width = w(c.logisticsCost)+"%";
+    document.getElementById("segMisc").style.width      = w(c.miscCost)+"%";
+    txt("cbProduct", usd0(c.productCost));   txt("pcProduct", pct0(w(c.productCost)));
+    txt("cbLogistics", usd0(c.logisticsCost)); txt("pcLogistics", pct0(w(c.logisticsCost)));
+    txt("cbMisc", usd0(c.miscCost));         txt("pcMisc", pct0(w(c.miscCost)));
+    txt("cbTotal", usd0(c.totalCost));
+
+    txt("qBoules", int(c.totalBoules));
+    txt("qCartons", int(c.totalCartons));
+    txt("qPallets", int(c.totalPallets));
+    txt("qBpc", int(c.boulesPerCarton));
+
+    // cash cycle
+    txt("ccDays", int(c.totalDays));
+    txt("ccDaysUnit", l.days);
+    txt("ccMeta", "≈ "+dec1(c.months)+" "+l.months+" · "+dec1(c.cyclesPerYear)+" "+l.cyclesYr);
+    var td=c.totalDays||0;
+    function wd(x){ return td>0? x/td*100:0; }
+    document.getElementById("segProd").style.width=wd(c.prodDays)+"%";
+    document.getElementById("segShip").style.width=wd(c.shipDays)+"%";
+    document.getElementById("segSell").style.width=wd(c.sellDays)+"%";
+    txt("tlProd", int(c.prodDays)+" "+l.dShort); txt("pcProd", pct0(wd(c.prodDays)));
+    txt("tlShip", int(c.shipDays)+" "+l.dShort); txt("pcShip", pct0(wd(c.shipDays)));
+    txt("tlSell", int(c.sellDays)+" "+l.dShort); txt("pcSell", pct0(wd(c.sellDays)));
+  }
+
+  FIELDS.forEach(function(id){
+    var el=document.getElementById(id); if(!el) return;
+    function onEdit(){ var v=parseFloat(el.value); state[id]= isFinite(v)? v : 0; render(); save(); }
+    el.addEventListener("input", onEdit);
+    el.addEventListener("change", onEdit);
+  });
+  document.querySelectorAll("input").forEach(function(inp){
+    inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); this.blur(); } });
+  });
+  document.querySelectorAll(".stp").forEach(function(b){
+    b.addEventListener("click", function(){
+      var p=this.getAttribute("data-step").split(":"), id=p[0], d=parseFloat(p[1]);
+      var nv=(parseFloat(state[id])||0)+d;
+      if(id==="numContainers" && nv<1) nv=1; if(nv<0) nv=0;
+      state[id]=nv; render(); save();
+    });
+  });
+
+  function applyLang(){
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      var s=L()[el.getAttribute("data-i18n")]; if(s!=null) el.textContent=s;
+    });
+    document.querySelectorAll("#langtog button").forEach(function(b){
+      b.classList.toggle("on", b.getAttribute("data-lang")===lang);
+    });
+    render();
+  }
+  document.getElementById("langtog").addEventListener("click", function(e){
+    var b=e.target.closest("button"); if(!b) return;
+    lang = b.getAttribute("data-lang")==="fr" ? "fr" : "en";
+    try{ localStorage.setItem(STORE_KEY+".lang", lang); }catch(e2){}
+    applyLang();
+  });
+
+  applyLang();
+})();
+</script>
+</body>
+</html>
