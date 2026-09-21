@@ -102,6 +102,10 @@
   .field input.money{padding-left:28px}
   .field input.hassuf{padding-right:34px}
   .field input.sufcfa{padding-right:48px}
+  .cc-hero{display:flex;align-items:baseline;gap:9px;margin:6px 0 2px}
+  .cc-num{font-family:"Archivo",sans-serif;font-weight:900;font-size:2.5rem;line-height:1;letter-spacing:-.5px}
+  .cc-unit{font-weight:800;color:var(--muted);text-transform:uppercase;font-size:.82rem;letter-spacing:.6px}
+  .cc-note{font-size:.85rem;color:var(--muted);font-weight:600;margin:0 0 14px}
   .boulecost{display:flex;align-items:center;gap:14px;border-left:5px solid var(--amber)}
   .boulecost .bc-left{flex:1;min-width:0}
   .bc-lbl{font-size:.7rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted)}
@@ -240,6 +244,22 @@
         <div class="in"><span class="pre">$</span><input type="number" class="money" id="misc" step="1" min="0" inputmode="decimal"></div>
       </div>
     </div>
+
+    <div class="grouplbl sp2" data-i18n="grpTimeline">Timeline (days)</div>
+    <div class="grid2">
+      <div class="field">
+        <label data-i18n="lblProd">Production</label>
+        <div class="in"><input type="number" class="hassuf" id="prodDays" step="1" min="0" inputmode="numeric"><span class="suf">d</span></div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblShip">Shipping to here</label>
+        <div class="in"><input type="number" class="hassuf" id="shipDays" step="1" min="0" inputmode="numeric"><span class="suf">d</span></div>
+      </div>
+      <div class="field">
+        <label data-i18n="lblSell2">Selling</label>
+        <div class="in"><input type="number" class="hassuf" id="sellDays" step="1" min="0" inputmode="numeric"><span class="suf">d</span></div>
+      </div>
+    </div>
   </div>
 
   <!-- PER-BOULE ECONOMICS -->
@@ -306,6 +326,22 @@
     <div class="trow"><span class="tn" data-i18n="shBpc">Boules per carton</span><span class="tv num" id="qBpc">0</span></div>
   </div>
 
+  <!-- CASH CYCLE -->
+  <div class="card" style="margin-bottom:14px">
+    <h2 class="sec" data-i18n="ccTitle">Cash cycle</h2>
+    <p class="sec-sub" data-i18n="ccSub">How long from paying to getting your money back.</p>
+    <div class="cc-hero"><span class="cc-num num" id="ccDays">0</span><span class="cc-unit" id="ccDaysUnit">days</span></div>
+    <div class="cc-note" id="ccMeta">—</div>
+    <div class="bar">
+      <span id="segProd" style="background:var(--indigo)"></span>
+      <span id="segShip" style="background:var(--amber)"></span>
+      <span id="segSell" style="background:var(--pos)"></span>
+    </div>
+    <div class="legrow"><span class="sw" style="background:var(--indigo)"></span><span class="nm" data-i18n="lblProd">Production</span><span class="amt num" id="tlProd">0</span><span class="pc num" id="pcProd">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--amber)"></span><span class="nm" data-i18n="lblShip">Shipping to here</span><span class="amt num" id="tlShip">0</span><span class="pc num" id="pcShip">0%</span></div>
+    <div class="legrow"><span class="sw" style="background:var(--pos)"></span><span class="nm" data-i18n="lblSell2">Selling</span><span class="amt num" id="tlSell">0</span><span class="pc num" id="pcSell">0%</span></div>
+  </div>
+
   <!-- SETUP -->
   <div class="card">
     <details class="setup">
@@ -347,12 +383,15 @@
       misc: 0,
       bouleLb: 3,
       boulesPerCarton: 20,
-      cartonsPerPallet: 30
+      cartonsPerPallet: 30,
+      prodDays: 21,
+      shipDays: 40,
+      sellDays: 30
     };
   }
   var LB_TO_KG = 0.45359237;
   var FIELDS = ["numContainers","containerTonnes","cfaPerKg","rate","sellPrice","logistics","misc",
-                "bouleLb","boulesPerCarton","cartonsPerPallet"];
+                "bouleLb","boulesPerCarton","cartonsPerPallet","prodDays","shipDays","sellDays"];
 
   var T = {
     en:{ eyebrow:"Container Profit Tracker", live:"Live",
@@ -369,6 +408,9 @@
       shBoules:"Total boules", shCartons:"Total cartons", shPallets:"Total pallets", shBpc:"Boules per carton",
       setupTitle:"Setup — change once", setupSub:"Physical assumptions used to work out boules, cartons & pallets.",
       lblBouleKg:"Boule size (lb)", lblBpc:"Boules per carton", lblCpp:"Cartons per pallet",
+      grpTimeline:"Timeline (days)", lblProd:"Production", lblShip:"Shipping to here", lblSell2:"Selling",
+      ccTitle:"Cash cycle", ccSub:"How long from paying to getting your money back.",
+      days:"days", months:"months", cyclesYr:"cycles / year", dShort:"d",
       lead:"Landed cost & profit", container:"container", containers:"containers", each:"each",
       landedAllIn:"Landed, all-in", across:"Across",
       inProfit:"In profit", atLoss:"At a loss", margin:"margin", boulesSold:"boules sold",
@@ -387,6 +429,9 @@
       shBoules:"Total boules", shCartons:"Total cartons", shPallets:"Total palettes", shBpc:"Boules par carton",
       setupTitle:"Réglages — à changer une fois", setupSub:"Hypothèses physiques pour calculer boules, cartons et palettes.",
       lblBouleKg:"Taille de la boule (lb)", lblBpc:"Boules par carton", lblCpp:"Cartons par palette",
+      grpTimeline:"Délais (jours)", lblProd:"Production", lblShip:"Transport ici", lblSell2:"Vente",
+      ccTitle:"Cycle de trésorerie", ccSub:"Temps entre le paiement et la récupération de l'argent.",
+      days:"jours", months:"mois", cyclesYr:"cycles / an", dShort:"j",
       lead:"Coût rendu & bénéfice", container:"conteneur", containers:"conteneurs", each:"chacun",
       landedAllIn:"Coût rendu, tout compris", across:"Sur",
       inProfit:"Bénéficiaire", atLoss:"En perte", margin:"marge", boulesSold:"boules vendues",
@@ -418,6 +463,7 @@
   function int(n){ if(!isFinite(n)) n=0; return Math.round(n).toLocaleString("en-US"); }
   function pct(n){ if(!isFinite(n)) n=0; return n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})+"%"; }
   function pct0(n){ if(!isFinite(n)) n=0; return Math.round(n)+"%"; }
+  function dec1(n){ if(!isFinite(n)) n=0; return n.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1}); }
 
   function compute(){
     var s=state;
@@ -450,10 +496,17 @@
     var breakEven  = totalBoules>0 ? totalCost/totalBoules : 0;
     var profitPerBoule = totalBoules>0 ? netProfit/totalBoules : 0;
 
+    var prodDays=s.prodDays||0, shipDays=s.shipDays||0, sellDays=s.sellDays||0;
+    var totalDays=prodDays+shipDays+sellDays;
+    var months=totalDays/30.44;
+    var cyclesPerYear= totalDays>0 ? 365/totalDays : 0;
+    var annualProfit=netProfit*cyclesPerYear;
+
     return {boulesPerCarton:bpc,totalBoules:totalBoules,totalCartons:totalCartons,totalPallets:totalPallets,
       bouleCostUSD:bouleCostUSD,cfaPerBoule:cfaPerBoule,
       productCost:productCost,logisticsCost:logisticsCost,miscCost:miscCost,totalCost:totalCost,
-      revenue:revenue,netProfit:netProfit,margin:margin,breakEven:breakEven,profitPerBoule:profitPerBoule};
+      revenue:revenue,netProfit:netProfit,margin:margin,breakEven:breakEven,profitPerBoule:profitPerBoule,
+      prodDays:prodDays,shipDays:shipDays,sellDays:sellDays,totalDays:totalDays,months:months,cyclesPerYear:cyclesPerYear,annualProfit:annualProfit};
   }
 
   function txt(id,v){
@@ -504,6 +557,19 @@
     txt("qCartons", int(c.totalCartons));
     txt("qPallets", int(c.totalPallets));
     txt("qBpc", int(c.boulesPerCarton));
+
+    // cash cycle
+    txt("ccDays", int(c.totalDays));
+    txt("ccDaysUnit", l.days);
+    txt("ccMeta", "≈ "+dec1(c.months)+" "+l.months+" · "+dec1(c.cyclesPerYear)+" "+l.cyclesYr);
+    var td=c.totalDays||0;
+    function wd(x){ return td>0? x/td*100:0; }
+    document.getElementById("segProd").style.width=wd(c.prodDays)+"%";
+    document.getElementById("segShip").style.width=wd(c.shipDays)+"%";
+    document.getElementById("segSell").style.width=wd(c.sellDays)+"%";
+    txt("tlProd", int(c.prodDays)+" "+l.dShort); txt("pcProd", pct0(wd(c.prodDays)));
+    txt("tlShip", int(c.shipDays)+" "+l.dShort); txt("pcShip", pct0(wd(c.shipDays)));
+    txt("tlSell", int(c.sellDays)+" "+l.dShort); txt("pcSell", pct0(wd(c.sellDays)));
   }
 
   FIELDS.forEach(function(id){
