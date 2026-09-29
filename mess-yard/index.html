@@ -175,7 +175,7 @@
     <div class="table-scroll">
       <table>
         <thead>
-          <tr><th>Date</th><th>Day</th><th>Shift</th><th style="text-align:right">Pieces</th><th>Notes</th></tr>
+          <tr><th>Date</th><th>Day</th><th>Shift</th><th style="text-align:right">Pieces</th><th style="text-align:right">Workers</th><th>Notes</th></tr>
         </thead>
         <tbody id="logBody"></tbody>
         <tfoot id="logFoot"></tfoot>
@@ -196,7 +196,7 @@
    ──────────────────────────────────────────────────────────────── */
 const DATA = {
   line: "Aluminum Machine",
-  updated: "2026-09-28",
+  updated: "2026-09-29",
   next: "Awaiting next shift report",
   entries: [
     { date:"2026-09-18", shift:"Night", pieces:341, note:"" },
@@ -210,7 +210,8 @@ const DATA = {
     { date:"2026-09-26", shift:"Day",   pieces:268, note:"" },
     { date:"2026-09-27", shift:"Day",   pieces:0,   note:"Day off" },
     { date:"2026-09-27", shift:"Night", pieces:0,   note:"Day off" },
-    { date:"2026-09-28", shift:"Day",   pieces:337, note:"" }
+    { date:"2026-09-28", shift:"Day",   pieces:337, note:"" },
+    { date:"2026-09-28", shift:"Night", pieces:292, note:"", workers:4 }
   ]
 };
 
@@ -250,10 +251,11 @@ document.getElementById("logBody").innerHTML=[...entries].reverse().map(e=>`
     <td>${fmt(e.date)}</td><td>${wd(e.date)}</td>
     <td><span class="pill ${e.shift.toLowerCase()}"><i></i>${e.shift}</span></td>
     <td class="num tnum">${e.pieces.toLocaleString()}</td>
-    <td class="note">${e.note||"—"}</td>
-  </tr>`).join("")||`<tr><td colspan="5" style="color:var(--muted);padding:16px">No shifts logged yet.</td></tr>`;
+    <td class="num tnum">${e.workers?e.workers:"—"}</td>
+    <td class="note">${e.note||(e.workers?`${Math.round(e.pieces/e.workers)} pcs/worker`:"—")}</td>
+  </tr>`).join("")||`<tr><td colspan="6" style="color:var(--muted);padding:16px">No shifts logged yet.</td></tr>`;
 document.getElementById("logFoot").innerHTML=entries.length
-  ?`<tr><td colspan="3">Total</td><td class="num">${total.toLocaleString()}</td><td></td></tr>`:"";
+  ?`<tr><td colspan="3">Total</td><td class="num">${total.toLocaleString()}</td><td></td><td></td></tr>`:"";
 
 function drawChart(){
   const svg=document.getElementById("chart");
