@@ -211,7 +211,8 @@ const DATA = {
     { date:"2026-09-27", shift:"Day",   pieces:0,   note:"Day off" },
     { date:"2026-09-27", shift:"Night", pieces:0,   note:"Day off" },
     { date:"2026-09-28", shift:"Day",   pieces:337, note:"" },
-    { date:"2026-09-28", shift:"Night", pieces:292, note:"", workers:4 }
+    { date:"2026-09-28", shift:"Night", pieces:292, note:"", workers:4 },
+    { date:"2026-09-29", shift:"Day",   pieces:262, note:"Machine broken", workers:4 }
   ]
 };
 
@@ -246,14 +247,18 @@ document.getElementById("kpis").innerHTML=kpis.map(k=>`
     <div class="k-sub">${k.sub}</div>
   </div>`).join("");
 
-document.getElementById("logBody").innerHTML=[...entries].reverse().map(e=>`
+document.getElementById("logBody").innerHTML=[...entries].reverse().map(e=>{
+  const pw=e.workers?`${Math.round(e.pieces/e.workers)} pcs/worker`:"";
+  const noteText=[e.note,pw].filter(Boolean).join(" · ")||"—";
+  return `
   <tr>
     <td>${fmt(e.date)}</td><td>${wd(e.date)}</td>
     <td><span class="pill ${e.shift.toLowerCase()}"><i></i>${e.shift}</span></td>
     <td class="num tnum">${e.pieces.toLocaleString()}</td>
     <td class="num tnum">${e.workers?e.workers:"—"}</td>
-    <td class="note">${e.note||(e.workers?`${Math.round(e.pieces/e.workers)} pcs/worker`:"—")}</td>
-  </tr>`).join("")||`<tr><td colspan="6" style="color:var(--muted);padding:16px">No shifts logged yet.</td></tr>`;
+    <td class="note">${noteText}</td>
+  </tr>`;
+}).join("")||`<tr><td colspan="6" style="color:var(--muted);padding:16px">No shifts logged yet.</td></tr>`;
 document.getElementById("logFoot").innerHTML=entries.length
   ?`<tr><td colspan="3">Total</td><td class="num">${total.toLocaleString()}</td><td></td><td></td></tr>`:"";
 
